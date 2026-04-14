@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curso Importación</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #000; color: #fff; font-family: sans-serif; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  h2 { margin-bottom: 10px; font-size: 1rem; opacity: 0.7; }
+  #title { margin-bottom: 16px; font-size: 1.2rem; font-weight: bold; }
+  iframe { width: 100vw; max-width: 960px; height: 54vw; max-height: 540px; border: none; }
+  #controls { margin-top: 16px; display: flex; gap: 12px; }
+  button { background: #fff; color: #000; border: none; padding: 10px 20px; border-radius: 8px; font-size: 1rem; cursor: pointer; font-weight: bold; }
+  button:hover { background: #ddd; }
+  #counter { opacity: 0.5; font-size: 0.9rem; margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<h2>Curso de Importación</h2>
+<div id="title">Capítulo 1</div>
+<iframe id="player" src="" allowfullscreen allow="autoplay"></iframe>
+<div id="controls">
+  <button onclick="prev()">⬅ Anterior</button>
+  <button onclick="next()">Siguiente ➡</button>
+</div>
+<div id="counter"></div>
+
+<script>
+const videos = [
+  { title: "Capítulo 1", id: "1pVW41VO3w8Lt3qf0wLIA_yuPBRhsXzz2" },
+  { title: "Capítulo 2", id: "19PvSjRFPR2eYdardOxIHKydtIuZ3l-V1" },
+  { title: "Capítulo 3", id: "1de_KywDGEcBIKgrlrH8wTHd8w7WUDCXA" },
+  { title: "Capítulo 4", id: "1-UIzv51oVdAOAV6QuBAfz1VSY4T9qIKQ" },
+];
+
+let current = 0;
+
+function load(i) {
+  current = (i + videos.length) % videos.length;
+  const v = videos[current];
+  document.getElementById('player').src = `https://drive.google.com/file/d/${v.id}/preview?autoplay=1`;
+  document.getElementById('title').textContent = v.title;
+  document.getElementById('counter').textContent = `${current + 1} / ${videos.length}`;
+}
+
+function next() { load(current + 1); }
+function prev() { load(current - 1); }
+
+load(0);
+</script>
+</body>
+</html>
