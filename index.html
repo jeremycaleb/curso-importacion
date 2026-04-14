@@ -3,29 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Curso Importación</title>
+<title>INCUBADORA</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: #0a0a0a; color: #fff; font-family: sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
-  h1 { font-size: 1.1rem; opacity: 0.5; margin-bottom: 6px; letter-spacing: 2px; text-transform: uppercase; }
-  #title { font-size: 1.5rem; font-weight: bold; margin-bottom: 20px; }
-  video { width: 100%; max-width: 960px; border-radius: 12px; background: #111; }
-  #controls { margin-top: 18px; display: flex; gap: 12px; }
-  button { background: #fff; color: #000; border: none; padding: 12px 28px; border-radius: 50px; font-size: 1rem; cursor: pointer; font-weight: bold; }
-  button:hover { background: #ddd; }
-  #counter { opacity: 0.4; font-size: 0.85rem; margin-top: 12px; }
+  body {
+    font-family: sans-serif;
+    min-height: 100vh;
+    background: #000 url('fondo.jpg') center top / cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .overlay {
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.95) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  .top-space { height: 30vw; max-height: 200px; }
+  #chapter-title { color: #fff; font-size: 1.1rem; font-weight: bold; margin-bottom: 4px; text-shadow: 0 1px 6px #000; }
+  video { width: 100%; max-width: 700px; border-radius: 10px; background: #000; margin-bottom: 14px; }
+  .brand { font-size: 2.8rem; font-weight: 900; color: #fff; letter-spacing: 6px; text-shadow: 0 2px 16px rgba(0,0,0,0.8); margin-bottom: 16px; }
+  #controls { display: flex; gap: 10px; margin-bottom: 10px; }
+  button { background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.5); padding: 11px 26px; border-radius: 50px; font-size: 0.95rem; cursor: pointer; font-weight: bold; backdrop-filter: blur(4px); }
+  button:hover { background: rgba(255,255,255,0.25); }
+  #pipBtn { background: rgba(0,0,0,0.3); font-size: 0.85rem; margin-bottom: 8px; }
+  #counter { color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-bottom: 10px; }
+  #wakeMsg { color: #f4a261; font-size: 0.75rem; }
 </style>
 </head>
 <body>
-
-<h1>Curso de Importación</h1>
-<div id="title">Capítulo 1</div>
-<video id="player" controls autoplay playsinline></video>
-<div id="controls">
-  <button onclick="prev()">⬅ Anterior</button>
-  <button onclick="next()">Siguiente ➡</button>
+<div class="overlay">
+  <div class="top-space"></div>
+  <div id="chapter-title">Capítulo 1</div>
+  <video id="player" controls autoplay playsinline></video>
+  <div class="brand">INCUBADORA</div>
+  <div id="controls">
+    <button onclick="prev()">⬅ Anterior</button>
+    <button onclick="next()">Siguiente ➡</button>
+  </div>
+  <button id="pipBtn" onclick="pip()">⧉ Minimizar video</button>
+  <div id="counter"></div>
+  <div id="wakeMsg"></div>
 </div>
-<div id="counter"></div>
 
 <script>
 const videos = [
@@ -42,15 +65,36 @@ function load(i) {
   current = (i + videos.length) % videos.length;
   const v = videos[current];
   player.src = v.url;
-  document.getElementById('title').textContent = v.title;
+  document.getElementById('chapter-title').textContent = v.title;
   document.getElementById('counter').textContent = `${current + 1} / ${videos.length}`;
   player.play();
 }
 
 player.addEventListener('ended', () => load(current + 1));
-
 function next() { load(current + 1); }
 function prev() { load(current - 1); }
+
+function pip() {
+  if (document.pictureInPictureElement) {
+    document.exitPictureInPicture();
+  } else if (player.requestPictureInPicture) {
+    player.requestPictureInPicture();
+  }
+}
+
+// Wake Lock - pantalla activa
+async function keepAwake() {
+  try {
+    if ('wakeLock' in navigator) {
+      await navigator.wakeLock.request('screen');
+      document.getElementById('wakeMsg').textContent = '✓ Pantalla activa';
+    }
+  } catch(e) {}
+}
+keepAwake();
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') keepAwake();
+});
 
 load(0);
 </script>
