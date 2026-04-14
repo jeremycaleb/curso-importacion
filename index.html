@@ -109,6 +109,15 @@ function pip() {
   }
 }
 
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') {
+    if (!document.pictureInPictureElement && player.requestPictureInPicture) {
+      player.requestPictureInPicture().catch(() => {});
+    }
+  }
+  if (document.visibilityState === 'visible') keepAwake();
+});
+
 let wakeLock = null;
 async function keepAwake() {
   try {
@@ -119,9 +128,6 @@ async function keepAwake() {
   } catch(e) {}
 }
 keepAwake();
-document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'visible') keepAwake();
-});
 
 if ('mediaSession' in navigator) {
   navigator.mediaSession.metadata = new MediaMetadata({
