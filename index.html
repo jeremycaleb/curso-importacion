@@ -63,7 +63,7 @@
 <div class="hero"></div>
 <div class="content">
   <div id="chapter-title">Capítulo 1</div>
-  <video id="player" controls autoplay playsinline></video>
+  <video id="player" controls autoplay playsinline disableRemotePlayback></video>
   <div id="controls">
     <button onclick="prev()">⬅ Anterior</button>
     <button onclick="next()">Siguiente ➡</button>
@@ -110,11 +110,6 @@ function pip() {
 }
 
 document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'hidden') {
-    if (!document.pictureInPictureElement && player.requestPictureInPicture) {
-      player.requestPictureInPicture().catch(() => {});
-    }
-  }
   if (document.visibilityState === 'visible') keepAwake();
 });
 
@@ -133,9 +128,22 @@ if ('mediaSession' in navigator) {
   navigator.mediaSession.metadata = new MediaMetadata({
     title: 'INCUBADORA',
     artist: 'Curso de Importación',
+    artwork: [{ src: '/curso-importacion/icon-192x192.png', sizes: '192x192', type: 'image/png' }]
   });
   navigator.mediaSession.setActionHandler('play', () => player.play());
   navigator.mediaSession.setActionHandler('pause', () => player.pause());
+
+  // AUTO-PiP al presionar Home (Chrome 120+)
+  try {
+    navigator.mediaSession.setActionHandler('enterpictureinpicture', async () => {
+      if (document.pictureInPictureElement) {
+        await document.exitPictureInPicture();
+      }
+      await player.requestPictureInPicture();
+    });
+  } catch(e) {
+    console.warn('enterpictureinpicture no soportado:', e);
+  }
 }
 
 load(0);
