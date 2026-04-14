@@ -9,38 +9,51 @@
   body {
     font-family: sans-serif;
     min-height: 100vh;
-    background: #000 url('fondo.jpg') center top / cover no-repeat;
+    background: #0a1628;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-  .overlay {
+  .hero {
     width: 100%;
-    min-height: 100vh;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.95) 100%);
+    height: 45vw;
+    max-height: 360px;
+    background: url('fondo.jpg') center center / cover no-repeat;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 60%;
+    background: linear-gradient(to bottom, transparent, #0a1628);
+  }
+  .content {
+    width: 100%;
+    background: linear-gradient(to bottom, #0a1628, #05090f);
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
+    padding: 10px 20px 30px;
   }
-  .top-space { height: 30vw; max-height: 200px; }
-  #chapter-title { color: #fff; font-size: 1.1rem; font-weight: bold; margin-bottom: 4px; text-shadow: 0 1px 6px #000; }
-  video { width: 100%; max-width: 700px; border-radius: 10px; background: #000; margin-bottom: 14px; }
-  .brand { font-size: 2.8rem; font-weight: 900; color: #fff; letter-spacing: 6px; text-shadow: 0 2px 16px rgba(0,0,0,0.8); margin-bottom: 16px; }
+  #chapter-title { color: #ccc; font-size: 0.95rem; margin-bottom: 8px; }
+  video { width: 100%; max-width: 700px; border-radius: 10px; background: #000; margin-bottom: 16px; }
+  .logo { width: 140px; margin-bottom: 16px; opacity: 0.95; }
   #controls { display: flex; gap: 10px; margin-bottom: 10px; }
-  button { background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.5); padding: 11px 26px; border-radius: 50px; font-size: 0.95rem; cursor: pointer; font-weight: bold; backdrop-filter: blur(4px); }
-  button:hover { background: rgba(255,255,255,0.25); }
-  #pipBtn { background: rgba(0,0,0,0.3); font-size: 0.85rem; margin-bottom: 8px; }
-  #counter { color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-bottom: 10px; }
-  #wakeMsg { color: #f4a261; font-size: 0.75rem; }
+  button { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.3); padding: 11px 26px; border-radius: 50px; font-size: 0.95rem; cursor: pointer; font-weight: bold; }
+  button:hover { background: rgba(255,255,255,0.2); }
+  #pipBtn { font-size: 0.82rem; margin-bottom: 8px; }
+  #counter { color: rgba(255,255,255,0.4); font-size: 0.8rem; margin-bottom: 6px; }
+  #wakeMsg { color: #4caf50; font-size: 0.72rem; }
 </style>
 </head>
 <body>
-<div class="overlay">
-  <div class="top-space"></div>
+<div class="hero"></div>
+<div class="content">
   <div id="chapter-title">Capítulo 1</div>
   <video id="player" controls autoplay playsinline></video>
-  <div class="brand">INCUBADORA</div>
+  <img src="incubadora_logo_blanco.png" class="logo" alt="INCUBADORA">
   <div id="controls">
     <button onclick="prev()">⬅ Anterior</button>
     <button onclick="next()">Siguiente ➡</button>
@@ -82,11 +95,12 @@ function pip() {
   }
 }
 
-// Wake Lock - pantalla activa
+// Wake Lock
+let wakeLock = null;
 async function keepAwake() {
   try {
     if ('wakeLock' in navigator) {
-      await navigator.wakeLock.request('screen');
+      wakeLock = await navigator.wakeLock.request('screen');
       document.getElementById('wakeMsg').textContent = '✓ Pantalla activa';
     }
   } catch(e) {}
@@ -95,6 +109,16 @@ keepAwake();
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'visible') keepAwake();
 });
+
+// Audio en segundo plano
+if ('mediaSession' in navigator) {
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title: 'INCUBADORA',
+    artist: 'Curso de Importación',
+  });
+  navigator.mediaSession.setActionHandler('play', () => player.play());
+  navigator.mediaSession.setActionHandler('pause', () => player.pause());
+}
 
 load(0);
 </script>
