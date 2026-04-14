@@ -18,7 +18,7 @@
     width: 100%;
     height: 45vw;
     max-height: 360px;
-    background: url('fondo.jpg') center center / cover no-repeat;
+    background: url('fondo2.jpg') center center / cover no-repeat;
     position: relative;
     flex-shrink: 0;
   }
@@ -39,11 +39,20 @@
   }
   #chapter-title { color: #ccc; font-size: 0.95rem; margin-bottom: 8px; }
   video { width: 100%; max-width: 700px; border-radius: 10px; background: #000; margin-bottom: 16px; }
-  .logo { width: 140px; margin-bottom: 16px; opacity: 0.95; }
   #controls { display: flex; gap: 10px; margin-bottom: 10px; }
   button { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.3); padding: 11px 26px; border-radius: 50px; font-size: 0.95rem; cursor: pointer; font-weight: bold; }
   button:hover { background: rgba(255,255,255,0.2); }
-  #pipBtn { font-size: 0.82rem; margin-bottom: 8px; }
+  #pipBtn { font-size: 0.82rem; margin-bottom: 14px; }
+  .bottom-row {
+    width: 100%;
+    max-width: 700px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .logo { width: 126px; opacity: 0.95; }
+  .profesor { width: 90px; opacity: 0.95; }
   #counter { color: rgba(255,255,255,0.4); font-size: 0.8rem; margin-bottom: 6px; }
   #wakeMsg { color: #4caf50; font-size: 0.72rem; }
 </style>
@@ -53,12 +62,15 @@
 <div class="content">
   <div id="chapter-title">Capítulo 1</div>
   <video id="player" controls autoplay playsinline></video>
-  <img src="incubadora_logo_blanco.png" class="logo" alt="INCUBADORA">
   <div id="controls">
     <button onclick="prev()">⬅ Anterior</button>
     <button onclick="next()">Siguiente ➡</button>
   </div>
   <button id="pipBtn" onclick="pip()">⧉ Minimizar video</button>
+  <div class="bottom-row">
+    <img src="incubadora_logo_blanco.png" class="logo" alt="INCUBADORA">
+    <img src="profesor.png" class="profesor" alt="Profesor">
+  </div>
   <div id="counter"></div>
   <div id="wakeMsg"></div>
 </div>
@@ -95,7 +107,6 @@ function pip() {
   }
 }
 
-// Wake Lock
 let wakeLock = null;
 async function keepAwake() {
   try {
@@ -110,7 +121,6 @@ document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'visible') keepAwake();
 });
 
-// Audio en segundo plano
 if ('mediaSession' in navigator) {
   navigator.mediaSession.metadata = new MediaMetadata({
     title: 'INCUBADORA',
