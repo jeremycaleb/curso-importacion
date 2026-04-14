@@ -11,7 +11,7 @@
   #title { font-size: 1.5rem; font-weight: bold; margin-bottom: 20px; }
   video { width: 100%; max-width: 960px; border-radius: 12px; background: #111; }
   #controls { margin-top: 18px; display: flex; gap: 12px; }
-  button { background: #fff; color: #000; border: none; padding: 12px 28px; border-radius: 50px; font-size: 1rem; cursor: pointer; font-weight: bold; transition: background 0.2s; }
+  button { background: #fff; color: #000; border: none; padding: 12px 28px; border-radius: 50px; font-size: 1rem; cursor: pointer; font-weight: bold; }
   button:hover { background: #ddd; }
   #counter { opacity: 0.4; font-size: 0.85rem; margin-top: 12px; }
 </style>
@@ -20,7 +20,7 @@
 
 <h1>Curso de Importación</h1>
 <div id="title">Capítulo 1</div>
-<video id="player" controls autoplay></video>
+<video id="player" controls autoplay playsinline></video>
 <div id="controls">
   <button onclick="prev()">⬅ Anterior</button>
   <button onclick="next()">Siguiente ➡</button>
@@ -29,10 +29,10 @@
 
 <script>
 const videos = [
-  { title: "Capítulo 1", id: "1pVW41VO3w8Lt3qf0wLIA_yuPBRhsXzz2" },
-  { title: "Capítulo 2", id: "19PvSjRFPR2eYdardOxIHKydtIuZ3l-V1" },
-  { title: "Capítulo 3", id: "1de_KywDGEcBIKgrlrH8wTHd8w7WUDCXA" },
-  { title: "Capítulo 4", id: "1-UIzv51oVdAOAV6QuBAfz1VSY4T9qIKQ" },
+  { title: "Capítulo 1", url: "https://www.dropbox.com/scl/fi/d8s2lcaphxqwxvw8exgj1/Clase-01-Revu-School.mp4?rlkey=qqk1xd0ar5l605dcqiwetuyih&st=dgy3qmc2&dl=1" },
+  { title: "Capítulo 2", url: "https://www.dropbox.com/scl/fi/0p28iga4089wh8dw05z9b/Clase-Esp.-02-29_06.mp4?rlkey=a99n20czfda9wqnle80v4uigh&st=n07jc5xm&dl=1" },
+  { title: "Capítulo 3", url: "https://www.dropbox.com/scl/fi/8s33ubuy0gcd74gbnvtl4/clase-03-importaciones-revu-03.mp4?rlkey=aem6ah7v08b1prvt96f5udym0&st=loqbe6h8&dl=1" },
+  { title: "Capítulo 4", url: "https://www.dropbox.com/scl/fi/952bbvgzi4s527vs4vr8q/clase-04-importaciones-revu-03.mp4?rlkey=ug6636spykbd4uydf4az5refg&st=gtxow10x&dl=1" },
 ];
 
 let current = 0;
@@ -41,7 +41,7 @@ const player = document.getElementById('player');
 function load(i) {
   current = (i + videos.length) % videos.length;
   const v = videos[current];
-  player.src = `https://drive.google.com/uc?export=download&id=${v.id}`;
+  player.src = v.url;
   document.getElementById('title').textContent = v.title;
   document.getElementById('counter').textContent = `${current + 1} / ${videos.length}`;
   player.play();
