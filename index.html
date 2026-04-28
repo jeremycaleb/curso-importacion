@@ -198,6 +198,7 @@ const videos = [
 
 const CLIENT_ID = '204377332392-r7oelpbtpdh0s0fec5kerm5se45t491t.apps.googleusercontent.com';
 const SCOPE = 'https://www.googleapis.com/auth/drive.readonly';
+const PROXY = 'https://drive-proxy.jeremycalebp.workers.dev';
 
 let current = 0;
 let accessToken = '';
@@ -223,7 +224,7 @@ function loadDriveVideo(fileId) {
   player.style.display = 'block';
   drivePlayer.style.display = 'none';
 
-  const url = `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media&access_token=${accessToken}`;
+  const url = `${PROXY}?id=${fileId}&token=${accessToken}`;
   player.src = url;
   player.load();
   player.play().catch(() => {});
