@@ -40,7 +40,15 @@
     padding: 10px 20px 30px;
   }
   #chapter-title { color: #ccc; font-size: 0.95rem; margin-bottom: 8px; }
-  video { width: 100%; max-width: 700px; border-radius: 10px; background: #000; margin-bottom: 16px; }
+  #player-container { width: 100%; max-width: 700px; margin-bottom: 16px; }
+  video { width: 100%; border-radius: 10px; background: #000; display: block; }
+  iframe#drivePlayer {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 10px;
+    border: none;
+    display: none;
+  }
   #controls { display: flex; gap: 10px; margin-bottom: 10px; }
   button { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.3); padding: 11px 26px; border-radius: 50px; font-size: 0.95rem; cursor: pointer; font-weight: bold; }
   button:hover { background: rgba(255,255,255,0.2); }
@@ -57,13 +65,18 @@
   .profesor { width: 125px; opacity: 0.95; margin-right: 20px; margin-bottom: 30px; }
   #counter { color: rgba(255,255,255,0.4); font-size: 0.8rem; margin-bottom: 6px; }
   #wakeMsg { color: #4caf50; font-size: 0.72rem; }
+  #driveNote { color: rgba(255,255,255,0.35); font-size: 0.72rem; margin-top: 6px; display: none; }
 </style>
 </head>
 <body>
 <div class="hero"></div>
 <div class="content">
   <div id="chapter-title">Capítulo 1</div>
-  <video id="player" controls autoplay playsinline disableRemotePlayback></video>
+  <div id="player-container">
+    <video id="player" controls autoplay playsinline disableRemotePlayback></video>
+    <iframe id="drivePlayer" allowfullscreen allow="autoplay"></iframe>
+  </div>
+  <div id="driveNote">▶ Presiona play en el video para continuar. El siguiente iniciará automáticamente.</div>
   <div id="controls">
     <button onclick="prev()">⬅ Anterior</button>
     <button onclick="next()">Siguiente ➡</button>
@@ -79,39 +92,214 @@
 
 <script>
 const videos = [
-  { title: "Capítulo 1", url: "https://www.dropbox.com/scl/fi/d8s2lcaphxqwxvw8exgj1/Clase-01-Revu-School.mp4?rlkey=qqk1xd0ar5l605dcqiwetuyih&st=dgy3qmc2&dl=1" },
-  { title: "Capítulo 2", url: "https://www.dropbox.com/scl/fi/0p28iga4089wh8dw05z9b/Clase-Esp.-02-29_06.mp4?rlkey=a99n20czfda9wqnle80v4uigh&st=n07jc5xm&dl=1" },
-  { title: "Capítulo 3", url: "https://www.dropbox.com/scl/fi/8s33ubuy0gcd74gbnvtl4/clase-03-importaciones-revu-03.mp4?rlkey=aem6ah7v08b1prvt96f5udym0&st=loqbe6h8&dl=1" },
-  { title: "Capítulo 4", url: "https://www.dropbox.com/scl/fi/952bbvgzi4s527vs4vr8q/clase-04-importaciones-revu-03.mp4?rlkey=ug6636spykbd4uydf4az5refg&st=gtxow10x&dl=1" },
+  // === CURSO INCUBADORA (Dropbox) ===
+  { title: "Capítulo 1", url: "https://www.dropbox.com/scl/fi/d8s2lcaphxqwxvw8exgj1/Clase-01-Revu-School.mp4?rlkey=qqk1xd0ar5l605dcqiwetuyih&st=dgy3qmc2&dl=1", type: "video" },
+  { title: "Capítulo 2", url: "https://www.dropbox.com/scl/fi/0p28iga4089wh8dw05z9b/Clase-Esp.-02-29_06.mp4?rlkey=a99n20czfda9wqnle80v4uigh&st=n07jc5xm&dl=1", type: "video" },
+  { title: "Capítulo 3", url: "https://www.dropbox.com/scl/fi/8s33ubuy0gcd74gbnvtl4/clase-03-importaciones-revu-03.mp4?rlkey=aem6ah7v08b1prvt96f5udym0&st=loqbe6h8&dl=1", type: "video" },
+  { title: "Capítulo 4", url: "https://www.dropbox.com/scl/fi/952bbvgzi4s527vs4vr8q/clase-04-importaciones-revu-03.mp4?rlkey=ug6636spykbd4uydf4az5refg&st=gtxow10x&dl=1", type: "video" },
+
+  // === CURSO 1 - IMPORTADOR DIGITAL (Drive) ===
+  { title: "C1 Módulo 1 - Presentación", url: "1mW20dMcAjtnxYhjE59FND42_dvhFFYi0", type: "drive" },
+
+  // Módulo 2
+  { title: "C1 Módulo 2 - Video 1", url: "17r1dTy8joNxCEi-mvdTP5w8LnIXvwfek", type: "drive" },
+  { title: "C1 Módulo 2 - Video 2", url: "1S3vpHC-mVobGKm0b8gAFEeZEIxIZ8-Gv", type: "drive" },
+  { title: "C1 Módulo 2 - Video 3", url: "1yYG10SmRkGXluRVgwb962UzbxNLO2sXA", type: "drive" },
+  { title: "C1 Módulo 2 - Video 4", url: "1DaOEPAbtIFXpXR9_pFBBNu1X7fFD2ebl", type: "drive" },
+
+  // Módulo 3
+  { title: "C1 Módulo 3 - Video 1", url: "1WYxGtwFajKN_Q2ZgOJ3pI10kB0_7NG3a", type: "drive" },
+  { title: "C1 Módulo 3 - Video 2", url: "1kfUVXAoZx5Edl-bbMj5DODCSqjzmdZKo", type: "drive" },
+
+  // Módulo 4
+  { title: "C1 Módulo 4 - Video 1", url: "1cToi0FoQIUaPiQzYQ9vDyngZX6WS4eRM", type: "drive" },
+  { title: "C1 Módulo 4 - Video 2", url: "1w_nirvkrJyU27DkoFRqhq-7sigdzE6Wf", type: "drive" },
+  { title: "C1 Módulo 4 - Video 3", url: "136ONc8W96gGL-wYWkWcrl5Fn6servZC7", type: "drive" },
+  { title: "C1 Módulo 4 - Video 4", url: "1PCFb2B6V5zHmj49fr-E0hCXHaEx0wfJU", type: "drive" },
+
+  // Módulo 5 (mismo ID que módulo 4 - confirmar)
+  { title: "C1 Módulo 5", url: "1me1KCj6Gg8sO6VCnxShYqELhLAwNGpIm", type: "drive" },
+
+  // Módulo 6
+  { title: "C1 Módulo 6 - Video 1", url: "1WLFXnjMACZ7IKofI6mW2bvzA1nJO6VVI", type: "drive" },
+  { title: "C1 Módulo 6 - Video 2", url: "1RzTf2KHU6B41uzy2S-YXa6Ki5WfQHe9e", type: "drive" },
+  { title: "C1 Módulo 6 - Video 3", url: "1SQ1zbSS1NCYC9giSborjQYl7MWD295I4", type: "drive" },
+  { title: "C1 Módulo 6 - Video 4", url: "1A79Zo-gKmG5bUYwLyQcsz2SdhkHR2YkX", type: "drive" },
+  { title: "C1 Módulo 6 - Video 5", url: "1WkOrg_bRcGqdSG_Sgxz6Ac69Xyg8rJ1u", type: "drive" },
+  { title: "C1 Módulo 6 - Video 6", url: "1DI8IYqjMcwhL3EWiJ9MrEVgkNToN-cUr", type: "drive" },
+  { title: "C1 Módulo 6 - Video 7", url: "1ruhU0jcydizHo4hki1MOxbffAClG3vSg", type: "drive" },
+  { title: "C1 Módulo 6 - Video 8", url: "1h1E4TVMpBZP1DBzLDmfIEB53rec9mwwN", type: "drive" },
+  { title: "C1 Módulo 6 - Video 9", url: "1psKEM9iFELkdH-FUSOCGfnBSWVqbaDif", type: "drive" },
+  { title: "C1 Módulo 6 - Video 10", url: "13kK_kxzMs4urU8O-_-4lmr64jDtECsyy", type: "drive" },
+  { title: "C1 Módulo 6 - Video 11", url: "1mYNerE1_Cq0yWXbCEhaMFRC3DJTOh66q", type: "drive" },
+  { title: "C1 Módulo 6 - Video 12", url: "1BLjdek1saLwABWBNgYKQ1TiqjF2dHYeV", type: "drive" },
+  { title: "C1 Módulo 6 - Video 13", url: "1f6q0p95eJYTSRJ_fdRjgbxAJyZce6u3y", type: "drive" },
+  { title: "C1 Módulo 6 - Video 14", url: "1WiwYUrtizGWOd3qk5Ucd_3MrNI7xVXew", type: "drive" },
+  { title: "C1 Módulo 6 - Video 15", url: "1LpR_Da71apyTPlKXscO9Fr0f1jhmMKvM", type: "drive" },
+  { title: "C1 Módulo 6 - Video 16", url: "13Xs9WKGGDBi3KRoJwhcNVkleYuy_OW1r", type: "drive" },
+  { title: "C1 Módulo 6 - Video 17", url: "1idJwMLdqvhlIO7k33JPAT4qAAXDeGeuL", type: "drive" },
+
+  // Módulo 7
+  { title: "C1 Módulo 7", url: "1SyYzxuAkkhZpfz2UzlGviEKC3zS5nhkd", type: "drive" },
+
+  // Módulo 8
+  { title: "C1 Módulo 8 - Video 1", url: "1R7UMHtoVCcdiSoWsxLH2V3nyQd1G1hvJ", type: "drive" },
+  { title: "C1 Módulo 8 - Video 2", url: "1_o6eC8cgmL1tvpAFkKItpa30ZoiM-MJh", type: "drive" },
+  { title: "C1 Módulo 8 - Video 3", url: "1DQqCBip0l_gZl5DgYMwXTKeWy-bUWTdJ", type: "drive" },
+
+  // Módulo 9
+  { title: "C1 Módulo 9 - Incoterms", url: "1R1JDWEJ9JvMT8ocMhUziOt6UNo-uD7fB", type: "drive" },
+
+  // Módulo 10
+  { title: "C1 Módulo 10 - Video 1", url: "19kH7AWrH8fqUyNEdxx7n6h9wWB4yilLm", type: "drive" },
+  { title: "C1 Módulo 10 - Video 2", url: "1c0Kk1ZV5qvZ8JYxfgxQQVhosa8ayrfaZ", type: "drive" },
+  { title: "C1 Módulo 10 - Video 3", url: "1fTLMeKr0MhBOMC0VDCe5BlgkwXcZAIYZ", type: "drive" },
+  { title: "C1 Módulo 10 - Video 4", url: "1nJeqqwrJPdewKdF8dHiAUVJ0m8hSv2Z1", type: "drive" },
+
+  // Módulo 11
+  { title: "C1 Módulo 11 - Final Teoría", url: "1QtVQ2YlX7y5iTN90o9izCljmN3JBXbYB", type: "drive" },
+
+  // Módulo 12
+  { title: "C1 Módulo 12 - Video 1", url: "1Uhl-Q6T8zSRVR7-BlCeZWr9ZYEyRfYpL", type: "drive" },
+  { title: "C1 Módulo 12 - Video 2", url: "1mjn-tnt18ikIT_797pZIXzTnqx-qcXSy", type: "drive" },
+  { title: "C1 Módulo 12 - Video 3", url: "1Anm6jw14I5M2tI9l6ww6ZXEMhIELTvT8", type: "drive" },
+  { title: "C1 Módulo 12 - Video 4", url: "1JpK6JMpuZ8u0-2O8pAVd_AqLXNEN9oYW", type: "drive" },
+
+  // Módulo 13
+  { title: "C1 Módulo 13 - Video 1", url: "1eMSsIGzqfhL_GPi8mAXsYmLzE5yfxT02", type: "drive" },
+  { title: "C1 Módulo 13 - Video 2", url: "13Sy6HEPB2Z_-PIyIONi_M3wPwT2UHTw4", type: "drive" },
+  { title: "C1 Módulo 13 - Video 3", url: "1WzOfTmtHXJC6EVutkFjEwL9ljKiZhOXD", type: "drive" },
+  { title: "C1 Módulo 13 - Video 4", url: "1qrViScQKO9b1UZRr7GgH7I3cYKfAMHO9", type: "drive" },
+  { title: "C1 Módulo 13 - Video 5", url: "17WxtpVMQhXJCxvP6pXkaE0jPDX0UBp6Y", type: "drive" },
+  { title: "C1 Módulo 13 - Video 6", url: "15QBImFCg-ef-Eeg3LvFMiGP-f9NSMgM1", type: "drive" },
+  { title: "C1 Módulo 13 - Video 7", url: "1LFd20_DNq8q4RUy-sW6FCMkvi-F8OGwa", type: "drive" },
+  { title: "C1 Módulo 13 - Video 8", url: "1B7KXfN81tBRt-KYfz0lVGiaeSr-3o27s", type: "drive" },
+  { title: "C1 Módulo 13 - Video 9", url: "1o5aVkUuiA-QI7DLL1XTMnkDTszH9_8jC", type: "drive" },
+  { title: "C1 Módulo 13 - Video 10", url: "1kfBkoeemEuozms-3_tl8yivRj6_Vwviz", type: "drive" },
+  { title: "C1 Módulo 13 - Video 11", url: "17K4YwpZns6qohEBUJ7cukE39t_kj_nvI", type: "drive" },
+  { title: "C1 Módulo 13 - Video 12", url: "1d7WSZfk6oYKYjmJHPnsw60hGN_B3qPQp", type: "drive" },
+  { title: "C1 Módulo 13 - Video 13", url: "1ukxAhi-wTfGcHl3z7f7Mn34ClIXsFmdA", type: "drive" },
+  { title: "C1 Módulo 13 - Video 14", url: "1WVY_BRW-jBwfQsbtKlRKIAO6yvrK7Vkn", type: "drive" },
+  { title: "C1 Módulo 13 - Video 15", url: "1C_VC1f9togPSRFeRAT6pv-NppZ63oc1H", type: "drive" },
+  { title: "C1 Módulo 13 - Video 16", url: "1o4qiZQnAPHcHL2bNmwAnHQ8agazaPpJQ", type: "drive" },
+  { title: "C1 Módulo 13 - Video 17", url: "1y6JF4lyMuQZkPQoOqPD6j5rcQ4a4KjOL", type: "drive" },
+  { title: "C1 Módulo 13 - Video 18", url: "1e-Fxl2v6wjckt5JUwTA3bEA1pJTrPWQF", type: "drive" },
+
+  // Módulo 14
+  { title: "C1 Módulo 14 - Video 1", url: "117TwgiUOv7JPHEulfC-dmna-gJFxSm1x", type: "drive" },
+  { title: "C1 Módulo 14 - Video 2", url: "1cySpKy4aC4jS4iLkeMtcZxYduAsGH06o", type: "drive" },
+  { title: "C1 Módulo 14 - Video 3", url: "1MeCK_NP4uBlsOqQ4hy0nFNpyAcvIPxYw", type: "drive" },
+  { title: "C1 Módulo 14 - Video 4", url: "1YueIBtCFCOxC_p2G-vYodsGfB-VZxic0", type: "drive" },
+  { title: "C1 Módulo 14 - Video 5", url: "1WDmgSvXK4lVSRpZZeEDhDlhIrOwv5IfC", type: "drive" },
+  { title: "C1 Módulo 14 - Video 6", url: "1AQkqf0JA9S4Y0GAOwKZzT3IITzXpPOTq", type: "drive" },
+  { title: "C1 Módulo 14 - Video 7", url: "16IB-OvdldVYs-qqEj6pfFt1C-arQD_EG", type: "drive" },
+  { title: "C1 Módulo 14 - Video 8", url: "16c3XQ0uTx97Bf-8Xh749KXR3jFyKaMlE", type: "drive" },
+  { title: "C1 Módulo 14 - Video 9", url: "1tAnUWMAyHvov1XRnjqq8-GFbCcjVMAt7", type: "drive" },
+  { title: "C1 Módulo 14 - Video 10", url: "1g2zubR0pz0dbS1TzxrWlZfKUMRHpgz57", type: "drive" },
+  { title: "C1 Módulo 14 - Video 11", url: "1VtFLk4b7iV1QzwRFbNKeVZRmvzwygeMt", type: "drive" },
+
+  // Módulo 15
+  { title: "C1 Módulo 15 - Video 1", url: "1vBN5I4vqt1jI6Pb3r2b5wxvWVgF6jt5y", type: "drive" },
+  { title: "C1 Módulo 15 - Video 2", url: "15YZjAuNaqsCrVVMVplfj2nxfQWbwz2BZ", type: "drive" },
+  { title: "C1 Módulo 15 - Video 3", url: "1cK0kJ7QJABqE-sJrzag1PHE1Ev7aePIL", type: "drive" },
+  { title: "C1 Módulo 15 - Video 4", url: "1KZqHviTP1HkY15Souy98O7qbUCnIk29G", type: "drive" },
+  { title: "C1 Módulo 15 - Video 5", url: "1wS7htFWJA_fcVEgcALflziGEjml-C8I8", type: "drive" },
+
+  // Módulo 16
+  { title: "C1 Módulo 16 - Hacks Amazon", url: "13JhWJ5xpNZnchotI5Boy4FAOWoT9pwZl", type: "drive" },
+
+  // Módulo 17
+  { title: "C1 Módulo 17 - Video 1", url: "1D8zED_brag55jzNIPaBhyh35MNlobEyw", type: "drive" },
+  { title: "C1 Módulo 17 - Video 2", url: "1dllZD93hfHFE3LbyPJq1QwNGbGZHRlF9", type: "drive" },
+  { title: "C1 Módulo 17 - Video 3", url: "1Zw93SoAgJtP_cRVXoxvg8AvbuYiMptHo", type: "drive" },
+  { title: "C1 Módulo 17 - Video 4", url: "1fObSPD58KItpLm0-qQzjxHRFQ94M19nS", type: "drive" },
+
+  // Módulo 18
+  { title: "C1 Módulo 18 - Otras Plataformas China", url: "1B4NcemAiVLMEqyXkVqi05_TbH4spAwn7", type: "drive" },
+
+  // Módulo 19
+  { title: "C1 Módulo 19", url: "1B4NcemAiVLMEqyXkVqi05_TbH4spAwn7", type: "drive" },
+
+  // Módulo 20
+  { title: "C1 Módulo 20", url: "1hc6QUe4HNT0fs8JBAlbmlGxWecj3kGrg", type: "drive" },
+
+  // Módulo 21
+  { title: "C1 Módulo 21", url: "1i-RDA-LgYBp7SDtFPXZYm7IYGGgLnUJg", type: "drive" },
+
+  // Módulo 22
+  { title: "C1 Módulo 22 - Video 1", url: "1tDJWWL1dplGtT9wvgKKiB-BazjIJfayC", type: "drive" },
+  { title: "C1 Módulo 22 - Video 2", url: "1FRa440RfguX-utBiUi3NgiZRFV28wJTE", type: "drive" },
+
+  // Módulo 23
+  { title: "C1 Módulo 23 - Video 1", url: "1tDJWWL1dplGtT9wvgKKiB-BazjIJfayC", type: "drive" },
+  { title: "C1 Módulo 23 - Video 2", url: "1FRa440RfguX-utBiUi3NgiZRFV28wJTE", type: "drive" },
+
+  // Módulo 24
+  { title: "C1 Módulo 24 - Video 1", url: "1J83LHWMCw4mk4K2lNMaRqynuYKiC3xCf", type: "drive" },
+  { title: "C1 Módulo 24 - Video 2", url: "1Vz92gGLXj4pgNT33hkp2PFxLxM1AKvWC", type: "drive" },
+
+  // Módulo 25
+  { title: "C1 Módulo 25 - Panamá", url: "1xTkq7OA31ePgGxV8PGzMQ92Gji1AlhUB", type: "drive" },
+
+  // Módulo 26
+  { title: "C1 Módulo 26 - Veritrade", url: "1WFdpXBctd9BlPg5t2pSu13F6VfgAgdJO", type: "drive" },
 ];
 
 let current = 0;
+let driveTimer = null;
 const player = document.getElementById('player');
+const drivePlayer = document.getElementById('drivePlayer');
+const driveNote = document.getElementById('driveNote');
 
 function load(i) {
   current = (i + videos.length) % videos.length;
   const v = videos[current];
-  player.src = v.url;
   document.getElementById('chapter-title').textContent = v.title;
   document.getElementById('counter').textContent = `${current + 1} / ${videos.length}`;
-  player.play();
+
+  if (driveTimer) { clearTimeout(driveTimer); driveTimer = null; }
+
+  if (v.type === 'video') {
+    // Mostrar video normal
+    player.style.display = 'block';
+    drivePlayer.style.display = 'none';
+    driveNote.style.display = 'none';
+    player.src = v.url;
+    player.play();
+  } else {
+    // Mostrar iframe de Drive
+    player.style.display = 'none';
+    drivePlayer.style.display = 'block';
+    driveNote.style.display = 'block';
+    drivePlayer.src = `https://drive.google.com/file/d/${v.url}/preview`;
+    // Auto-avance después de 2 minutos como fallback (Drive no emite evento ended)
+    // El usuario también puede presionar Siguiente manualmente
+    startDriveAutoNext();
+  }
+}
+
+function startDriveAutoNext() {
+  // Intentamos detectar fin via postMessage de Drive (no siempre funciona)
+  // Como fallback: mostramos botón Siguiente prominente
+  // No hay forma confiable de detectar fin en iframe cross-origin
 }
 
 player.addEventListener('ended', () => load(current + 1));
+
 function next() { load(current + 1); }
 function prev() { load(current - 1); }
 
 function pip() {
+  if (videos[current].type === 'drive') {
+    alert('PiP no disponible para videos de Google Drive');
+    return;
+  }
   if (document.pictureInPictureElement) {
     document.exitPictureInPicture();
   } else if (player.requestPictureInPicture) {
     player.requestPictureInPicture();
   }
 }
-
-document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'visible') keepAwake();
-});
 
 let wakeLock = null;
 async function keepAwake() {
@@ -122,7 +310,10 @@ async function keepAwake() {
     }
   } catch(e) {}
 }
-keepAwake();
+
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') keepAwake();
+});
 
 if ('mediaSession' in navigator) {
   navigator.mediaSession.metadata = new MediaMetadata({
@@ -132,20 +323,15 @@ if ('mediaSession' in navigator) {
   });
   navigator.mediaSession.setActionHandler('play', () => player.play());
   navigator.mediaSession.setActionHandler('pause', () => player.pause());
-
-  // AUTO-PiP al presionar Home (Chrome 120+)
   try {
     navigator.mediaSession.setActionHandler('enterpictureinpicture', async () => {
-      if (document.pictureInPictureElement) {
-        await document.exitPictureInPicture();
-      }
+      if (document.pictureInPictureElement) await document.exitPictureInPicture();
       await player.requestPictureInPicture();
     });
-  } catch(e) {
-    console.warn('enterpictureinpicture no soportado:', e);
-  }
+  } catch(e) {}
 }
 
+keepAwake();
 load(0);
 </script>
 </body>
