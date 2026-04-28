@@ -6,20 +6,33 @@
 <title>INCUBADORA</title>
 <link rel="manifest" href="/curso-importacion/manifest.json">
 <meta name="theme-color" content="#0a1628">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
+  :root {
+    --bg: #080e1a;
+    --bg2: #0d1525;
+    --accent: #e8a020;
+    --accent2: #f0c060;
+    --text: #e8e8e8;
+    --muted: #6b7a99;
+    --card: #111827;
+    --card-hover: #1a2540;
+    --border: rgba(255,255,255,0.07);
+  }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
-    font-family: sans-serif;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
     min-height: 100vh;
-    background: #0a1628;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    overflow-x: hidden;
   }
+
+  /* HERO */
   .hero {
     width: 100%;
-    height: 45vw;
-    max-height: 360px;
+    height: 42vw;
+    max-height: 340px;
     background: url('fondo.jpg') center center / cover no-repeat;
     position: relative;
     flex-shrink: 0;
@@ -27,43 +40,194 @@
   .hero::after {
     content: '';
     position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 60%;
-    background: linear-gradient(to bottom, transparent, #0a1628);
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(8,14,26,0.3) 0%, var(--bg) 100%);
   }
-  .content {
+
+  /* PLAYER SECTION */
+  .player-section {
     width: 100%;
-    background: linear-gradient(to bottom, #0a1628, #05090f);
+    background: var(--bg);
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 10px 20px 30px;
+    padding: 12px 16px 0;
   }
-  #chapter-title { color: #ccc; font-size: 0.95rem; margin-bottom: 8px; }
-  #player-container { width: 100%; max-width: 700px; margin-bottom: 16px; }
-  video { width: 100%; border-radius: 10px; background: #000; display: block; }
+  #chapter-title {
+    color: var(--accent2);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.25rem;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    text-align: center;
+    max-width: 700px;
+    width: 100%;
+  }
+  #course-badge {
+    display: inline-block;
+    background: var(--accent);
+    color: #000;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+  }
+  #player-container { width: 100%; max-width: 700px; margin-bottom: 12px; }
+  video {
+    width: 100%;
+    border-radius: 8px;
+    background: #000;
+    display: block;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+  }
   #controls { display: flex; gap: 10px; margin-bottom: 10px; }
-  button { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.3); padding: 11px 26px; border-radius: 50px; font-size: 0.95rem; cursor: pointer; font-weight: bold; }
-  button:hover { background: rgba(255,255,255,0.2); }
-  #pipBtn { font-size: 0.82rem; margin-bottom: 14px; }
+  button {
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 10px 22px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+  }
+  button:hover { background: rgba(255,255,255,0.16); border-color: var(--accent); }
+  #pipBtn { font-size: 0.8rem; margin-bottom: 12px; }
   .bottom-row {
     width: 100%;
     max-width: 700px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
-  .logo { width: 151px; opacity: 0.95; }
-  .profesor { width: 125px; opacity: 0.95; margin-right: 20px; margin-bottom: 30px; }
-  #counter { color: rgba(255,255,255,0.4); font-size: 0.8rem; margin-bottom: 6px; }
-  #wakeMsg { color: #4caf50; font-size: 0.72rem; }
+  .logo { width: 140px; opacity: 0.9; }
+  .profesor { width: 115px; opacity: 0.9; margin-right: 16px; }
+  #counter { color: var(--muted); font-size: 0.75rem; margin-bottom: 4px; }
+  #wakeMsg { color: #4caf50; font-size: 0.7rem; margin-bottom: 16px; }
+
+  /* NETFLIX MENU */
+  .netflix-menu {
+    width: 100%;
+    background: var(--bg);
+    padding: 8px 0 40px;
+  }
+
+  /* TABS */
+  .course-tabs {
+    display: flex;
+    gap: 0;
+    padding: 0 16px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .course-tabs::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: var(--muted);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.05rem;
+    letter-spacing: 2px;
+    padding: 10px 20px 8px;
+    cursor: pointer;
+    white-space: nowrap;
+    border-radius: 0;
+    transition: all 0.2s;
+  }
+  .tab-btn:hover { color: var(--text); background: none; border-color: rgba(255,255,255,0.2); }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* MODULE ROWS */
+  .module-row {
+    margin-bottom: 24px;
+    display: none;
+  }
+  .module-row.visible { display: block; }
+  .module-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    color: var(--muted);
+    padding: 0 16px;
+    margin-bottom: 8px;
+  }
+  .module-label span {
+    color: var(--accent);
+    margin-right: 6px;
+  }
+
+  /* SCROLLABLE VIDEO CARDS */
+  .cards-scroll {
+    display: flex;
+    gap: 8px;
+    padding: 0 16px;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) transparent;
+    padding-bottom: 6px;
+  }
+  .cards-scroll::-webkit-scrollbar { height: 3px; }
+  .cards-scroll::-webkit-scrollbar-track { background: transparent; }
+  .cards-scroll::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+  .video-card {
+    flex-shrink: 0;
+    width: 140px;
+    background: var(--card);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    padding: 10px 10px 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .video-card:hover {
+    background: var(--card-hover);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .video-card.playing {
+    border-color: var(--accent);
+    background: var(--card-hover);
+  }
+  .video-card.playing::before {
+    content: '▶';
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    color: var(--accent);
+    font-size: 0.6rem;
+  }
+  .card-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    color: rgba(255,255,255,0.08);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .card-title {
+    font-size: 0.72rem;
+    color: var(--text);
+    line-height: 1.3;
+    font-weight: 500;
+  }
+  .video-card.playing .card-title { color: var(--accent2); }
 </style>
 </head>
 <body>
 <div class="hero"></div>
-<div class="content">
-  <div id="chapter-title">Capítulo 1</div>
+<div class="player-section">
+  <div id="course-badge">REVU IMPORT</div>
+  <div id="chapter-title">Clase 01</div>
   <div id="player-container">
     <video id="player" controls autoplay playsinline disableRemotePlayback></video>
   </div>
@@ -80,219 +244,377 @@
   <div id="wakeMsg"></div>
 </div>
 
+<div class="netflix-menu">
+  <div class="course-tabs">
+    <button class="tab-btn active" onclick="switchCourse(0)">REVU IMPORT</button>
+    <button class="tab-btn" onclick="switchCourse(1)">SOL IMPORTACIONES</button>
+    <button class="tab-btn" onclick="switchCourse(2)">NETZUN</button>
+  </div>
+  <div id="menu-content"></div>
+</div>
+
 <script>
-const videos = [
-  // === CURSO INCUBADORA (Dropbox) ===
-  { title: "Capítulo 1", url: "https://www.dropbox.com/scl/fi/d8s2lcaphxqwxvw8exgj1/Clase-01-Revu-School.mp4?rlkey=qqk1xd0ar5l605dcqiwetuyih&st=dgy3qmc2&dl=1", type: "video" },
-  { title: "Capítulo 2", url: "https://www.dropbox.com/scl/fi/0p28iga4089wh8dw05z9b/Clase-Esp.-02-29_06.mp4?rlkey=a99n20czfda9wqnle80v4uigh&st=n07jc5xm&dl=1", type: "video" },
-  { title: "Capítulo 3", url: "https://www.dropbox.com/scl/fi/8s33ubuy0gcd74gbnvtl4/clase-03-importaciones-revu-03.mp4?rlkey=aem6ah7v08b1prvt96f5udym0&st=loqbe6h8&dl=1", type: "video" },
-  { title: "Capítulo 4", url: "https://www.dropbox.com/scl/fi/952bbvgzi4s527vs4vr8q/clase-04-importaciones-revu-03.mp4?rlkey=ug6636spykbd4uydf4az5refg&st=gtxow10x&dl=1", type: "video" },
-
-  // === CURSO 1 - IMPORTADOR DIGITAL (Drive) ===
-  { title: "C1 Módulo 1 - Presentación", url: "1mW20dMcAjtnxYhjE59FND42_dvhFFYi0", type: "drive" },
-  { title: "C1 Módulo 2 - Video 1", url: "17r1dTy8joNxCEi-mvdTP5w8LnIXvwfek", type: "drive" },
-  { title: "C1 Módulo 2 - Video 2", url: "1S3vpHC-mVobGKm0b8gAFEeZEIxIZ8-Gv", type: "drive" },
-  { title: "C1 Módulo 2 - Video 3", url: "1yYG10SmRkGXluRVgwb962UzbxNLO2sXA", type: "drive" },
-  { title: "C1 Módulo 2 - Video 4", url: "1DaOEPAbtIFXpXR9_pFBBNu1X7fFD2ebl", type: "drive" },
-  { title: "C1 Módulo 3 - Video 1", url: "1WYxGtwFajKN_Q2ZgOJ3pI10kB0_7NG3a", type: "drive" },
-  { title: "C1 Módulo 3 - Video 2", url: "1kfUVXAoZx5Edl-bbMj5DODCSqjzmdZKo", type: "drive" },
-  { title: "C1 Módulo 4 - Video 1", url: "1cToi0FoQIUaPiQzYQ9vDyngZX6WS4eRM", type: "drive" },
-  { title: "C1 Módulo 4 - Video 2", url: "1w_nirvkrJyU27DkoFRqhq-7sigdzE6Wf", type: "drive" },
-  { title: "C1 Módulo 4 - Video 3", url: "136ONc8W96gGL-wYWkWcrl5Fn6servZC7", type: "drive" },
-  { title: "C1 Módulo 4 - Video 4", url: "1PCFb2B6V5zHmj49fr-E0hCXHaEx0wfJU", type: "drive" },
-  { title: "C1 Módulo 5", url: "1me1KCj6Gg8sO6VCnxShYqELhLAwNGpIm", type: "drive" },
-  { title: "C1 Módulo 6 - Video 1", url: "1WLFXnjMACZ7IKofI6mW2bvzA1nJO6VVI", type: "drive" },
-  { title: "C1 Módulo 6 - Video 2", url: "1RzTf2KHU6B41uzy2S-YXa6Ki5WfQHe9e", type: "drive" },
-  { title: "C1 Módulo 6 - Video 3", url: "1SQ1zbSS1NCYC9giSborjQYl7MWD295I4", type: "drive" },
-  { title: "C1 Módulo 6 - Video 4", url: "1A79Zo-gKmG5bUYwLyQcsz2SdhkHR2YkX", type: "drive" },
-  { title: "C1 Módulo 6 - Video 5", url: "1WkOrg_bRcGqdSG_Sgxz6Ac69Xyg8rJ1u", type: "drive" },
-  { title: "C1 Módulo 6 - Video 6", url: "1DI8IYqjMcwhL3EWiJ9MrEVgkNToN-cUr", type: "drive" },
-  { title: "C1 Módulo 6 - Video 7", url: "1ruhU0jcydizHo4hki1MOxbffAClG3vSg", type: "drive" },
-  { title: "C1 Módulo 6 - Video 8", url: "1h1E4TVMpBZP1DBzLDmfIEB53rec9mwwN", type: "drive" },
-  { title: "C1 Módulo 6 - Video 9", url: "1psKEM9iFELkdH-FUSOCGfnBSWVqbaDif", type: "drive" },
-  { title: "C1 Módulo 6 - Video 10", url: "13kK_kxzMs4urU8O-_-4lmr64jDtECsyy", type: "drive" },
-  { title: "C1 Módulo 6 - Video 11", url: "1mYNerE1_Cq0yWXbCEhaMFRC3DJTOh66q", type: "drive" },
-  { title: "C1 Módulo 6 - Video 12", url: "1BLjdek1saLwABWBNgYKQ1TiqjF2dHYeV", type: "drive" },
-  { title: "C1 Módulo 6 - Video 13", url: "1f6q0p95eJYTSRJ_fdRjgbxAJyZce6u3y", type: "drive" },
-  { title: "C1 Módulo 6 - Video 14", url: "1WiwYUrtizGWOd3qk5Ucd_3MrNI7xVXew", type: "drive" },
-  { title: "C1 Módulo 6 - Video 15", url: "1LpR_Da71apyTPlKXscO9Fr0f1jhmMKvM", type: "drive" },
-  { title: "C1 Módulo 6 - Video 16", url: "13Xs9WKGGDBi3KRoJwhcNVkleYuy_OW1r", type: "drive" },
-  { title: "C1 Módulo 6 - Video 17", url: "1idJwMLdqvhlIO7k33JPAT4qAAXDeGeuL", type: "drive" },
-  { title: "C1 Módulo 7", url: "1SyYzxuAkkhZpfz2UzlGviEKC3zS5nhkd", type: "drive" },
-  { title: "C1 Módulo 8 - Video 1", url: "1R7UMHtoVCcdiSoWsxLH2V3nyQd1G1hvJ", type: "drive" },
-  { title: "C1 Módulo 8 - Video 2", url: "1_o6eC8cgmL1tvpAFkKItpa30ZoiM-MJh", type: "drive" },
-  { title: "C1 Módulo 8 - Video 3", url: "1DQqCBip0l_gZl5DgYMwXTKeWy-bUWTdJ", type: "drive" },
-  { title: "C1 Módulo 9 - Incoterms", url: "1R1JDWEJ9JvMT8ocMhUziOt6UNo-uD7fB", type: "drive" },
-  { title: "C1 Módulo 10 - Video 1", url: "19kH7AWrH8fqUyNEdxx7n6h9wWB4yilLm", type: "drive" },
-  { title: "C1 Módulo 10 - Video 2", url: "1c0Kk1ZV5qvZ8JYxfgxQQVhosa8ayrfaZ", type: "drive" },
-  { title: "C1 Módulo 10 - Video 3", url: "1fTLMeKr0MhBOMC0VDCe5BlgkwXcZAIYZ", type: "drive" },
-  { title: "C1 Módulo 10 - Video 4", url: "1nJeqqwrJPdewKdF8dHiAUVJ0m8hSv2Z1", type: "drive" },
-  { title: "C1 Módulo 11 - Final Teoría", url: "1QtVQ2YlX7y5iTN90o9izCljmN3JBXbYB", type: "drive" },
-  { title: "C1 Módulo 12 - Video 1", url: "1Uhl-Q6T8zSRVR7-BlCeZWr9ZYEyRfYpL", type: "drive" },
-  { title: "C1 Módulo 12 - Video 2", url: "1mjn-tnt18ikIT_797pZIXzTnqx-qcXSy", type: "drive" },
-  { title: "C1 Módulo 12 - Video 3", url: "1Anm6jw14I5M2tI9l6ww6ZXEMhIELTvT8", type: "drive" },
-  { title: "C1 Módulo 12 - Video 4", url: "1JpK6JMpuZ8u0-2O8pAVd_AqLXNEN9oYW", type: "drive" },
-  { title: "C1 Módulo 13 - Video 1", url: "1eMSsIGzqfhL_GPi8mAXsYmLzE5yfxT02", type: "drive" },
-  { title: "C1 Módulo 13 - Video 2", url: "13Sy6HEPB2Z_-PIyIONi_M3wPwT2UHTw4", type: "drive" },
-  { title: "C1 Módulo 13 - Video 3", url: "1WzOfTmtHXJC6EVutkFjEwL9ljKiZhOXD", type: "drive" },
-  { title: "C1 Módulo 13 - Video 4", url: "1qrViScQKO9b1UZRr7GgH7I3cYKfAMHO9", type: "drive" },
-  { title: "C1 Módulo 13 - Video 5", url: "17WxtpVMQhXJCxvP6pXkaE0jPDX0UBp6Y", type: "drive" },
-  { title: "C1 Módulo 13 - Video 6", url: "15QBImFCg-ef-Eeg3LvFMiGP-f9NSMgM1", type: "drive" },
-  { title: "C1 Módulo 13 - Video 7", url: "1LFd20_DNq8q4RUy-sW6FCMkvi-F8OGwa", type: "drive" },
-  { title: "C1 Módulo 13 - Video 8", url: "1B7KXfN81tBRt-KYfz0lVGiaeSr-3o27s", type: "drive" },
-  { title: "C1 Módulo 13 - Video 9", url: "1o5aVkUuiA-QI7DLL1XTMnkDTszH9_8jC", type: "drive" },
-  { title: "C1 Módulo 13 - Video 10", url: "1kfBkoeemEuozms-3_tl8yivRj6_Vwviz", type: "drive" },
-  { title: "C1 Módulo 13 - Video 11", url: "17K4YwpZns6qohEBUJ7cukE39t_kj_nvI", type: "drive" },
-  { title: "C1 Módulo 13 - Video 12", url: "1d7WSZfk6oYKYjmJHPnsw60hGN_B3qPQp", type: "drive" },
-  { title: "C1 Módulo 13 - Video 13", url: "1ukxAhi-wTfGcHl3z7f7Mn34ClIXsFmdA", type: "drive" },
-  { title: "C1 Módulo 13 - Video 14", url: "1WVY_BRW-jBwfQsbtKlRKIAO6yvrK7Vkn", type: "drive" },
-  { title: "C1 Módulo 13 - Video 15", url: "1C_VC1f9togPSRFeRAT6pv-NppZ63oc1H", type: "drive" },
-  { title: "C1 Módulo 13 - Video 16", url: "1o4qiZQnAPHcHL2bNmwAnHQ8agazaPpJQ", type: "drive" },
-  { title: "C1 Módulo 13 - Video 17", url: "1y6JF4lyMuQZkPQoOqPD6j5rcQ4a4KjOL", type: "drive" },
-  { title: "C1 Módulo 13 - Video 18", url: "1e-Fxl2v6wjckt5JUwTA3bEA1pJTrPWQF", type: "drive" },
-  { title: "C1 Módulo 14 - Video 1", url: "117TwgiUOv7JPHEulfC-dmna-gJFxSm1x", type: "drive" },
-  { title: "C1 Módulo 14 - Video 2", url: "1cySpKy4aC4jS4iLkeMtcZxYduAsGH06o", type: "drive" },
-  { title: "C1 Módulo 14 - Video 3", url: "1MeCK_NP4uBlsOqQ4hy0nFNpyAcvIPxYw", type: "drive" },
-  { title: "C1 Módulo 14 - Video 4", url: "1YueIBtCFCOxC_p2G-vYodsGfB-VZxic0", type: "drive" },
-  { title: "C1 Módulo 14 - Video 5", url: "1WDmgSvXK4lVSRpZZeEDhDlhIrOwv5IfC", type: "drive" },
-  { title: "C1 Módulo 14 - Video 6", url: "1AQkqf0JA9S4Y0GAOwKZzT3IITzXpPOTq", type: "drive" },
-  { title: "C1 Módulo 14 - Video 7", url: "16IB-OvdldVYs-qqEj6pfFt1C-arQD_EG", type: "drive" },
-  { title: "C1 Módulo 14 - Video 8", url: "16c3XQ0uTx97Bf-8Xh749KXR3jFyKaMlE", type: "drive" },
-  { title: "C1 Módulo 14 - Video 9", url: "1tAnUWMAyHvov1XRnjqq8-GFbCcjVMAt7", type: "drive" },
-  { title: "C1 Módulo 14 - Video 10", url: "1g2zubR0pz0dbS1TzxrWlZfKUMRHpgz57", type: "drive" },
-  { title: "C1 Módulo 14 - Video 11", url: "1VtFLk4b7iV1QzwRFbNKeVZRmvzwygeMt", type: "drive" },
-  { title: "C1 Módulo 15 - Video 1", url: "1vBN5I4vqt1jI6Pb3r2b5wxvWVgF6jt5y", type: "drive" },
-  { title: "C1 Módulo 15 - Video 2", url: "15YZjAuNaqsCrVVMVplfj2nxfQWbwz2BZ", type: "drive" },
-  { title: "C1 Módulo 15 - Video 3", url: "1cK0kJ7QJABqE-sJrzag1PHE1Ev7aePIL", type: "drive" },
-  { title: "C1 Módulo 15 - Video 4", url: "1KZqHviTP1HkY15Souy98O7qbUCnIk29G", type: "drive" },
-  { title: "C1 Módulo 15 - Video 5", url: "1wS7htFWJA_fcVEgcALflziGEjml-C8I8", type: "drive" },
-  { title: "C1 Módulo 16 - Hacks Amazon", url: "13JhWJ5xpNZnchotI5Boy4FAOWoT9pwZl", type: "drive" },
-  { title: "C1 Módulo 17 - Video 1", url: "1D8zED_brag55jzNIPaBhyh35MNlobEyw", type: "drive" },
-  { title: "C1 Módulo 17 - Video 2", url: "1dllZD93hfHFE3LbyPJq1QwNGbGZHRlF9", type: "drive" },
-  { title: "C1 Módulo 17 - Video 3", url: "1Zw93SoAgJtP_cRVXoxvg8AvbuYiMptHo", type: "drive" },
-  { title: "C1 Módulo 17 - Video 4", url: "1fObSPD58KItpLm0-qQzjxHRFQ94M19nS", type: "drive" },
-  { title: "C1 Módulo 18 - Otras Plataformas China", url: "1B4NcemAiVLMEqyXkVqi05_TbH4spAwn7", type: "drive" },
-  { title: "C1 Módulo 19", url: "1B4NcemAiVLMEqyXkVqi05_TbH4spAwn7", type: "drive" },
-  { title: "C1 Módulo 20", url: "1hc6QUe4HNT0fs8JBAlbmlGxWecj3kGrg", type: "drive" },
-  { title: "C1 Módulo 21", url: "1i-RDA-LgYBp7SDtFPXZYm7IYGGgLnUJg", type: "drive" },
-  { title: "C1 Módulo 22 - Video 1", url: "1tDJWWL1dplGtT9wvgKKiB-BazjIJfayC", type: "drive" },
-  { title: "C1 Módulo 22 - Video 2", url: "1FRa440RfguX-utBiUi3NgiZRFV28wJTE", type: "drive" },
-  { title: "C1 Módulo 23 - Video 1", url: "1tDJWWL1dplGtT9wvgKKiB-BazjIJfayC", type: "drive" },
-  { title: "C1 Módulo 23 - Video 2", url: "1FRa440RfguX-utBiUi3NgiZRFV28wJTE", type: "drive" },
-  { title: "C1 Módulo 24 - Video 1", url: "1J83LHWMCw4mk4K2lNMaRqynuYKiC3xCf", type: "drive" },
-  { title: "C1 Módulo 24 - Video 2", url: "1Vz92gGLXj4pgNT33hkp2PFxLxM1AKvWC", type: "drive" },
-  { title: "C1 Módulo 25 - Panamá", url: "1xTkq7OA31ePgGxV8PGzMQ92Gji1AlhUB", type: "drive" },
-  { title: "C1 Módulo 26 - Veritrade", url: "1WFdpXBctd9BlPg5t2pSu13F6VfgAgdJO", type: "drive" },
-
-  // === CURSO 2 (Drive) ===
-  { title: "C2 - Video 1", url: "1Qo9tu3nvVQGMwMYe28kjAX9fyC3Z-zmL", type: "drive" },
-  { title: "C2 - Video 2", url: "1-Id4NNv9Z2nwfVmZDBYfwU6jCzmwu1O2", type: "drive" },
-  { title: "C2 - Video 3", url: "1gEorMq2hoclWFGlDSILApkoeDKA16R42", type: "drive" },
-  { title: "C2 - Video 4", url: "1mIfnPJnSu8GkFUH68tubsAMaf3HPiu4p", type: "drive" },
-  { title: "C2 - Video 5", url: "1Sbf3CltsFEWtCN-LVQmve1_NQg3c4Y9W", type: "drive" },
-  { title: "C2 - Video 6", url: "1DaLCXeq-Zi5ViTiGBV7ask1ir_6FnQSA", type: "drive" },
-  { title: "C2 - Video 7", url: "1EIb3TNyazI9UcJ-FN804xO9NWx2K3mX9", type: "drive" },
-  { title: "C2 - Video 8", url: "1kRcTYC9PqSBifJ8HC3TaWHQiDMdOOhmp", type: "drive" },
-  { title: "C2 - Video 9", url: "1_cCPFI3R8RTWGsOvK0kBIi-4Ea_YJtye", type: "drive" },
-  { title: "C2 - Video 10", url: "1BatZNle2tAxCdtN4cKrAQB58TxuRBwDa", type: "drive" },
-  { title: "C2 - Video 11", url: "1QG3uDrR8wqLWI4mnITvuOf5gjpCJaQ5Q", type: "drive" },
-  { title: "C2 - Video 12", url: "1SR8hk13MCyF5ie10042NV-Q3YUMH8760", type: "drive" },
-
-  // === CURSO 3 (Drive) ===
-  { title: "C3 - Video 1", url: "1O91vHaYw70r73omyu66fGXvprJpNoiXp", type: "drive" },
-  { title: "C3 - Video 2", url: "1-IIN8hV-ziMAx0--EWKowf92ZJ32X2SU", type: "drive" },
-  { title: "C3 - Video 3", url: "1Mb6-agjJUNxgJCXuNeyA-86gxAExAn8J", type: "drive" },
-  { title: "C3 - Video 4", url: "1PnB2WTvbnmA8qXMR9iGso_3Xww_Ml3ru", type: "drive" },
-  { title: "C3 - Video 5", url: "1NIoKi8G8EDNYuq9_mLVLmU_8NkvA6UJf", type: "drive" },
-  { title: "C3 - Video 6", url: "101Ik31EvBW3utDOt8fUlAR4_OCC9mYVI", type: "drive" },
-  { title: "C3 - Video 7", url: "1Nfi3IwXSuvQcsmNZOj7JIygEUJdKo1JK", type: "drive" },
-  { title: "C3 - Video 8", url: "1SJ6XCyMy_M9tW6fTbAPxcrjg7kW5tCvS", type: "drive" },
-  { title: "C3 - Video 9", url: "1G03ucb28VUfXuwUt_2BCXytdISLvMNZ8", type: "drive" },
-  { title: "C3 - Video 10", url: "13IgWxrT57WwBy24qv5B6VaMoMcZwS4Ds", type: "drive" },
-  { title: "C3 - Video 11", url: "1RZA2SNmDR6jqGjeYfFdhuARMeWVCjSZt", type: "drive" },
-  { title: "C3 - Video 12", url: "1DeyNycJPetD1KzXUhJpB6eOUvP_puRpn", type: "drive" },
-  { title: "C3 - Video 13", url: "124aL2nFhZnZTi2UnPPxkZJrbVonen-7h", type: "drive" },
-  { title: "C3 - Video 14", url: "1qVvGijqucszeJBvs-fXz_01TgL5AuVc_", type: "drive" },
-  { title: "C3 - Video 15", url: "1P_KVqGGnS-230L5yVnNxkjHfHewZQtD6", type: "drive" },
-  { title: "C3 - Video 16", url: "1jC_9qLoP9H5pTlhQ0R9aMmsHxJELbftS", type: "drive" },
-  { title: "C3 - Video 17", url: "1CsKgnFBvqSDN9X_F3ev6QlvJi2UJIE9h", type: "drive" },
-
-  // === CURSO 4 (Drive) ===
-  { title: "C4 - Video 1", url: "1OieEKrRMZL_XvxCsYHRlMyBfoa3hKUZC", type: "drive" },
-  { title: "C4 - Video 2", url: "18CjGrkvaWqyyiAyx1yMIHPqo_WRowQrQ", type: "drive" },
-  { title: "C4 - Video 3", url: "1kCE0tL94IkaXTFK8uQb5kVg7dKRMKeNn", type: "drive" },
-  { title: "C4 - Video 4", url: "183cCV7YNcHLVT4TMwntdFmLdlKTi4RwT", type: "drive" },
-  { title: "C4 - Video 5", url: "1HZraYwm5I4-AXkQTSCOgpbiGqRK-M8cd", type: "drive" },
-  { title: "C4 - Video 6", url: "1lI1xfRRaLsnBDbaC6Jt2LMn6BSdVc_7S", type: "drive" },
-  { title: "C4 - Video 7", url: "1AkghauAPpcqwfB24KSK-5DQPxBM5vqBP", type: "drive" },
-  { title: "C4 - Video 8", url: "16plwEylIie_7wubwMgS7VopGgr-SkT30", type: "drive" },
-  { title: "C4 - Video 9", url: "1WhtJzzeVBZ0D0SAUUe__yw1WbOZ63PLd", type: "drive" },
-  { title: "C4 - Video 10", url: "1hjjqgu1Qt-fbw4z8O6uzECSCEXPTj4rF", type: "drive" },
-  { title: "C4 - Video 11", url: "18ZcgBiP7QSayz2qd7Ztp_hau6G0FuM-u", type: "drive" },
-  { title: "C4 - Video 12", url: "1QUjPGBAjVdeo30Y-swScG1nTYmPQ8YFC", type: "drive" },
-  { title: "C4 - Video 13", url: "1MzeUXBGG4_HVbJEpYq-rF17ZdYYejRTF", type: "drive" },
-
-  // === CURSO 5 (Drive) ===
-  { title: "C5 - Video 1", url: "1lLe4HdgZHaa4dVZzRlrG7vyzyWu38XLb", type: "drive" },
-  { title: "C5 - Video 2", url: "1P-d3ItrJicNTZvJz1mVrWbIRA2WO3_jg", type: "drive" },
-  { title: "C5 - Video 3", url: "1fCykKNKYB62WtIw7joeBKK2176OwGUoM", type: "drive" },
-  { title: "C5 - Video 4", url: "1ajQSoOoct6TioHJ_TKEuhFPNGcRIrFmz", type: "drive" },
-  { title: "C5 - Video 5", url: "1gedV00zSw_9gJyPHzQJekL46IhXseKNi", type: "drive" },
-  { title: "C5 - Video 6", url: "1d0LwlDB4XdFQ8yg1BbzhMedLh6Kc1TBF", type: "drive" },
-  { title: "C5 - Video 7", url: "1WxvNqoh-Am2XBs7Krqun8yKUENkccBEE", type: "drive" },
-  { title: "C5 - Video 8", url: "1roA-zBqN5LlTOGWFbWJJG-8fsz_lauTx", type: "drive" },
-  { title: "C5 - Video 9", url: "12dCIQ_yKAc7IujSPtanhDXzzzc7k3I-H", type: "drive" },
-  { title: "C5 - Video 10", url: "1E4ESxq5bcOCDQ4USdQEdok7b6a1MDxZz", type: "drive" },
-  { title: "C5 - Video 11", url: "1vo7CfitHjvN8EjupagAv_UGBO0UDf_6J", type: "drive" },
-  { title: "C5 - Video 12", url: "1eznmkeF4Ofs-Okcnot6XMJ6PH12H-9rv", type: "drive" },
-  { title: "C5 - Video 13", url: "1IRJOg1altCW7aQ5BnOD1O58nenwLNe4D", type: "drive" },
-  { title: "C5 - Video 14", url: "1hNva2kn3T5KDQCCIpG4wOQyTc0hJA5Nh", type: "drive" },
-  { title: "C5 - Video 15", url: "1HrllOXUry-quecGX7Q3btIfyJv4u-hN6", type: "drive" },
-
-  // === CURSO 6 (Drive) ===
-  { title: "C6 - Video 1", url: "1G3ofVaHIDQvNjAsnPPdpEF6ROxgG6ehE", type: "drive" },
-  { title: "C6 - Video 2", url: "1uuWpd5pHuaqTUurw5Q7vFJdR6uBBlUxL", type: "drive" },
-  { title: "C6 - Video 3", url: "1w-PIymbr0-xx7BVDaCFcuW3hvnK-8RDj", type: "drive" },
-  { title: "C6 - Video 4", url: "17kV24j_6ECioj95tYfNqP5Lh88mvlTnL", type: "drive" },
-  { title: "C6 - Video 5", url: "1FNpB4bDAJrqGu1SNN5QLjmzBlVnSzk0I", type: "drive" },
-  { title: "C6 - Video 6", url: "13RY-MQ4iLrZoFEgmSQgxqXZXL11Iz9Th", type: "drive" },
-  { title: "C6 - Video 7", url: "1ELxNJsZHpOX8wjDpyVe65S0qfDsJGlmL", type: "drive" },
-  { title: "C6 - Video 8", url: "1AObb7Ih006ayRjKA1koejVwZF9PXllus", type: "drive" },
-  { title: "C6 - Video 9", url: "1jG_S7obHsnzcrPFAcKgC2lLzwGwAwjU7", type: "drive" },
-  { title: "C6 - Video 10", url: "1eiLI32iFuhGKJRti4dfS6GYVBTc96lyy", type: "drive" },
-  { title: "C6 - Video 11", url: "11bJK8tVuolQt6oq63g5HTp2GzJQgw5W2", type: "drive" },
-  { title: "C6 - Video 12", url: "1fa1Hy5sPnYruCx6YXAxhS0oXiHbKVDRB", type: "drive" },
-  { title: "C6 - Video 13", url: "1YX_bdCYjNXXtS-zpfPln2z4A5rQKQSR4", type: "drive" },
-  { title: "C6 - Video 14", url: "1Cjfw8R2SKLI29W3m9in-wA9R8ggiASG4", type: "drive" },
-];
-
 const PROXY = 'https://drive-proxy.jeremycalebp.workers.dev';
 
+const courses = [
+  {
+    name: "REVU IMPORT",
+    modules: [
+      {
+        label: "Clases", videos: [
+          { title: "Clase 01", url: "https://www.dropbox.com/scl/fi/d8s2lcaphxqwxvw8exgj1/Clase-01-Revu-School.mp4?rlkey=qqk1xd0ar5l605dcqiwetuyih&st=dgy3qmc2&dl=1", type: "video" },
+          { title: "Clase 02", url: "https://www.dropbox.com/scl/fi/0p28iga4089wh8dw05z9b/Clase-Esp.-02-29_06.mp4?rlkey=a99n20czfda9wqnle80v4uigh&st=n07jc5xm&dl=1", type: "video" },
+          { title: "Clase 03", url: "https://www.dropbox.com/scl/fi/8s33ubuy0gcd74gbnvtl4/clase-03-importaciones-revu-03.mp4?rlkey=aem6ah7v08b1prvt96f5udym0&st=loqbe6h8&dl=1", type: "video" },
+          { title: "Clase 04", url: "https://www.dropbox.com/scl/fi/952bbvgzi4s527vs4vr8q/clase-04-importaciones-revu-03.mp4?rlkey=ug6636spykbd4uydf4az5refg&st=gtxow10x&dl=1", type: "video" },
+        ]
+      }
+    ]
+  },
+  {
+    name: "SOL IMPORTACIONES",
+    modules: [
+      { label: "Módulo 1 · Presentación", videos: [
+        { title: "Presentación", url: "1mW20dMcAjtnxYhjE59FND42_dvhFFYi0", type: "drive" },
+      ]},
+      { label: "Módulo 2 · Teoría y Productos Novedosos", videos: [
+        { title: "Aspectos Generales", url: "17r1dTy8joNxCEi-mvdTP5w8LnIXvwfek", type: "drive" },
+        { title: "Productos Novedosos", url: "1S3vpHC-mVobGKm0b8gAFEeZEIxIZ8-Gv", type: "drive" },
+        { title: "Estadísticas de Comercio Internacional", url: "1yYG10SmRkGXluRVgwb962UzbxNLO2sXA", type: "drive" },
+        { title: "Importaciones de China, Panamá y EEUU", url: "1DaOEPAbtIFXpXR9_pFBBNu1X7fFD2ebl", type: "drive" },
+      ]},
+      { label: "Módulo 3 · Sociedad y Regímenes Tributarios", videos: [
+        { title: "Sociedades y Regímenes Tributarios", url: "1WYxGtwFajKN_Q2ZgOJ3pI10kB0_7NG3a", type: "drive" },
+        { title: "Formalización y Régimen Tributario Perú", url: "1kfUVXAoZx5Edl-bbMj5DODCSqjzmdZKo", type: "drive" },
+      ]},
+      { label: "Módulo 4 · Actividades Claves de Importación", videos: [
+        { title: "Actividades Claves para Importar", url: "1cToi0FoQIUaPiQzYQ9vDyngZX6WS4eRM", type: "drive" },
+        { title: "Tipos de Despacho Aduanero", url: "1w_nirvkrJyU27DkoFRqhq-7sigdzE6Wf", type: "drive" },
+        { title: "Documentos Importantes", url: "136ONc8W96gGL-wYWkWcrl5Fn6servZC7", type: "drive" },
+        { title: "Tipos de Transporte Internacional", url: "1PCFb2B6V5zHmj49fr-E0hCXHaEx0wfJU", type: "drive" },
+      ]},
+      { label: "Módulo 5 · Impuestos para Perú", videos: [
+        { title: "Impuestos para Perú", url: "1me1KCj6Gg8sO6VCnxShYqELhLAwNGpIm", type: "drive" },
+      ]},
+      { label: "Módulo 6 · Impuestos por País", videos: [
+        { title: "Bolivia", url: "1WLFXnjMACZ7IKofI6mW2bvzA1nJO6VVI", type: "drive" },
+        { title: "Ecuador", url: "1RzTf2KHU6B41uzy2S-YXa6Ki5WfQHe9e", type: "drive" },
+        { title: "Colombia", url: "1SQ1zbSS1NCYC9giSborjQYl7MWD295I4", type: "drive" },
+        { title: "Chile", url: "1A79Zo-gKmG5bUYwLyQcsz2SdhkHR2YkX", type: "drive" },
+        { title: "México", url: "1WkOrg_bRcGqdSG_Sgxz6Ac69Xyg8rJ1u", type: "drive" },
+        { title: "Venezuela", url: "1DI8IYqjMcwhL3EWiJ9MrEVgkNToN-cUr", type: "drive" },
+        { title: "Guatemala", url: "1ruhU0jcydizHo4hki1MOxbffAClG3vSg", type: "drive" },
+        { title: "Panamá", url: "1h1E4TVMpBZP1DBzLDmfIEB53rec9mwwN", type: "drive" },
+        { title: "El Salvador", url: "1psKEM9iFELkdH-FUSOCGfnBSWVqbaDif", type: "drive" },
+        { title: "República Dominicana", url: "13kK_kxzMs4urU8O-_-4lmr64jDtECsyy", type: "drive" },
+        { title: "Honduras", url: "1mYNerE1_Cq0yWXbCEhaMFRC3DJTOh66q", type: "drive" },
+        { title: "Nicaragua", url: "1BLjdek1saLwABWBNgYKQ1TiqjF2dHYeV", type: "drive" },
+        { title: "Costa Rica", url: "1f6q0p95eJYTSRJ_fdRjgbxAJyZce6u3y", type: "drive" },
+        { title: "España", url: "1WiwYUrtizGWOd3qk5Ucd_3MrNI7xVXew", type: "drive" },
+        { title: "Argentina", url: "1LpR_Da71apyTPlKXscO9Fr0f1jhmMKvM", type: "drive" },
+        { title: "Uruguay", url: "13Xs9WKGGDBi3KRoJwhcNVkleYuy_OW1r", type: "drive" },
+        { title: "Uruguay · Parte 2", url: "1idJwMLdqvhlIO7k33JPAT4qAAXDeGeuL", type: "drive" },
+      ]},
+      { label: "Módulo 7 · Partidas Arancelarias", videos: [
+        { title: "Partidas Arancelarias", url: "1SyYzxuAkkhZpfz2UzlGviEKC3zS5nhkd", type: "drive" },
+      ]},
+      { label: "Módulo 8 · Teoría y Restricciones", videos: [
+        { title: "Tipos de Proveedores", url: "1R7UMHtoVCcdiSoWsxLH2V3nyQd1G1hvJ", type: "drive" },
+        { title: "Tipos de Mercancía", url: "1_o6eC8cgmL1tvpAFkKItpa30ZoiM-MJh", type: "drive" },
+        { title: "Organismos de Estado que Tramitan Permisos", url: "1DQqCBip0l_gZl5DgYMwXTKeWy-bUWTdJ", type: "drive" },
+      ]},
+      { label: "Módulo 9 · Incoterms", videos: [
+        { title: "Incoterms", url: "1R1JDWEJ9JvMT8ocMhUziOt6UNo-uD7fB", type: "drive" },
+      ]},
+      { label: "Módulo 10 · Agentes en una Importación", videos: [
+        { title: "Empresas de Inspección de Calidad", url: "19kH7AWrH8fqUyNEdxx7n6h9wWB4yilLm", type: "drive" },
+        { title: "Couriers de Envíos Postales", url: "1c0Kk1ZV5qvZ8JYxfgxQQVhosa8ayrfaZ", type: "drive" },
+        { title: "Intermediarios de una Importación", url: "1fTLMeKr0MhBOMC0VDCe5BlgkwXcZAIYZ", type: "drive" },
+        { title: "Medios de Pago", url: "1nJeqqwrJPdewKdF8dHiAUVJ0m8hSv2Z1", type: "drive" },
+      ]},
+      { label: "Módulo 11 · Final Teoría", videos: [
+        { title: "Final Teoría", url: "1QtVQ2YlX7y5iTN90o9izCljmN3JBXbYB", type: "drive" },
+      ]},
+      { label: "Módulo 12 · Importación de USA", videos: [
+        { title: "Páginas Directas", url: "1Uhl-Q6T8zSRVR7-BlCeZWr9ZYEyRfYpL", type: "drive" },
+        { title: "Teoría Casilleros y Viajeros", url: "1mjn-tnt18ikIT_797pZIXzTnqx-qcXSy", type: "drive" },
+        { title: "Creación de Casillero Perú", url: "1Anm6jw14I5M2tI9l6ww6ZXEMhIELTvT8", type: "drive" },
+        { title: "Cómo Usar Olivo Courier", url: "1JpK6JMpuZ8u0-2O8pAVd_AqLXNEN9oYW", type: "drive" },
+      ]},
+      { label: "Módulo 13 · Courier por País", videos: [
+        { title: "Courier México", url: "1eMSsIGzqfhL_GPi8mAXsYmLzE5yfxT02", type: "drive" },
+        { title: "Courier Bolivia · Parte 1", url: "13Sy6HEPB2Z_-PIyIONi_M3wPwT2UHTw4", type: "drive" },
+        { title: "Courier Bolivia · Parte 2", url: "1WzOfTmtHXJC6EVutkFjEwL9ljKiZhOXD", type: "drive" },
+        { title: "Courier Ecuador", url: "1qrViScQKO9b1UZRr7GgH7I3cYKfAMHO9", type: "drive" },
+        { title: "Courier Chile", url: "17WxtpVMQhXJCxvP6pXkaE0jPDX0UBp6Y", type: "drive" },
+        { title: "Courier Argentina · Parte 1", url: "15QBImFCg-ef-Eeg3LvFMiGP-f9NSMgM1", type: "drive" },
+        { title: "Courier Argentina · Parte 2", url: "1LFd20_DNq8q4RUy-sW6FCMkvi-F8OGwa", type: "drive" },
+        { title: "Courier República Dominicana · Parte 1", url: "1B7KXfN81tBRt-KYfz0lVGiaeSr-3o27s", type: "drive" },
+        { title: "Courier República Dominicana · Parte 2", url: "1o5aVkUuiA-QI7DLL1XTMnkDTszH9_8jC", type: "drive" },
+        { title: "Courier El Salvador", url: "1kfBkoeemEuozms-3_tl8yivRj6_Vwviz", type: "drive" },
+        { title: "Courier Uruguay", url: "17K4YwpZns6qohEBUJ7cukE39t_kj_nvI", type: "drive" },
+        { title: "Courier España", url: "1d7WSZfk6oYKYjmJHPnsw60hGN_B3qPQp", type: "drive" },
+        { title: "Courier Guatemala", url: "1ukxAhi-wTfGcHl3z7f7Mn34ClIXsFmdA", type: "drive" },
+        { title: "Courier Paraguay", url: "1WVY_BRW-jBwfQsbtKlRKIAO6yvrK7Vkn", type: "drive" },
+        { title: "Courier Costa Rica", url: "1C_VC1f9togPSRFeRAT6pv-NppZ63oc1H", type: "drive" },
+        { title: "Courier Cuba", url: "1o4qiZQnAPHcHL2bNmwAnHQ8agazaPpJQ", type: "drive" },
+        { title: "Courier Nicaragua", url: "1y6JF4lyMuQZkPQoOqPD6j5rcQ4a4KjOL", type: "drive" },
+        { title: "Courier Brasil", url: "1e-Fxl2v6wjckt5JUwTA3bEA1pJTrPWQF", type: "drive" },
+      ]},
+      { label: "Módulo 14 · Casos Prácticos USA", videos: [
+        { title: "Amazon - La Más Grande de USA", url: "117TwgiUOv7JPHEulfC-dmna-gJFxSm1x", type: "drive" },
+        { title: "Mundo de la Tecnología", url: "1cySpKy4aC4jS4iLkeMtcZxYduAsGH06o", type: "drive" },
+        { title: "Mundo de las Zapatillas", url: "1MeCK_NP4uBlsOqQ4hy0nFNpyAcvIPxYw", type: "drive" },
+        { title: "Mundo del Skincare", url: "1YueIBtCFCOxC_p2G-vYodsGfB-VZxic0", type: "drive" },
+        { title: "Mundo de los Cosméticos", url: "1WDmgSvXK4lVSRpZZeEDhDlhIrOwv5IfC", type: "drive" },
+        { title: "Mundo de los Relojes", url: "1AQkqf0JA9S4Y0GAOwKZzT3IITzXpPOTq", type: "drive" },
+        { title: "Todo por 1.75 Dólar", url: "16IB-OvdldVYs-qqEj6pfFt1C-arQD_EG", type: "drive" },
+        { title: "Mystery Boxes", url: "16c3XQ0uTx97Bf-8Xh749KXR3jFyKaMlE", type: "drive" },
+        { title: "Mundo de los Juguetes", url: "1tAnUWMAyHvov1XRnjqq8-GFbCcjVMAt7", type: "drive" },
+        { title: "Mystery Box Boxycharm", url: "1g2zubR0pz0dbS1TzxrWlZfKUMRHpgz57", type: "drive" },
+        { title: "Juntar Pedidos en USA", url: "1VtFLk4b7iV1QzwRFbNKeVZRmvzwygeMt", type: "drive" },
+      ]},
+      { label: "Módulo 15 · Método Viajeros", videos: [
+        { title: "Teoría Viajeros", url: "1vBN5I4vqt1jI6Pb3r2b5wxvWVgF6jt5y", type: "drive" },
+        { title: "Mundo Apple - Comparto mi Maleta", url: "15YZjAuNaqsCrVVMVplfj2nxfQWbwz2BZ", type: "drive" },
+        { title: "Mundo de Celulares Usados", url: "1cK0kJ7QJABqE-sJrzag1PHE1Ev7aePIL", type: "drive" },
+        { title: "Mundo Gamer", url: "1KZqHviTP1HkY15Souy98O7qbUCnIk29G", type: "drive" },
+        { title: "Mundo del Minoxidil", url: "1wS7htFWJA_fcVEgcALflziGEjml-C8I8", type: "drive" },
+      ]},
+      { label: "Módulo 16 · Hacks para Amazon", videos: [
+        { title: "Camel Camel Camel", url: "13JhWJ5xpNZnchotI5Boy4FAOWoT9pwZl", type: "drive" },
+      ]},
+      { label: "Módulo 17 · Importaciones de China", videos: [
+        { title: "Básico Aliexpress y Shein", url: "1CLK91lJsfm7RBzsBRjel8u7DzfCW0e_T", type: "drive" },
+        { title: "Alibaba", url: "1Q9za3GKqLclT5357GXz4DESMIyQs71Tw", type: "drive" },
+        { title: "Caso Práctico - Importación Directa menos de $200", url: "1RaGC5odBeIYKihs3i5dYz1h2KAmdiM8z", type: "drive" },
+        { title: "Caso Práctico - Importa $200 a más", url: "1MMU9h1r2ta1i-851IVaG0tPu8gBzmMXP", type: "drive" },
+      ]},
+      { label: "Módulo 18 · Otras Plataformas de China", videos: [
+        { title: "Otras Plataformas de China", url: "1B4NcemAiVLMEqyXkVqi05_TbH4spAwn7", type: "drive" },
+      ]},
+      { label: "Módulo 19 · Proveedores de Hong Kong", videos: [
+        { title: "Hong Kong Sourcing", url: "1hc6QUe4HNT0fs8JBAlbmlGxWecj3kGrg", type: "drive" },
+      ]},
+      { label: "Módulo 20 · Proveedores de Korea", videos: [
+        { title: "Trade Korea", url: "1i-RDA-LgYBp7SDtFPXZYm7IYGGgLnUJg", type: "drive" },
+      ]},
+      { label: "Módulo 21 · Proveedores de Taiwan", videos: [
+        { title: "Trade Taiwan", url: "1i-RDA-LgYBp7SDtFPXZYm7IYGGgLnUJg", type: "drive" },
+      ]},
+      { label: "Módulo 22 · Proveedores India", videos: [
+        { title: "Trade India", url: "1dzAyVT33wUKHA5yAj1ZrIBEsGEhVOzWz", type: "drive" },
+      ]},
+      { label: "Módulo 23 · Método Yiwu", videos: [
+        { title: "Método Yiwu", url: "1J83LHWMCw4mk4K2lNMaRqynuYKiC3xCf", type: "drive" },
+        { title: "Caso Práctico Método Yiwu", url: "1Vz92gGLXj4pgNT33hkp2PFxLxM1AKvWC", type: "drive" },
+      ]},
+      { label: "Módulo 24 · Misiones Comerciales", videos: [
+        { title: "Yiwu Market", url: "1J83LHWMCw4mk4K2lNMaRqynuYKiC3xCf", type: "drive" },
+        { title: "Canton Fair", url: "1Vz92gGLXj4pgNT33hkp2PFxLxM1AKvWC", type: "drive" },
+      ]},
+      { label: "Módulo 25 · Panamá - Misión Comercial", videos: [
+        { title: "Panamá - Misión Comercial", url: "1xTkq7OA31ePgGxV8PGzMQ92Gji1AlhUB", type: "drive" },
+      ]},
+      { label: "Módulo 26 · Herramientas Veritrade", videos: [
+        { title: "Veritrade", url: "1WFdpXBctd9BlPg5t2pSu13F6VfgAgdJO", type: "drive" },
+      ]},
+      { label: "Módulo 27 · Ventas Orgánicas", videos: [
+        { title: "Introducción Ventas Orgánicas", url: "1UjQIGKxq_A0e6MRf9YWm8HPLCGRwqDKG", type: "drive" },
+        { title: "Modalidad de Venta", url: "1Fu-ZiAy9y_x_7Xt7XrbIoWP1jZTM7pJU", type: "drive" },
+        { title: "Modalidad de Compra", url: "18Aq2ZLf2rrNo0R1UktKo0EFCFUkPgRJz", type: "drive" },
+        { title: "Principios del Nuevo Mundo Digital", url: "1-PD99pgHkZXTbrLFFzafTvmTndmeU5JL", type: "drive" },
+        { title: "Comportamiento del Consumidor Moderno", url: "1pRyrRT3eF8WrpjLburHnifuEEI35Xo_M", type: "drive" },
+        { title: "3 Ideas a Tomar en Cuenta", url: "1Y8SMYp-HQ-07IYnl-IgE8HiyjXDmUd_X", type: "drive" },
+        { title: "Gatillos Mentales", url: "18Uz-B7zJscvCLN7ES9gUgWzktNZ11lwW", type: "drive" },
+        { title: "Canva", url: "14l_khbH2a_QxL1BGroBMaNlvsw0mEAAG", type: "drive" },
+        { title: "Redes Sociales para Negocios", url: "1T1yGKpgh_Yv6oNqloX9l_i620vxf8Ght", type: "drive" },
+        { title: "Links para tu Negocio", url: "17zRVPo9dVmKw9wLd72gvFfWg9_cgr794", type: "drive" },
+        { title: "Estrategias de Neuromarketing", url: "1X59_CDNbIz-u09AtS0VW1vzmJu4YrMBs", type: "drive" },
+        { title: "Caso Práctico Método Olivo Sales", url: "1sUY9vZ0I2UHTRD2Z9G95Nj0_PRmFYK6P", type: "drive" },
+        { title: "Psicología del Consumidor", url: "1HzkouFxpzAhQ8rvWl8xTZpJmHsaGM_Dc", type: "drive" },
+        { title: "Hambre Éxito", url: "1BiAx24VrXip5oKHSDmRkq8aqIEgjjfiD", type: "drive" },
+        { title: "Principios del Consumidor", url: "1EEzmDQtQb_BBhZeMA8R6MHPoZ9BFqn1R", type: "drive" },
+        { title: "3 Partes, Propuesta de Valor", url: "1UyI1fkdaMAyvkD8R_A-RqeKAbNz4T2m9", type: "drive" },
+      ]},
+      { label: "Módulo 28 · Bonus", videos: [
+        { title: "Bonus: Uso de PayPal", url: "1fjwwVrTP0W3-CBgiD04Jr525ZVDjTUyU", type: "drive" },
+        { title: "Bonus: Búsqueda de Marcas", url: "1i3dDCZWiH2ZJy_gb-lNzXDHxYjNkyTWb", type: "drive" },
+      ]},
+      { label: "Módulo 29 · Sesiones en Vivo", videos: [
+        { title: "Primera Sesión en Vivo", url: "1Mxg_AFazJKIsZKPi3AI3Tzy3chWqjJH8", type: "drive" },
+        { title: "Segunda Sesión en Vivo", url: "154qw_92ZiRvm_SNRUcIi2ROuBkN0l0XX", type: "drive" },
+        { title: "Tercera Sesión en Vivo", url: "1vQaFkzXT5W68dP7yGPP6c3N6ctR-E_FZ", type: "drive" },
+        { title: "Cuarta y Última Sesión en Vivo", url: "1LglSkVm3dMbCdHPnJQnPJZvNCVWnUosG", type: "drive" },
+      ]},
+    ]
+  },
+  {
+    name: "NETZUN",
+    modules: [
+      { label: "Módulo 1 · Fundamentos de Importación", videos: [
+        { title: "Presentación del Docente y Curso", url: "1Qo9tu3nvVQGMwMYe28kjAX9fyC3Z-zmL", type: "drive" },
+        { title: "Importación para el Consumo y Categoría de Bienes", url: "1-Id4NNv9Z2nwfVmZDBYfwU6jCzmwu1O2", type: "drive" },
+        { title: "Importa Fácil y Envíos de Entrega Rápida (EER)", url: "1gEorMq2hoclWFGlDSILApkoeDKA16R42", type: "drive" },
+        { title: "Referencias de Proveedores", url: "1mIfnPJnSu8GkFUH68tubsAMaf3HPiu4p", type: "drive" },
+        { title: "Incoterms", url: "1Sbf3CltsFEWtCN-LVQmve1_NQg3c4Y9W", type: "drive" },
+        { title: "La Cotización del Proveedor", url: "1DaLCXeq-Zi5ViTiGBV7ask1ir_6FnQSA", type: "drive" },
+        { title: "Tratamiento Arancelario", url: "1EIb3TNyazI9UcJ-FN804xO9NWx2K3mX9", type: "drive" },
+        { title: "Cálculo de los Derechos e Impuestos de Importación", url: "1kRcTYC9PqSBifJ8HC3TaWHQiDMdOOhmp", type: "drive" },
+        { title: "Operadores que Participan en el Proceso de Importación", url: "1_cCPFI3R8RTWGsOvK0kBIi-4Ea_YJtye", type: "drive" },
+        { title: "Documentos en el Proceso de Importación", url: "1BatZNle2tAxCdtN4cKrAQB58TxuRBwDa", type: "drive" },
+        { title: "Modalidades de Despacho y Canales de Control", url: "1QG3uDrR8wqLWI4mnITvuOf5gjpCJaQ5Q", type: "drive" },
+        { title: "5 Tips para una Importación Exitosa", url: "1SR8hk13MCyF5ie10042NV-Q3YUMH8760", type: "drive" },
+      ]},
+      { label: "Módulo 2 · Optimización y Costos", videos: [
+        { title: "Presentación del Docente y Curso", url: "1O91vHaYw70r73omyu66fGXvprJpNoiXp", type: "drive" },
+        { title: "Optimización de Costos en la Importación", url: "1-IIN8hV-ziMAx0--EWKowf92ZJ32X2SU", type: "drive" },
+        { title: "Criterios de Evaluación de Proveedores", url: "1Mb6-agjJUNxgJCXuNeyA-86gxAExAn8J", type: "drive" },
+        { title: "Importancia del Inventario", url: "1PnB2WTvbnmA8qXMR9iGso_3Xww_Ml3ru", type: "drive" },
+        { title: "Contrato de Compra y Venta Internacional", url: "1NIoKi8G8EDNYuq9_mLVLmU_8NkvA6UJf", type: "drive" },
+        { title: "Características de las Formas y Medios de Pago", url: "101Ik31EvBW3utDOt8fUlAR4_OCC9mYVI", type: "drive" },
+        { title: "Carta de Crédito", url: "1Nfi3IwXSuvQcsmNZOj7JIygEUJdKo1JK", type: "drive" },
+        { title: "Costos en el Transporte Marítimo Internacional", url: "1SJ6XCyMy_M9tW6fTbAPxcrjg7kW5tCvS", type: "drive" },
+        { title: "Costos en el Transporte Aéreo", url: "1G03ucb28VUfXuwUt_2BCXytdISLvMNZ8", type: "drive" },
+        { title: "Costos del Despacho Aduanero", url: "13IgWxrT57WwBy24qv5B6VaMoMcZwS4Ds", type: "drive" },
+        { title: "Cálculo de los Derechos e Impuestos de Importación", url: "1RZA2SNmDR6jqGjeYfFdhuARMeWVCjSZt", type: "drive" },
+        { title: "Otros Costos Operativos en el Proceso de Importación", url: "1DeyNycJPetD1KzXUhJpB6eOUvP_puRpn", type: "drive" },
+        { title: "Caso de Costos de Importación", url: "124aL2nFhZnZTi2UnPPxkZJrbVonen-7h", type: "drive" },
+        { title: "Ejecución de la Operación", url: "1qVvGijqucszeJBvs-fXz_01TgL5AuVc_", type: "drive" },
+        { title: "Factores y Procedimientos", url: "1P_KVqGGnS-230L5yVnNxkjHfHewZQtD6", type: "drive" },
+        { title: "5 Tips para Importaciones Sostenibles", url: "1jC_9qLoP9H5pTlhQ0R9aMmsHxJELbftS", type: "drive" },
+        { title: "Conclusiones y Despedida del Curso", url: "1CsKgnFBvqSDN9X_F3ev6QlvJi2UJIE9h", type: "drive" },
+      ]},
+      { label: "Módulo 3 · Importar desde China", videos: [
+        { title: "Presentación del Docente", url: "1OieEKrRMZL_XvxCsYHRlMyBfoa3hKUZC", type: "drive" },
+        { title: "China la Fábrica del Mundo", url: "18CjGrkvaWqyyiAyx1yMIHPqo_WRowQrQ", type: "drive" },
+        { title: "El Beneficio Diferencial de Importar de China", url: "1kCE0tL94IkaXTFK8uQb5kVg7dKRMKeNn", type: "drive" },
+        { title: "Quiénes Pueden Importar de China", url: "183cCV7YNcHLVT4TMwntdFmLdlKTi4RwT", type: "drive" },
+        { title: "Cuánto Capital se Necesita", url: "1HZraYwm5I4-AXkQTSCOgpbiGqRK-M8cd", type: "drive" },
+        { title: "Los Tipos de Importador", url: "1lI1xfRRaLsnBDbaC6Jt2LMn6BSdVc_7S", type: "drive" },
+        { title: "Alibaba y sus 40 Aplicaciones", url: "1AkghauAPpcqwfB24KSK-5DQPxBM5vqBP", type: "drive" },
+        { title: "Alibaba vs Aliexpress", url: "16plwEylIie_7wubwMgS7VopGgr-SkT30", type: "drive" },
+        { title: "Más Plataformas, Más Proveedores", url: "1WhtJzzeVBZ0D0SAUUe__yw1WbOZ63PLd", type: "drive" },
+        { title: "Minisites y Contacto Inmediato", url: "1hjjqgu1Qt-fbw4z8O6uzECSCEXPTj4rF", type: "drive" },
+        { title: "WeChat el WhatsApp Chino", url: "18ZcgBiP7QSayz2qd7Ztp_hau6G0FuM-u", type: "drive" },
+        { title: "Preguntas Clave para Todo Proveedor", url: "1QUjPGBAjVdeo30Y-swScG1nTYmPQ8YFC", type: "drive" },
+        { title: "Control de Muestras y Auditorías", url: "1MzeUXBGG4_HVbJEpYq-rF17ZdYYejRTF", type: "drive" },
+      ]},
+      { label: "Módulo 4 · Negocios Internacionales", videos: [
+        { title: "Presentación del Profesor y del Tema", url: "1lLe4HdgZHaa4dVZzRlrG7vyzyWu38XLb", type: "drive" },
+        { title: "Las Revoluciones Industriales", url: "1P-d3ItrJicNTZvJz1mVrWbIRA2WO3_jg", type: "drive" },
+        { title: "La Globalización y el Patrón de Internacionalización", url: "1fCykKNKYB62WtIw7joeBKK2176OwGUoM", type: "drive" },
+        { title: "Los Negocios Internacionales en el Contexto 2020", url: "1ajQSoOoct6TioHJ_TKEuhFPNGcRIrFmz", type: "drive" },
+        { title: "El Rol de las Instituciones Gubernamentales", url: "1gedV00zSw_9gJyPHzQJekL46IhXseKNi", type: "drive" },
+        { title: "Principales Acuerdos Comerciales de Perú", url: "1d0LwlDB4XdFQ8yg1BbzhMedLh6Kc1TBF", type: "drive" },
+        { title: "Terminología e Incoterms del Comercio Internacional", url: "1WxvNqoh-Am2XBs7Krqun8yKUENkccBEE", type: "drive" },
+        { title: "Conociendo el Mercado Meta", url: "1roA-zBqN5LlTOGWFbWJJG-8fsz_lauTx", type: "drive" },
+        { title: "Análisis PESTAL del Mercado Meta · Parte 1", url: "12dCIQ_yKAc7IujSPtanhDXzzzc7k3I-H", type: "drive" },
+        { title: "Análisis PESTAL del Mercado Meta · Parte 2", url: "1E4ESxq5bcOCDQ4USdQEdok7b6a1MDxZz", type: "drive" },
+        { title: "Los Negocios Internacionales por Internet", url: "1vo7CfitHjvN8EjupagAv_UGBO0UDf_6J", type: "drive" },
+        { title: "Principales Socios Comerciales de Perú", url: "1eznmkeF4Ofs-Okcnot6XMJ6PH12H-9rv", type: "drive" },
+        { title: "Mercados y Productos más Atractivos para Perú", url: "1IRJOg1altCW7aQ5BnOD1O58nenwLNe4D", type: "drive" },
+        { title: "Lo Nuevo de Perú que Vale la Pena Atender", url: "1hNva2kn3T5KDQCCIpG4wOQyTc0hJA5Nh", type: "drive" },
+        { title: "Conclusiones", url: "1HrllOXUry-quecGX7Q3btIfyJv4u-hN6", type: "drive" },
+      ]},
+      { label: "Módulo 5 · Exportación", videos: [
+        { title: "Presentación del Docente", url: "1G3ofVaHIDQvNjAsnPPdpEF6ROxgG6ehE", type: "drive" },
+        { title: "Conociendo la Exportación", url: "1uuWpd5pHuaqTUurw5Q7vFJdR6uBBlUxL", type: "drive" },
+        { title: "Tipos de Exportación", url: "1w-PIymbr0-xx7BVDaCFcuW3hvnK-8RDj", type: "drive" },
+        { title: "Exportación Marítima", url: "17kV24j_6ECioj95tYfNqP5Lh88mvlTnL", type: "drive" },
+        { title: "Exportación Aérea", url: "1FNpB4bDAJrqGu1SNN5QLjmzBlVnSzk0I", type: "drive" },
+        { title: "Terrestre, Fluvial y Otros", url: "13RY-MQ4iLrZoFEgmSQgxqXZXL11Iz9Th", type: "drive" },
+        { title: "Exportación Definitiva", url: "1ELxNJsZHpOX8wjDpyVe65S0qfDsJGlmL", type: "drive" },
+        { title: "Exportación Temporal", url: "1AObb7Ih006ayRjKA1koejVwZF9PXllus", type: "drive" },
+        { title: "Exportación Directa - Indirecta", url: "1jG_S7obHsnzcrPFAcKgC2lLzwGwAwjU7", type: "drive" },
+        { title: "Qué son los Incoterms", url: "1eiLI32iFuhGKJRti4dfS6GYVBTc96lyy", type: "drive" },
+        { title: "Incoterms para el Transporte Marítimo", url: "11bJK8tVuolQt6oq63g5HTp2GzJQgw5W2", type: "drive" },
+        { title: "Documentos Principales para Exportar", url: "1fa1Hy5sPnYruCx6YXAxhS0oXiHbKVDRB", type: "drive" },
+        { title: "Documentos Opcionales", url: "1YX_bdCYjNXXtS-zpfPln2z4A5rQKQSR4", type: "drive" },
+        { title: "Caso Práctico de Exportación", url: "1Cjfw8R2SKLI29W3m9in-wA9R8ggiASG4", type: "drive" },
+      ]},
+    ]
+  }
+];
+
+// Flatten all videos with course/module info for player
+let allVideos = [];
+courses.forEach((course, ci) => {
+  course.modules.forEach((mod, mi) => {
+    mod.videos.forEach((v, vi) => {
+      allVideos.push({ ...v, courseIdx: ci, modIdx: mi, vidIdx: vi, courseName: course.name });
+    });
+  });
+});
+
 let current = 0;
+let activeCourse = 0;
 const player = document.getElementById('player');
 
-function load(i) {
-  current = (i + videos.length) % videos.length;
-  const v = videos[current];
+function getUrl(v) {
+  return v.type === 'video' ? v.url : `${PROXY}?id=${v.url}`;
+}
+
+function load(globalIdx) {
+  current = (globalIdx + allVideos.length) % allVideos.length;
+  const v = allVideos[current];
   document.getElementById('chapter-title').textContent = v.title;
-  document.getElementById('counter').textContent = `${current + 1} / ${videos.length}`;
+  document.getElementById('course-badge').textContent = v.courseName;
+  document.getElementById('counter').textContent = `${current + 1} / ${allVideos.length}`;
+
+  // Update playing card
+  document.querySelectorAll('.video-card').forEach(c => c.classList.remove('playing'));
+  const card = document.querySelector(`[data-global="${current}"]`);
+  if (card) {
+    card.classList.add('playing');
+    card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }
 
   player.pause();
   player.src = '';
-
-  if (v.type === 'video') {
-    player.src = v.url;
-  } else {
-    player.src = `${PROXY}?id=${v.url}`;
-  }
+  player.src = getUrl(v);
   player.load();
   player.play().catch(() => {});
 }
 
-player.addEventListener('ended', () => load(current + 1));
-
 function next() { load(current + 1); }
 function prev() { load(current - 1); }
+
+function switchCourse(idx) {
+  activeCourse = idx;
+  document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+  renderMenu();
+}
+
+function renderMenu() {
+  const container = document.getElementById('menu-content');
+  const course = courses[activeCourse];
+  let globalOffset = 0;
+  // Calculate offset for this course
+  for (let ci = 0; ci < activeCourse; ci++) {
+    courses[ci].modules.forEach(m => globalOffset += m.videos.length);
+  }
+
+  let html = '';
+  let modOffset = 0;
+  course.modules.forEach((mod, mi) => {
+    html += `<div class="module-row visible">
+      <div class="module-label"><span>▶</span>${mod.label}</div>
+      <div class="cards-scroll">`;
+    mod.videos.forEach((v, vi) => {
+      const gIdx = globalOffset + modOffset + vi;
+      const isPlaying = gIdx === current;
+      html += `<div class="video-card${isPlaying ? ' playing' : ''}" data-global="${gIdx}" onclick="load(${gIdx})">
+        <div class="card-num">${String(vi + 1).padStart(2, '0')}</div>
+        <div class="card-title">${v.title}</div>
+      </div>`;
+    });
+    html += `</div></div>`;
+    modOffset += mod.videos.length;
+  });
+  container.innerHTML = html;
+}
+
+player.addEventListener('ended', () => load(current + 1));
 
 function pip() {
   if (document.pictureInPictureElement) {
@@ -333,6 +655,7 @@ if ('mediaSession' in navigator) {
 }
 
 keepAwake();
+renderMenu();
 load(0);
 </script>
 </body>
