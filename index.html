@@ -76,7 +76,8 @@
     <video id="player" controls autoplay playsinline disableRemotePlayback></video>
     <iframe id="drivePlayer" allowfullscreen allow="autoplay"></iframe>
   </div>
-  <div id="driveNote">▶ Presiona play en el video para continuar. El siguiente iniciará automáticamente.</div>
+  <div id="driveNote"></div>
+  <button id="loginBtn" onclick="initAuth()" style="display:none; background:#4285f4; margin-bottom:10px;">🔐 Iniciar sesión con Google</button>
   <div id="controls">
     <button onclick="prev()">⬅ Anterior</button>
     <button onclick="next()">Siguiente ➡</button>
@@ -245,11 +246,50 @@ const videos = [
   { title: "C1 Módulo 26 - Veritrade", url: "1WFdpXBctd9BlPg5t2pSu13F6VfgAgdJO", type: "drive" },
 ];
 
+const CLIENT_ID = '204377332392-r7oelpbtpdh0s0fec5kerm5se45t491t.apps.googleusercontent.com';
+const SCOPE = 'https://www.googleapis.com/auth/drive.readonly';
+
 let current = 0;
-let driveTimer = null;
+let accessToken = '';
 const player = document.getElementById('player');
 const drivePlayer = document.getElementById('drivePlayer');
 const driveNote = document.getElementById('driveNote');
+
+// Login con Google
+function initAuth() {
+  const client = google.accounts.oauth2.initTokenClient({
+    client_id: CLIENT_ID,
+    scope: SCOPE,
+    callback: (response) => {
+      accessToken = response.access_token;
+      document.getElementById('loginBtn').style.display = 'none';
+      load(0);
+    },
+  });
+  client.requestAccessToken();
+}
+
+async function loadDriveVideo(fileId) {
+  driveNote.style.display = 'block';
+  driveNote.textContent = '⏳ Cargando video...';
+  player.style.display = 'block';
+  drivePlayer.style.display = 'none';
+
+  try {
+    const response = await fetch(
+      `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`,
+      { headers: { Authorization: `Bearer ${accessToken}` } }
+    );
+    if (!response.ok) throw new Error('Error al cargar');
+    const blob = await response.blob();
+    const url = URL.createObjectURL(blob);
+    player.src = url;
+    driveNote.style.display = 'none';
+    player.play();
+  } catch(e) {
+    driveNote.textContent = '⚠️ Error. Presiona Siguiente o intenta de nuevo.';
+  }
+}
 
 function load(i) {
   current = (i + videos.length) % videos.length;
@@ -257,29 +297,21 @@ function load(i) {
   document.getElementById('chapter-title').textContent = v.title;
   document.getElementById('counter').textContent = `${current + 1} / ${videos.length}`;
 
-  if (driveTimer) { clearTimeout(driveTimer); driveTimer = null; }
-
   if (v.type === 'video') {
-    drivePlayer.src = '';
-    player.style.display = 'block';
     drivePlayer.style.display = 'none';
     driveNote.style.display = 'none';
+    player.style.display = 'block';
     player.src = v.url;
     player.play();
   } else {
-    player.pause();
-    player.src = '';
-    player.style.display = 'none';
-    drivePlayer.style.display = 'block';
-    driveNote.style.display = 'block';
-    drivePlayer.src = `https://drive.google.com/file/d/${v.url}/preview?autoplay=1`;
+    if (!accessToken) {
+      driveNote.style.display = 'block';
+      driveNote.textContent = '🔐 Inicia sesión con Google para ver este video.';
+      document.getElementById('loginBtn').style.display = 'inline-block';
+      return;
+    }
+    loadDriveVideo(v.url);
   }
-}
-
-function startDriveAutoNext() {
-  // Intentamos detectar fin via postMessage de Drive (no siempre funciona)
-  // Como fallback: mostramos botón Siguiente prominente
-  // No hay forma confiable de detectar fin en iframe cross-origin
 }
 
 player.addEventListener('ended', () => load(current + 1));
@@ -332,5 +364,6 @@ if ('mediaSession' in navigator) {
 keepAwake();
 load(0);
 </script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 </body>
 </html>
