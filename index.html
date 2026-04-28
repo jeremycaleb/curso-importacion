@@ -260,21 +260,19 @@ function load(i) {
   if (driveTimer) { clearTimeout(driveTimer); driveTimer = null; }
 
   if (v.type === 'video') {
-    // Mostrar video normal
+    drivePlayer.src = '';
     player.style.display = 'block';
     drivePlayer.style.display = 'none';
     driveNote.style.display = 'none';
     player.src = v.url;
     player.play();
   } else {
-    // Mostrar iframe de Drive
+    player.pause();
+    player.src = '';
     player.style.display = 'none';
     drivePlayer.style.display = 'block';
     driveNote.style.display = 'block';
-    drivePlayer.src = `https://drive.google.com/file/d/${v.url}/preview`;
-    // Auto-avance después de 2 minutos como fallback (Drive no emite evento ended)
-    // El usuario también puede presionar Siguiente manualmente
-    startDriveAutoNext();
+    drivePlayer.src = `https://drive.google.com/file/d/${v.url}/preview?autoplay=1`;
   }
 }
 
