@@ -278,7 +278,7 @@
   .logo-bottom img.logo { width: 110px; opacity: 0.9; }
   .logo-bottom img.profesor { width: 90px; opacity: 0.95; }
 @media (max-width: 768px) {
-    .hero { height: 52vw; min-height: 160px; max-height: 220px; }
+    .hero { height: 52vw; min-height: 160px; max-height: 280px; }
     .video-wrapper { aspect-ratio: 16/9; width: 100%; margin-top: -60px; }
     .info-bar { padding: 6px 10px 8px; }
     .sidebar.open {
@@ -645,10 +645,8 @@ function load(gIdx) {
   player.src = '';
   player.src = getUrl(v);
   player.load();
-  player.play().catch(() => {
-  player.muted = true;
-  player.play().catch(() => {});
-});
+  player.muted = false;
+player.play().catch(() => {});
 
   setTimeout(() => {
     const el = document.querySelector(`[data-gidx="${current}"]`);
