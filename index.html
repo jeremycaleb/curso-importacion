@@ -9,14 +9,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0d0d0d;
-    --sidebar: #111111;
+    --bg: #0a1628;
+    --sidebar-w: 270px;
+    --sidebar: #0d1f3a;
     --accent: #e8a020;
     --text: #e8e8e8;
-    --muted: #555;
-    --hover: #1a1a1a;
-    --active: #1f1f1f;
-    --border: rgba(255,255,255,0.06);
+    --muted: #556;
+    --hover: #112240;
+    --active: #152a4a;
+    --border: rgba(255,255,255,0.07);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -25,90 +26,44 @@
     color: var(--text);
     min-height: 100vh;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     overflow: hidden;
     height: 100vh;
   }
 
-  /* TOP BAR */
-  .topbar {
-    display: flex;
-    align-items: center;
-    background: var(--sidebar);
-    border-bottom: 1px solid var(--border);
-    padding: 10px 16px;
-    gap: 14px;
-    flex-shrink: 0;
-    z-index: 100;
-  }
-  .hamburger {
-    background: none;
-    border: none;
-    color: var(--text);
-    font-size: 1.4rem;
-    cursor: pointer;
-    padding: 4px 6px;
-    border-radius: 6px;
-    transition: background 0.15s;
-    line-height: 1;
-  }
-  .hamburger:hover { background: var(--hover); }
-  .topbar-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.1rem;
-    letter-spacing: 3px;
-    color: var(--accent);
-    flex: 1;
-  }
-  .topbar-course {
-    font-size: 0.7rem;
-    color: var(--muted);
-    font-weight: 600;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-  }
-
-  /* OVERLAY */
-  .overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.6);
-    z-index: 200;
-  }
-  .overlay.open { display: block; }
-
   /* SIDEBAR */
   .sidebar {
-    position: fixed;
-    top: 0; left: 0;
-    width: 280px;
-    height: 100vh;
+    width: 0;
+    min-width: 0;
     background: var(--sidebar);
     border-right: 1px solid var(--border);
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    z-index: 300;
-    transform: translateX(-100%);
-    transition: transform 0.25s ease;
+    height: 100vh;
+    transition: width 0.28s ease, min-width 0.28s ease;
+    flex-shrink: 0;
   }
-  .sidebar.open { transform: translateX(0); }
+  .sidebar.open {
+    width: var(--sidebar-w);
+    min-width: var(--sidebar-w);
+  }
 
   .sidebar-header {
-    padding: 16px;
+    padding: 14px 16px;
     border-bottom: 1px solid var(--border);
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-shrink: 0;
+    min-width: var(--sidebar-w);
   }
-  .sidebar-header img { width: 120px; opacity: 0.9; }
+  .sidebar-header img { width: 110px; opacity: 0.9; }
   .close-btn {
     background: none;
     border: none;
     color: var(--muted);
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     cursor: pointer;
     padding: 4px 8px;
     border-radius: 6px;
@@ -121,17 +76,27 @@
     font-size: 0.72rem;
     letter-spacing: 3px;
     color: var(--muted);
-    padding: 14px 16px 6px;
+    padding: 12px 16px 6px;
     flex-shrink: 0;
+    min-width: var(--sidebar-w);
   }
 
-  /* COURSES — always visible, fixed */
-  .courses-list { flex-shrink: 0; }
+  .courses-list {
+    flex-shrink: 0;
+    min-width: var(--sidebar-w);
+    overflow-y: auto;
+    flex: 1;
+    scrollbar-width: thin;
+    scrollbar-color: #333 transparent;
+  }
+  .courses-list::-webkit-scrollbar { width: 4px; }
+  .courses-list::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+
   .course-item {
     padding: 11px 16px;
     cursor: pointer;
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     letter-spacing: 2px;
     color: var(--muted);
     border-left: 3px solid transparent;
@@ -139,34 +104,28 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    white-space: nowrap;
   }
   .course-item:hover { background: var(--hover); color: var(--text); }
   .course-item.active { color: var(--accent); border-left-color: var(--accent); background: var(--active); }
-  .course-arrow { font-size: 0.55rem; transition: transform 0.2s; }
+  .course-arrow { font-size: 0.55rem; transition: transform 0.2s; flex-shrink: 0; }
   .course-item.active .course-arrow { transform: rotate(90deg); }
 
-  /* MODULES — scrollable, nested inside course */
   .course-submenu {
     display: none;
     background: rgba(0,0,0,0.2);
     border-left: 2px solid rgba(232,160,32,0.2);
-    margin-left: 16px;
-    overflow-y: auto;
-    max-height: 55vh;
-    scrollbar-width: thin;
-    scrollbar-color: #333 transparent;
+    margin-left: 14px;
   }
-  .course-submenu::-webkit-scrollbar { width: 4px; }
-  .course-submenu::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
   .course-submenu.open { display: block; }
 
   .module-item { border-bottom: 1px solid var(--border); }
   .module-header {
-    padding: 9px 12px;
+    padding: 8px 12px;
     cursor: pointer;
-    font-size: 0.78rem;
+    font-size: 0.77rem;
     font-weight: 600;
-    color: #888;
+    color: #778;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -177,14 +136,14 @@
   .module-arrow { font-size: 0.6rem; transition: transform 0.2s; flex-shrink: 0; margin-left: 6px; }
   .module-header.open .module-arrow { transform: rotate(90deg); }
 
-  .videos-list { display: none; background: rgba(0,0,0,0.2); }
+  .videos-list { display: none; background: rgba(0,0,0,0.15); }
   .videos-list.open { display: block; }
 
   .video-item {
-    padding: 7px 12px 7px 20px;
+    padding: 7px 10px 7px 18px;
     cursor: pointer;
-    font-size: 0.76rem;
-    color: #777;
+    font-size: 0.75rem;
+    color: #667;
     transition: all 0.15s;
     border-left: 2px solid transparent;
     line-height: 1.35;
@@ -193,26 +152,77 @@
   .video-item.playing { color: var(--accent); border-left-color: var(--accent); background: rgba(232,160,32,0.05); }
 
   .single-video-item {
-    padding: 8px 12px 8px 16px;
+    padding: 8px 10px 8px 14px;
     cursor: pointer;
-    font-size: 0.82rem;
-    color: #777;
+    font-size: 0.8rem;
+    color: #667;
     transition: all 0.15s;
     border-left: 2px solid transparent;
   }
   .single-video-item:hover { background: var(--hover); color: var(--text); }
   .single-video-item.playing { color: var(--accent); border-left-color: var(--accent); background: rgba(232,160,32,0.05); }
 
-  /* MAIN */
+  /* MAIN — se encoge cuando sidebar abre */
   .main {
     flex: 1;
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    height: calc(100vh - 49px); /* minus topbar */
+    height: 100vh;
+    min-width: 0;
+    background: var(--bg);
+    position: relative;
   }
 
-  /* VIDEO — 16:9, not full height */
+  /* HAMBURGER TOPBAR — flotante sobre el hero */
+  .topbar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    display: flex;
+    align-items: center;
+    padding: 8px 14px;
+    gap: 12px;
+    z-index: 10;
+  }
+  .hamburger {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 8px;
+    transition: background 0.15s;
+    line-height: 1;
+  }
+  .hamburger:hover { background: rgba(255,255,255,0.14); }
+  .topbar-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .topbar-course { font-size: 0.62rem; font-weight: 700; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; }
+  .topbar-title { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 1.5px; color: var(--text); }
+
+  /* HERO BANNER */
+  .hero {
+    width: 100%;
+    height: 30vw;
+    max-height: 220px;
+    min-height: 100px;
+    background: url('fondo.jpg') center center / cover no-repeat;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 70%;
+    background: linear-gradient(to bottom, transparent, var(--bg));
+  }
+
+  /* VIDEO */
   .video-wrapper {
     width: 100%;
     aspect-ratio: 16/9;
@@ -229,111 +239,97 @@
   /* INFO + CONTROLS */
   .info-bar {
     flex: 1;
-    background: #0d0d0d;
-    padding: 14px 16px;
-    border-top: 1px solid var(--border);
+    padding: 10px 16px 12px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     overflow: hidden;
+    min-height: 0;
   }
 
-  .info-top {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-  }
-  .info-course { font-size: 0.65rem; font-weight: 700; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; }
-  .info-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 1.5px; color: var(--text); }
-  .info-counter { font-size: 0.7rem; color: var(--muted); }
-  #wakeMsg { color: #4caf50; font-size: 0.65rem; }
+  .info-top { display: flex; flex-direction: column; gap: 2px; }
+  .info-counter { font-size: 0.68rem; color: var(--muted); }
+  #wakeMsg { color: #4caf50; font-size: 0.63rem; }
 
   .controls {
     display: flex;
-    gap: 10px;
-    align-items: center;
-    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 8px;
   }
   .btn {
-    background: rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.09);
     color: #fff;
-    border: 1px solid rgba(255,255,255,0.12);
-    padding: 12px 22px;
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 11px 10px;
     border-radius: 50px;
-    font-size: 0.92rem;
+    font-size: 0.9rem;
     cursor: pointer;
     font-family: 'DM Sans', sans-serif;
     transition: all 0.15s;
-    font-weight: 500;
+    font-weight: 600;
     flex: 1;
-    min-width: 100px;
     text-align: center;
   }
-  .btn:hover { background: rgba(255,255,255,0.15); border-color: var(--accent); }
+  .btn:hover { background: rgba(255,255,255,0.17); border-color: var(--accent); }
 
   .bottom-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
   }
-
-  .logo-bottom {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .logo-bottom img.logo { width: 60px; opacity: 0.85; }
-  .logo-bottom img.profesor { width: 65px; opacity: 0.9; }
+  .logo-bottom img.logo { width: 110px; opacity: 0.9; }
+  .logo-bottom img.profesor { width: 90px; opacity: 0.95; }
 </style>
 </head>
 <body>
 
-<!-- OVERLAY -->
-<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
-
-<!-- SIDEBAR -->
+<!-- SIDEBAR (push layout, no overlay) -->
 <div class="sidebar" id="sidebar">
   <div class="sidebar-header">
     <img src="incubadora_logo_blanco.png" alt="INCUBADORA">
-    <button class="close-btn" onclick="closeSidebar()">✕</button>
+    <button class="close-btn" onclick="toggleSidebar()">✕</button>
   </div>
   <div class="sidebar-section-title">CURSOS</div>
   <div class="courses-list" id="courses-list"></div>
 </div>
 
-<!-- TOP BAR -->
-<div class="topbar">
-  <button class="hamburger" onclick="toggleSidebar()">☰</button>
-  <div class="topbar-title">INCUBADORA</div>
-  <div class="topbar-course" id="topbar-course">REVU IMPORT</div>
-</div>
-
 <!-- MAIN -->
 <div class="main">
+  <!-- HERO BANNER -->
+  <div class="hero"></div>
+
+  <!-- TOPBAR sobre el hero -->
+  <div class="topbar">
+    <button class="hamburger" onclick="toggleSidebar()">☰</button>
+    <div class="topbar-info">
+      <div class="topbar-course" id="topbar-course">REVU IMPORT</div>
+      <div class="topbar-title" id="topbar-title">Clase 01</div>
+    </div>
+  </div>
+
+  <!-- VIDEO -->
   <div class="video-wrapper">
     <video id="player" controls autoplay playsinline disableRemotePlayback></video>
   </div>
 
+  <!-- INFO + BOTONES -->
   <div class="info-bar">
     <div class="info-top">
-      <div class="info-course" id="info-course">REVU IMPORT</div>
-      <div class="info-title" id="info-title">Clase 01</div>
       <div class="info-counter" id="info-counter"></div>
       <div id="wakeMsg"></div>
     </div>
 
     <div>
-      <div class="controls" style="margin-bottom:10px;">
+      <div class="controls">
         <button class="btn" onclick="prev()">⬅ Anterior</button>
         <button class="btn" onclick="next()">Siguiente ➡</button>
         <button class="btn" onclick="pip()">⧉ Mini</button>
       </div>
-      <div class="bottom-row">
+      <div class="bottom-row" style="margin-top:8px;">
         <div class="logo-bottom">
           <img src="incubadora_logo_blanco.png" class="logo" alt="INCUBADORA">
-          <img src="profesor.png" class="profesor" alt="Profesor">
         </div>
+        <img src="profesor.png" class="profesor" alt="Profesor">
       </div>
     </div>
   </div>
@@ -608,11 +604,6 @@ const player = document.getElementById('player');
 
 function toggleSidebar() {
   document.getElementById('sidebar').classList.toggle('open');
-  document.getElementById('overlay').classList.toggle('open');
-}
-function closeSidebar() {
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('overlay').classList.remove('open');
 }
 
 function getUrl(v) {
@@ -629,10 +620,9 @@ function globalIndex(ci, mi, vi) {
 function load(gIdx) {
   current = (gIdx + allVideos.length) % allVideos.length;
   const v = allVideos[current];
-  document.getElementById('info-course').textContent = v.courseName;
-  document.getElementById('info-title').textContent = v.title;
-  document.getElementById('info-counter').textContent = `${current + 1} / ${allVideos.length}`;
   document.getElementById('topbar-course').textContent = v.courseName;
+  document.getElementById('topbar-title').textContent = v.title;
+  document.getElementById('info-counter').textContent = `${current + 1} / ${allVideos.length}`;
 
   if (v.ci !== activeCourse) {
     activeCourse = v.ci;
