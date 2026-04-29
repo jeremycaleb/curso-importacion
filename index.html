@@ -25,35 +25,107 @@
     color: var(--text);
     min-height: 100vh;
     display: flex;
+    flex-direction: column;
     overflow: hidden;
     height: 100vh;
   }
 
+  /* TOP BAR */
+  .topbar {
+    display: flex;
+    align-items: center;
+    background: var(--sidebar);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 16px;
+    gap: 14px;
+    flex-shrink: 0;
+    z-index: 100;
+  }
+  .hamburger {
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 1.4rem;
+    cursor: pointer;
+    padding: 4px 6px;
+    border-radius: 6px;
+    transition: background 0.15s;
+    line-height: 1;
+  }
+  .hamburger:hover { background: var(--hover); }
+  .topbar-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 3px;
+    color: var(--accent);
+    flex: 1;
+  }
+  .topbar-course {
+    font-size: 0.7rem;
+    color: var(--muted);
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  /* OVERLAY */
+  .overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 200;
+  }
+  .overlay.open { display: block; }
+
   /* SIDEBAR */
   .sidebar {
-    width: 270px;
-    min-width: 270px;
+    position: fixed;
+    top: 0; left: 0;
+    width: 280px;
+    height: 100vh;
     background: var(--sidebar);
     border-right: 1px solid var(--border);
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    height: 100vh;
+    z-index: 300;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
   }
+  .sidebar.open { transform: translateX(0); }
+
   .sidebar-header {
-    padding: 20px 16px 14px;
+    padding: 16px;
     border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     flex-shrink: 0;
   }
-  .sidebar-header img { width: 130px; opacity: 0.9; }
+  .sidebar-header img { width: 120px; opacity: 0.9; }
+  .close-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 1.4rem;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: color 0.15s;
+  }
+  .close-btn:hover { color: var(--text); }
+
   .sidebar-section-title {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     letter-spacing: 3px;
     color: var(--muted);
     padding: 14px 16px 6px;
     flex-shrink: 0;
   }
+
+  /* COURSES — always visible, fixed */
   .courses-list { flex-shrink: 0; }
   .course-item {
     padding: 11px 16px;
@@ -64,23 +136,33 @@
     color: var(--muted);
     border-left: 3px solid transparent;
     transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
   .course-item:hover { background: var(--hover); color: var(--text); }
   .course-item.active { color: var(--accent); border-left-color: var(--accent); background: var(--active); }
+  .course-arrow { font-size: 0.55rem; transition: transform 0.2s; }
+  .course-item.active .course-arrow { transform: rotate(90deg); }
 
-  .modules-tree {
-    flex: 1;
+  /* MODULES — scrollable, nested inside course */
+  .course-submenu {
+    display: none;
+    background: rgba(0,0,0,0.2);
+    border-left: 2px solid rgba(232,160,32,0.2);
+    margin-left: 16px;
     overflow-y: auto;
+    max-height: 55vh;
     scrollbar-width: thin;
     scrollbar-color: #333 transparent;
-    padding-bottom: 20px;
   }
-  .modules-tree::-webkit-scrollbar { width: 4px; }
-  .modules-tree::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+  .course-submenu::-webkit-scrollbar { width: 4px; }
+  .course-submenu::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+  .course-submenu.open { display: block; }
 
   .module-item { border-bottom: 1px solid var(--border); }
   .module-header {
-    padding: 9px 16px;
+    padding: 9px 12px;
     cursor: pointer;
     font-size: 0.78rem;
     font-weight: 600;
@@ -99,7 +181,7 @@
   .videos-list.open { display: block; }
 
   .video-item {
-    padding: 7px 16px 7px 28px;
+    padding: 7px 12px 7px 20px;
     cursor: pointer;
     font-size: 0.76rem;
     color: #777;
@@ -111,7 +193,7 @@
   .video-item.playing { color: var(--accent); border-left-color: var(--accent); background: rgba(232,160,32,0.05); }
 
   .single-video-item {
-    padding: 8px 16px 8px 20px;
+    padding: 8px 12px 8px 16px;
     cursor: pointer;
     font-size: 0.82rem;
     color: #777;
@@ -122,70 +204,137 @@
   .single-video-item.playing { color: var(--accent); border-left-color: var(--accent); background: rgba(232,160,32,0.05); }
 
   /* MAIN */
-  .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; height: 100vh; }
-  .video-area { flex: 1; background: #000; display: flex; flex-direction: column; overflow: hidden; }
-  video { width: 100%; flex: 1; min-height: 0; background: #000; display: block; }
+  .main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: calc(100vh - 49px); /* minus topbar */
+  }
 
+  /* VIDEO — 16:9, not full height */
+  .video-wrapper {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #000;
+    flex-shrink: 0;
+  }
+  .video-wrapper video {
+    width: 100%;
+    height: 100%;
+    display: block;
+    background: #000;
+  }
+
+  /* INFO + CONTROLS */
   .info-bar {
+    flex: 1;
     background: #0d0d0d;
-    padding: 10px 20px;
+    padding: 14px 16px;
     border-top: 1px solid var(--border);
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: space-between;
-    flex-shrink: 0;
-    gap: 12px;
+    overflow: hidden;
+  }
+
+  .info-top {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .info-course { font-size: 0.65rem; font-weight: 700; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; }
+  .info-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 1.5px; color: var(--text); }
+  .info-counter { font-size: 0.7rem; color: var(--muted); }
+  #wakeMsg { color: #4caf50; font-size: 0.65rem; }
+
+  .controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
     flex-wrap: wrap;
   }
-  .info-left { display: flex; flex-direction: column; gap: 2px; }
-  .info-course { font-size: 0.65rem; font-weight: 700; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; }
-  .info-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 1.5px; color: var(--text); }
-  .info-counter { font-size: 0.7rem; color: var(--muted); }
-  .controls { display: flex; gap: 8px; align-items: center; }
   .btn {
     background: rgba(255,255,255,0.08);
     color: #fff;
     border: 1px solid rgba(255,255,255,0.12);
-    padding: 7px 18px;
+    padding: 12px 22px;
     border-radius: 50px;
-    font-size: 0.82rem;
+    font-size: 0.92rem;
     cursor: pointer;
     font-family: 'DM Sans', sans-serif;
     transition: all 0.15s;
     font-weight: 500;
+    flex: 1;
+    min-width: 100px;
+    text-align: center;
   }
   .btn:hover { background: rgba(255,255,255,0.15); border-color: var(--accent); }
-  #wakeMsg { color: #4caf50; font-size: 0.65rem; }
-  .profesor-img { width: 70px; opacity: 0.9; }
+
+  .bottom-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .logo-bottom {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-bottom img.logo { width: 60px; opacity: 0.85; }
+  .logo-bottom img.profesor { width: 65px; opacity: 0.9; }
 </style>
 </head>
 <body>
 
-<div class="sidebar">
+<!-- OVERLAY -->
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
   <div class="sidebar-header">
     <img src="incubadora_logo_blanco.png" alt="INCUBADORA">
+    <button class="close-btn" onclick="closeSidebar()">✕</button>
   </div>
   <div class="sidebar-section-title">CURSOS</div>
   <div class="courses-list" id="courses-list"></div>
-  <div class="modules-tree" id="modules-tree"></div>
 </div>
 
+<!-- TOP BAR -->
+<div class="topbar">
+  <button class="hamburger" onclick="toggleSidebar()">☰</button>
+  <div class="topbar-title">INCUBADORA</div>
+  <div class="topbar-course" id="topbar-course">REVU IMPORT</div>
+</div>
+
+<!-- MAIN -->
 <div class="main">
-  <div class="video-area">
+  <div class="video-wrapper">
     <video id="player" controls autoplay playsinline disableRemotePlayback></video>
   </div>
+
   <div class="info-bar">
-    <div class="info-left">
+    <div class="info-top">
       <div class="info-course" id="info-course">REVU IMPORT</div>
       <div class="info-title" id="info-title">Clase 01</div>
       <div class="info-counter" id="info-counter"></div>
       <div id="wakeMsg"></div>
     </div>
-    <div class="controls">
-      <button class="btn" onclick="prev()">⬅ Anterior</button>
-      <button class="btn" onclick="next()">Siguiente ➡</button>
-      <button class="btn" onclick="pip()">⧉ Mini</button>
-      <img src="profesor.png" class="profesor-img" alt="Profesor">
+
+    <div>
+      <div class="controls" style="margin-bottom:10px;">
+        <button class="btn" onclick="prev()">⬅ Anterior</button>
+        <button class="btn" onclick="next()">Siguiente ➡</button>
+        <button class="btn" onclick="pip()">⧉ Mini</button>
+      </div>
+      <div class="bottom-row">
+        <div class="logo-bottom">
+          <img src="incubadora_logo_blanco.png" class="logo" alt="INCUBADORA">
+          <img src="profesor.png" class="profesor" alt="Profesor">
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -443,7 +592,6 @@ const courses = [
   }
 ];
 
-// Build flat list
 let allVideos = [];
 courses.forEach((course, ci) => {
   course.modules.forEach((mod, mi) => {
@@ -457,6 +605,15 @@ let current = 0;
 let activeCourse = 0;
 let openModules = new Set();
 const player = document.getElementById('player');
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('open');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
 
 function getUrl(v) {
   return v.type === 'video' ? v.url : `${PROXY}?id=${v.url}`;
@@ -475,13 +632,12 @@ function load(gIdx) {
   document.getElementById('info-course').textContent = v.courseName;
   document.getElementById('info-title').textContent = v.title;
   document.getElementById('info-counter').textContent = `${current + 1} / ${allVideos.length}`;
+  document.getElementById('topbar-course').textContent = v.courseName;
 
   if (v.ci !== activeCourse) {
     activeCourse = v.ci;
     openModules.clear();
   }
-
-  // Open parent module
   const modKey = `${v.ci}-${v.mi}`;
   openModules.add(modKey);
 
@@ -493,7 +649,6 @@ function load(gIdx) {
   player.load();
   player.play().catch(() => {});
 
-  // Scroll active item into view
   setTimeout(() => {
     const el = document.querySelector(`[data-gidx="${current}"]`);
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -517,35 +672,47 @@ function switchCourse(ci) {
 
 function renderSidebar() {
   const cl = document.getElementById('courses-list');
-  cl.innerHTML = courses.map((c, ci) =>
-    `<div class="course-item${ci === activeCourse ? ' active' : ''}" onclick="switchCourse(${ci})">${c.name}</div>`
-  ).join('');
+  cl.innerHTML = courses.map((c, ci) => {
+    const isActive = ci === activeCourse;
+    let submenuHTML = '';
 
-  const tree = document.getElementById('modules-tree');
-  const course = courses[activeCourse];
-  const ci = activeCourse;
+    if (isActive) {
+      const course = courses[ci];
+      if (course.flat) {
+        submenuHTML = `<div class="course-submenu open">${
+          course.modules[0].videos.map((v, vi) => {
+            const gIdx = globalIndex(ci, 0, vi);
+            return `<div class="single-video-item${gIdx === current ? ' playing' : ''}" data-gidx="${gIdx}" onclick="load(${gIdx})">${v.title}</div>`;
+          }).join('')
+        }</div>`;
+      } else {
+        submenuHTML = `<div class="course-submenu open">${
+          course.modules.map((mod, mi) => {
+            const key = `${ci}-${mi}`;
+            const isOpen = openModules.has(key);
+            const videos = mod.videos.map((v, vi) => {
+              const gIdx = globalIndex(ci, mi, vi);
+              return `<div class="video-item${gIdx === current ? ' playing' : ''}" data-gidx="${gIdx}" onclick="load(${gIdx})">${v.title}</div>`;
+            }).join('');
+            return `<div class="module-item">
+              <div class="module-header${isOpen ? ' open' : ''}" onclick="toggleModule('${key}')">
+                <span>${mod.label}</span><span class="module-arrow">▶</span>
+              </div>
+              <div class="videos-list${isOpen ? ' open' : ''}">${videos}</div>
+            </div>`;
+          }).join('')
+        }</div>`;
+      }
+    }
 
-  if (course.flat) {
-    tree.innerHTML = course.modules[0].videos.map((v, vi) => {
-      const gIdx = globalIndex(ci, 0, vi);
-      return `<div class="single-video-item${gIdx === current ? ' playing' : ''}" data-gidx="${gIdx}" onclick="load(${gIdx})">${v.title}</div>`;
-    }).join('');
-  } else {
-    tree.innerHTML = course.modules.map((mod, mi) => {
-      const key = `${ci}-${mi}`;
-      const isOpen = openModules.has(key);
-      const videos = mod.videos.map((v, vi) => {
-        const gIdx = globalIndex(ci, mi, vi);
-        return `<div class="video-item${gIdx === current ? ' playing' : ''}" data-gidx="${gIdx}" onclick="load(${gIdx})">${v.title}</div>`;
-      }).join('');
-      return `<div class="module-item">
-        <div class="module-header${isOpen ? ' open' : ''}" data-mod="${key}" onclick="toggleModule('${key}')">
-          <span>${mod.label}</span><span class="module-arrow">▶</span>
-        </div>
-        <div class="videos-list${isOpen ? ' open' : ''}">${videos}</div>
-      </div>`;
-    }).join('');
-  }
+    return `<div>
+      <div class="course-item${isActive ? ' active' : ''}" onclick="switchCourse(${ci})">
+        <span>${c.name}</span>
+        <span class="course-arrow">▶</span>
+      </div>
+      ${submenuHTML}
+    </div>`;
+  }).join('');
 }
 
 player.addEventListener('ended', () => load(current + 1));
