@@ -277,17 +277,17 @@
   }
   .logo-bottom img.logo { width: 110px; opacity: 0.9; }
   .logo-bottom img.profesor { width: 90px; opacity: 0.95; }
- @media (max-width: 600px) {
-    .hero { height: 55vw; min-height: 200px; max-height: 260px; }
-    .video-wrapper { aspect-ratio: 16/9; }
-    .info-bar { padding: 8px 12px 10px; }
+@media (max-width: 768px) {
+    .hero { height: 40vw; min-height: 120px; max-height: 200px; }
+    .video-wrapper { aspect-ratio: 16/9; width: 100%; }
+    .info-bar { padding: 6px 10px 8px; }
     .sidebar.open {
       position: fixed;
       top: 0; left: 0;
       height: 100vh;
       z-index: 100;
-      width: 230px !important;
-      min-width: 230px !important;
+      width: 75vw !important;
+      min-width: 0 !important;
     }
     .main { width: 100% !important; flex: 1 !important; }
   }
