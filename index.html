@@ -320,16 +320,12 @@
     </div>
 
     <div>
-      <div class="controls">
+      <div class="controls" style="margin-bottom:10px;">
         <button class="btn" onclick="prev()">⬅ Anterior</button>
         <button class="btn" onclick="next()">Siguiente ➡</button>
-        <button class="btn" onclick="pip()">⧉ Mini</button>
       </div>
-      <div class="bottom-row" style="margin-top:8px;">
-        <div class="logo-bottom">
-          <img src="incubadora_logo_blanco.png" class="logo" alt="INCUBADORA">
-        </div>
-        <img src="profesor.png" class="profesor" alt="Profesor">
+      <div style="display:flex; justify-content:center;">
+        <button class="btn" style="flex:0 0 auto; min-width:180px;" onclick="pip()">⧉ Miniatura</button>
       </div>
     </div>
   </div>
@@ -342,10 +338,10 @@ const courses = [
   {
     name: "REVU IMPORT", flat: true,
     modules: [{ label: "Clases", videos: [
-      { title: "Clase 01", url: "https://www.dropbox.com/scl/fi/d8s2lcaphxqwxvw8exgj1/Clase-01-Revu-School.mp4?rlkey=qqk1xd0ar5l605dcqiwetuyih&st=dgy3qmc2&dl=1", type: "video" },
-      { title: "Clase 02", url: "https://www.dropbox.com/scl/fi/0p28iga4089wh8dw05z9b/Clase-Esp.-02-29_06.mp4?rlkey=a99n20czfda9wqnle80v4uigh&st=n07jc5xm&dl=1", type: "video" },
-      { title: "Clase 03", url: "https://www.dropbox.com/scl/fi/8s33ubuy0gcd74gbnvtl4/clase-03-importaciones-revu-03.mp4?rlkey=aem6ah7v08b1prvt96f5udym0&st=loqbe6h8&dl=1", type: "video" },
-      { title: "Clase 04", url: "https://www.dropbox.com/scl/fi/952bbvgzi4s527vs4vr8q/clase-04-importaciones-revu-03.mp4?rlkey=ug6636spykbd4uydf4az5refg&st=gtxow10x&dl=1", type: "video" },
+      { title: "Fundamentos e Incoterms", url: "https://www.dropbox.com/scl/fi/d8s2lcaphxqwxvw8exgj1/Clase-01-Revu-School.mp4?rlkey=qqk1xd0ar5l605dcqiwetuyih&st=dgy3qmc2&dl=1", type: "video" },
+      { title: "Importación de USA", url: "https://www.dropbox.com/scl/fi/0p28iga4089wh8dw05z9b/Clase-Esp.-02-29_06.mp4?rlkey=a99n20czfda9wqnle80v4uigh&st=n07jc5xm&dl=1", type: "video" },
+      { title: "Alibaba y Negociación", url: "https://www.dropbox.com/scl/fi/8s33ubuy0gcd74gbnvtl4/clase-03-importaciones-revu-03.mp4?rlkey=aem6ah7v08b1prvt96f5udym0&st=loqbe6h8&dl=1", type: "video" },
+      { title: "Importación Marítima", url: "https://www.dropbox.com/scl/fi/952bbvgzi4s527vs4vr8q/clase-04-importaciones-revu-03.mp4?rlkey=ug6636spykbd4uydf4az5refg&st=gtxow10x&dl=1", type: "video" },
     ]}]
   },
   {
