@@ -631,7 +631,10 @@ function load(gIdx) {
   player.src = '';
   player.src = getUrl(v);
   player.load();
+  player.play().catch(() => {
+  player.muted = true;
   player.play().catch(() => {});
+});
 
   setTimeout(() => {
     const el = document.querySelector(`[data-gidx="${current}"]`);
