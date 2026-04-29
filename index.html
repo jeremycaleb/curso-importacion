@@ -256,20 +256,20 @@
     gap: 8px;
     margin-bottom: 8px;
   }
-  .btn {
-    background: rgba(255,255,255,0.09);
-    color: #fff;
-    border: 1px solid rgba(255,255,255,0.15);
-    padding: 11px 10px;
-    border-radius: 50px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    transition: all 0.15s;
-    font-weight: 600;
-    flex: 1;
-    text-align: center;
-  }
+ .btn {
+  background: rgba(255,255,255,0.09);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 11px 10px;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.15s;
+  font-weight: 600;
+  flex: 1;
+  text-align: center;
+}
   .btn:hover { background: rgba(255,255,255,0.17); border-color: var(--accent); }
 
   .bottom-row {
@@ -651,8 +651,12 @@ function toggleModule(key) {
 }
 
 function switchCourse(ci) {
-  activeCourse = ci;
-  openModules.clear();
+  if (activeCourse === ci) {
+    activeCourse = -1;
+  } else {
+    activeCourse = ci;
+    openModules.clear();
+  }
   renderSidebar();
 }
 
