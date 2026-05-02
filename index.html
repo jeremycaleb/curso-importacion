@@ -68,7 +68,7 @@
   .category-header {
     padding: 10px 16px 6px;
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 0.72rem; letter-spacing: 3px;
+    font-size: 1.05rem; letter-spacing: 3px;
     color: var(--accent);
     border-top: 1px solid var(--border);
     cursor: pointer;
@@ -86,7 +86,7 @@
   .course-item {
     padding: 11px 16px; cursor: pointer;
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.1rem; letter-spacing: 2px; color: var(--muted);
+    font-size: 1.43rem; letter-spacing: 2px; color: var(--muted);
     border-left: 3px solid transparent; transition: all 0.15s;
     display: flex; align-items: center; justify-content: space-between;
     white-space: nowrap;
@@ -1278,8 +1278,8 @@ function next() { load(current + 1); }
 function prev() { load(current - 1); }
 
 function toggleCategory(cati) {
-  if (openCategories.has(cati)) openCategories.delete(cati);
-  else openCategories.add(cati);
+  
+  
   renderSidebar();
 }
 
