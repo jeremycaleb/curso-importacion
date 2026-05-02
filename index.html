@@ -31,79 +31,64 @@
     height: 100vh;
   }
 
-  /* SIDEBAR */
   .sidebar {
-    width: 0;
-    min-width: 0;
+    width: 0; min-width: 0;
     background: var(--sidebar);
     border-right: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    height: 100vh;
+    display: flex; flex-direction: column;
+    overflow: hidden; height: 100vh;
     transition: width 0.28s ease, min-width 0.28s ease;
     flex-shrink: 0;
   }
-  .sidebar.open {
-    width: var(--sidebar-w);
-    min-width: var(--sidebar-w);
-  }
+  .sidebar.open { width: var(--sidebar-w); min-width: var(--sidebar-w); }
 
   .sidebar-header {
     padding: 14px 16px;
     border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-shrink: 0;
-    min-width: var(--sidebar-w);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-shrink: 0; min-width: var(--sidebar-w);
   }
   .sidebar-header img { width: 110px; opacity: 0.9; }
   .close-btn {
-    background: none;
-    border: none;
-    color: var(--muted);
-    font-size: 1.3rem;
-    cursor: pointer;
-    padding: 4px 8px;
-    border-radius: 6px;
-    transition: color 0.15s;
+    background: none; border: none; color: var(--muted);
+    font-size: 1.3rem; cursor: pointer; padding: 4px 8px;
+    border-radius: 6px; transition: color 0.15s;
   }
   .close-btn:hover { color: var(--text); }
 
-  .sidebar-section-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 0.72rem;
-    letter-spacing: 3px;
-    color: var(--muted);
-    padding: 12px 16px 6px;
-    flex-shrink: 0;
-    min-width: var(--sidebar-w);
-  }
-
   .courses-list {
-    flex-shrink: 0;
-    min-width: var(--sidebar-w);
-    overflow-y: auto;
-    flex: 1;
-    scrollbar-width: thin;
-    scrollbar-color: #333 transparent;
+    flex-shrink: 0; min-width: var(--sidebar-w);
+    overflow-y: auto; flex: 1;
+    scrollbar-width: thin; scrollbar-color: #333 transparent;
   }
   .courses-list::-webkit-scrollbar { width: 4px; }
   .courses-list::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
 
-  .course-item {
-    padding: 11px 16px;
-    cursor: pointer;
+  /* CATEGORY */
+  .category-header {
+    padding: 10px 16px 6px;
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.1rem;
-    letter-spacing: 2px;
-    color: var(--muted);
-    border-left: 3px solid transparent;
-    transition: all 0.15s;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    font-size: 0.72rem; letter-spacing: 3px;
+    color: var(--accent);
+    border-top: 1px solid var(--border);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between;
+    min-width: var(--sidebar-w);
+    user-select: none;
+  }
+  .category-header:first-child { border-top: none; }
+  .category-arrow { font-size: 0.55rem; transition: transform 0.2s; }
+  .category-header.open .category-arrow { transform: rotate(90deg); }
+
+  .category-body { display: none; }
+  .category-body.open { display: block; }
+
+  .course-item {
+    padding: 11px 16px; cursor: pointer;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem; letter-spacing: 2px; color: var(--muted);
+    border-left: 3px solid transparent; transition: all 0.15s;
+    display: flex; align-items: center; justify-content: space-between;
     white-space: nowrap;
   }
   .course-item:hover { background: var(--hover); color: var(--text); }
@@ -111,24 +96,14 @@
   .course-arrow { font-size: 0.55rem; transition: transform 0.2s; flex-shrink: 0; }
   .course-item.active .course-arrow { transform: rotate(90deg); }
 
-  .course-submenu {
-    display: none;
-    background: rgba(0,0,0,0.2);
-    border-left: 2px solid rgba(232,160,32,0.2);
-    margin-left: 14px;
-  }
+  .course-submenu { display: none; background: rgba(0,0,0,0.2); border-left: 2px solid rgba(232,160,32,0.2); margin-left: 14px; }
   .course-submenu.open { display: block; }
 
   .module-item { border-bottom: 1px solid var(--border); }
   .module-header {
-    padding: 8px 12px;
-    cursor: pointer;
-    font-size: 0.77rem;
-    font-weight: 600;
-    color: #778;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    padding: 8px 12px; cursor: pointer;
+    font-size: 0.77rem; font-weight: 600; color: #778;
+    display: flex; justify-content: space-between; align-items: center;
     transition: all 0.15s;
   }
   .module-header:hover { background: var(--hover); color: var(--text); }
@@ -140,154 +115,80 @@
   .videos-list.open { display: block; }
 
   .video-item {
-    padding: 7px 10px 7px 18px;
-    cursor: pointer;
-    font-size: 0.75rem;
-    color: #667;
-    transition: all 0.15s;
-    border-left: 2px solid transparent;
-    line-height: 1.35;
+    padding: 7px 10px 7px 18px; cursor: pointer;
+    font-size: 0.75rem; color: #667; transition: all 0.15s;
+    border-left: 2px solid transparent; line-height: 1.35;
   }
   .video-item:hover { background: var(--hover); color: var(--text); }
   .video-item.playing { color: var(--accent); border-left-color: var(--accent); background: rgba(232,160,32,0.05); }
 
   .single-video-item {
-    padding: 8px 10px 8px 14px;
-    cursor: pointer;
-    font-size: 0.8rem;
-    color: #667;
-    transition: all 0.15s;
+    padding: 8px 10px 8px 14px; cursor: pointer;
+    font-size: 0.8rem; color: #667; transition: all 0.15s;
     border-left: 2px solid transparent;
   }
   .single-video-item:hover { background: var(--hover); color: var(--text); }
   .single-video-item.playing { color: var(--accent); border-left-color: var(--accent); background: rgba(232,160,32,0.05); }
 
-  /* MAIN — se encoge cuando sidebar abre */
   .main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    height: 100vh;
-    min-width: 0;
-    background: var(--bg);
-    position: relative;
+    flex: 1; display: flex; flex-direction: column;
+    overflow: hidden; height: 100vh; min-width: 0;
+    background: var(--bg); position: relative;
   }
 
-  /* HAMBURGER TOPBAR — flotante sobre el hero */
   .topbar {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    display: flex;
-    align-items: center;
-    padding: 8px 14px;
-    gap: 12px;
-    z-index: 10;
+    position: absolute; top: 0; left: 0; right: 0;
+    display: flex; align-items: center;
+    padding: 8px 14px; gap: 12px; z-index: 10;
   }
   .hamburger {
     background: rgba(255,255,255,0.07);
-    border: 1px solid var(--border);
-    color: var(--text);
-    font-size: 1.2rem;
-    cursor: pointer;
-    padding: 5px 10px;
-    border-radius: 8px;
-    transition: background 0.15s;
-    line-height: 1;
+    border: 1px solid var(--border); color: var(--text);
+    font-size: 1.2rem; cursor: pointer; padding: 5px 10px;
+    border-radius: 8px; transition: background 0.15s; line-height: 1;
   }
   .hamburger:hover { background: rgba(255,255,255,0.14); }
-  .topbar-info {
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-  }
+  .topbar-info { display: flex; flex-direction: column; gap: 1px; }
   .topbar-course { font-size: 0.62rem; font-weight: 700; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; }
   .topbar-title { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 1.5px; color: var(--text); }
 
-  /* HERO BANNER */
-.hero {
-    width: 100%;
-    height: 30vw;
-    max-height: 220px;
-    min-height: 160px;
+  .hero {
+    width: 100%; height: 30vw; max-height: 220px; min-height: 160px;
     background: url('fondo.jpg') center center / cover no-repeat;
-    position: relative;
-    flex-shrink: 0;
+    position: relative; flex-shrink: 0;
   }
   .hero::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 70%;
-    background: linear-gradient(to bottom, transparent, var(--bg));
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 70%; background: linear-gradient(to bottom, transparent, var(--bg));
   }
 
-  /* VIDEO */
-  .video-wrapper {
-    width: 100%;
-    aspect-ratio: 16/9;
-    background: #000;
-    flex-shrink: 0;
-  }
-  .video-wrapper video {
-    width: 100%;
-    height: 100%;
-    display: block;
-    background: #000;
-  }
+  .video-wrapper { width: 100%; aspect-ratio: 16/9; background: #000; flex-shrink: 0; }
+  .video-wrapper video { width: 100%; height: 100%; display: block; background: #000; }
 
-  /* INFO + CONTROLS */
-.info-bar {
-    flex-shrink: 0;
-    padding: 10px 16px 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
+  .info-bar { flex-shrink: 0; padding: 10px 16px 12px; display: flex; flex-direction: column; gap: 8px; }
   .info-top { display: flex; flex-direction: column; gap: 2px; }
   .info-counter { font-size: 0.68rem; color: var(--muted); }
   #wakeMsg { color: #4caf50; font-size: 0.63rem; }
 
-  .controls {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 8px;
+  .controls { display: flex; gap: 8px; margin-bottom: 8px; }
+  .btn {
+    background: rgba(255,255,255,0.09); color: #fff;
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 11px 10px; border-radius: 50px;
+    font-size: 0.9rem; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; transition: all 0.15s;
+    font-weight: 600; flex: 1; text-align: center;
   }
- .btn {
-  background: rgba(255,255,255,0.09);
-  color: #fff;
-  border: 1px solid rgba(255,255,255,0.15);
-  padding: 11px 10px;
-  border-radius: 50px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
-  transition: all 0.15s;
-  font-weight: 600;
-  flex: 1;
-  text-align: center;
-}
   .btn:hover { background: rgba(255,255,255,0.17); border-color: var(--accent); }
 
-  .bottom-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .logo-bottom img.logo { width: 110px; opacity: 0.9; }
-  .logo-bottom img.profesor { width: 90px; opacity: 0.95; }
-@media (max-width: 768px) {
+  @media (max-width: 768px) {
     .hero { height: 52vw; min-height: 160px; max-height: 280px; }
     .video-wrapper { width: 100%; height: 56vw; margin-top: 0; }
     .info-bar { padding: 6px 10px 8px; }
     .sidebar.open {
-      position: fixed;
-      top: 0; left: 0;
-      height: 100vh;
-      z-index: 100;
-      width: 75vw !important;
-      min-width: 0 !important;
+      position: fixed; top: 0; left: 0;
+      height: 100vh; z-index: 100;
+      width: 75vw !important; min-width: 0 !important;
     }
     .main { width: 100% !important; flex: 1 !important; }
   }
@@ -295,22 +196,16 @@
 </head>
 <body>
 
-<!-- SIDEBAR (push layout, no overlay) -->
 <div class="sidebar" id="sidebar">
   <div class="sidebar-header">
     <img src="incubadora_logo_blanco.png" alt="INCUBADORA">
     <button class="close-btn" onclick="toggleSidebar()">✕</button>
   </div>
-  <div class="sidebar-section-title">CURSOS</div>
   <div class="courses-list" id="courses-list"></div>
 </div>
 
-<!-- MAIN -->
 <div class="main">
-  <!-- HERO BANNER -->
   <div class="hero"></div>
-
-  <!-- TOPBAR sobre el hero -->
   <div class="topbar">
     <button class="hamburger" onclick="toggleSidebar()">☰</button>
     <div class="topbar-info">
@@ -318,19 +213,14 @@
       <div class="topbar-title" id="topbar-title">Clase 01</div>
     </div>
   </div>
-
-  <!-- VIDEO -->
   <div class="video-wrapper">
     <video id="player" controls autoplay playsinline disableRemotePlayback></video>
   </div>
-
-  <!-- INFO + BOTONES -->
   <div class="info-bar">
     <div class="info-top">
       <div class="info-counter" id="info-counter"></div>
       <div id="wakeMsg"></div>
     </div>
-
     <div>
       <div class="controls" style="margin-bottom:10px;">
         <button class="btn" onclick="prev()">⬅ Anterior</button>
@@ -346,433 +236,973 @@
 <script>
 const PROXY = 'https://drive-proxy.jeremycalebp.workers.dev';
 
-const courses = [
+const categories = [
   {
-    name: "REVU IMPORT", flat: true,
-    modules: [{ label: "Clases", videos: [
-      { title: "Fundamentos e Incoterms", url: "https://www.dropbox.com/scl/fi/d8s2lcaphxqwxvw8exgj1/Clase-01-Revu-School.mp4?rlkey=qqk1xd0ar5l605dcqiwetuyih&st=dgy3qmc2&dl=1", type: "video" },
-      { title: "Importación de USA", url: "https://www.dropbox.com/scl/fi/0p28iga4089wh8dw05z9b/Clase-Esp.-02-29_06.mp4?rlkey=a99n20czfda9wqnle80v4uigh&st=n07jc5xm&dl=1", type: "video" },
-      { title: "Alibaba y Negociación", url: "https://www.dropbox.com/scl/fi/8s33ubuy0gcd74gbnvtl4/clase-03-importaciones-revu-03.mp4?rlkey=aem6ah7v08b1prvt96f5udym0&st=loqbe6h8&dl=1", type: "video" },
-      { title: "Importación Marítima", url: "https://www.dropbox.com/scl/fi/952bbvgzi4s527vs4vr8q/clase-04-importaciones-revu-03.mp4?rlkey=ug6636spykbd4uydf4az5refg&st=gtxow10x&dl=1", type: "video" },
-    ]}]
-  },
-  {
-    name: "SOL IMPORTACIONES", flat: false,
-    modules: [
-      { label: "Módulo 1 · Presentación", videos: [{ title: "Presentación", url: "1mW20dMcAjtnxYhjE59FND42_dvhFFYi0", type: "drive" }]},
-      { label: "Módulo 2 · Teoría y Productos Novedosos", videos: [
-        { title: "Aspectos Generales", url: "17r1dTy8joNxCEi-mvdTP5w8LnIXvwfek", type: "drive" },
-        { title: "Productos Novedosos", url: "1S3vpHC-mVobGKm0b8gAFEeZEIxIZ8-Gv", type: "drive" },
-        { title: "Estadísticas de Comercio Internacional", url: "1yYG10SmRkGXluRVgwb962UzbxNLO2sXA", type: "drive" },
-        { title: "Importaciones de China, Panamá y EEUU", url: "1DaOEPAbtIFXpXR9_pFBBNu1X7fFD2ebl", type: "drive" },
-      ]},
-      { label: "Módulo 3 · Sociedad y Regímenes Tributarios", videos: [
-        { title: "Sociedades y Regímenes Tributarios", url: "1WYxGtwFajKN_Q2ZgOJ3pI10kB0_7NG3a", type: "drive" },
-        { title: "Formalización y Régimen Tributario Perú", url: "1kfUVXAoZx5Edl-bbMj5DODCSqjzmdZKo", type: "drive" },
-      ]},
-      { label: "Módulo 4 · Actividades Claves", videos: [
-        { title: "Actividades Claves para Importar", url: "1cToi0FoQIUaPiQzYQ9vDyngZX6WS4eRM", type: "drive" },
-        { title: "Tipos de Despacho Aduanero", url: "1w_nirvkrJyU27DkoFRqhq-7sigdzE6Wf", type: "drive" },
-        { title: "Documentos Importantes", url: "136ONc8W96gGL-wYWkWcrl5Fn6servZC7", type: "drive" },
-        { title: "Tipos de Transporte Internacional", url: "1PCFb2B6V5zHmj49fr-E0hCXHaEx0wfJU", type: "drive" },
-      ]},
-      { label: "Módulo 5 · Impuestos para Perú", videos: [{ title: "Impuestos para Perú", url: "1me1KCj6Gg8sO6VCnxShYqELhLAwNGpIm", type: "drive" }]},
-      { label: "Módulo 6 · Impuestos por País", videos: [
-        { title: "Bolivia", url: "1WLFXnjMACZ7IKofI6mW2bvzA1nJO6VVI", type: "drive" },
-        { title: "Ecuador", url: "1RzTf2KHU6B41uzy2S-YXa6Ki5WfQHe9e", type: "drive" },
-        { title: "Colombia", url: "1SQ1zbSS1NCYC9giSborjQYl7MWD295I4", type: "drive" },
-        { title: "Chile", url: "1A79Zo-gKmG5bUYwLyQcsz2SdhkHR2YkX", type: "drive" },
-        { title: "México", url: "1WkOrg_bRcGqdSG_Sgxz6Ac69Xyg8rJ1u", type: "drive" },
-        { title: "Venezuela", url: "1DI8IYqjMcwhL3EWiJ9MrEVgkNToN-cUr", type: "drive" },
-        { title: "Guatemala", url: "1ruhU0jcydizHo4hki1MOxbffAClG3vSg", type: "drive" },
-        { title: "Panamá", url: "1h1E4TVMpBZP1DBzLDmfIEB53rec9mwwN", type: "drive" },
-        { title: "El Salvador", url: "1psKEM9iFELkdH-FUSOCGfnBSWVqbaDif", type: "drive" },
-        { title: "República Dominicana", url: "13kK_kxzMs4urU8O-_-4lmr64jDtECsyy", type: "drive" },
-        { title: "Honduras", url: "1mYNerE1_Cq0yWXbCEhaMFRC3DJTOh66q", type: "drive" },
-        { title: "Nicaragua", url: "1BLjdek1saLwABWBNgYKQ1TiqjF2dHYeV", type: "drive" },
-        { title: "Costa Rica", url: "1f6q0p95eJYTSRJ_fdRjgbxAJyZce6u3y", type: "drive" },
-        { title: "España", url: "1WiwYUrtizGWOd3qk5Ucd_3MrNI7xVXew", type: "drive" },
-        { title: "Argentina", url: "1LpR_Da71apyTPlKXscO9Fr0f1jhmMKvM", type: "drive" },
-        { title: "Uruguay", url: "13Xs9WKGGDBi3KRoJwhcNVkleYuy_OW1r", type: "drive" },
-        { title: "Uruguay · Parte 2", url: "1idJwMLdqvhlIO7k33JPAT4qAAXDeGeuL", type: "drive" },
-      ]},
-      { label: "Módulo 7 · Partidas Arancelarias", videos: [{ title: "Partidas Arancelarias", url: "1SyYzxuAkkhZpfz2UzlGviEKC3zS5nhkd", type: "drive" }]},
-      { label: "Módulo 8 · Teoría y Restricciones", videos: [
-        { title: "Tipos de Proveedores", url: "1R7UMHtoVCcdiSoWsxLH2V3nyQd1G1hvJ", type: "drive" },
-        { title: "Tipos de Mercancía", url: "1_o6eC8cgmL1tvpAFkKItpa30ZoiM-MJh", type: "drive" },
-        { title: "Organismos de Estado que Tramitan Permisos", url: "1DQqCBip0l_gZl5DgYMwXTKeWy-bUWTdJ", type: "drive" },
-      ]},
-      { label: "Módulo 9 · Incoterms", videos: [{ title: "Incoterms", url: "1R1JDWEJ9JvMT8ocMhUziOt6UNo-uD7fB", type: "drive" }]},
-      { label: "Módulo 10 · Agentes en una Importación", videos: [
-        { title: "Empresas de Inspección de Calidad", url: "19kH7AWrH8fqUyNEdxx7n6h9wWB4yilLm", type: "drive" },
-        { title: "Couriers de Envíos Postales", url: "1c0Kk1ZV5qvZ8JYxfgxQQVhosa8ayrfaZ", type: "drive" },
-        { title: "Intermediarios de una Importación", url: "1fTLMeKr0MhBOMC0VDCe5BlgkwXcZAIYZ", type: "drive" },
-        { title: "Medios de Pago", url: "1nJeqqwrJPdewKdF8dHiAUVJ0m8hSv2Z1", type: "drive" },
-      ]},
-      { label: "Módulo 11 · Final Teoría", videos: [{ title: "Final Teoría", url: "1QtVQ2YlX7y5iTN90o9izCljmN3JBXbYB", type: "drive" }]},
-      { label: "Módulo 12 · Importación de USA", videos: [
-        { title: "Páginas Directas", url: "1Uhl-Q6T8zSRVR7-BlCeZWr9ZYEyRfYpL", type: "drive" },
-        { title: "Teoría Casilleros y Viajeros", url: "1mjn-tnt18ikIT_797pZIXzTnqx-qcXSy", type: "drive" },
-        { title: "Creación de Casillero Perú", url: "1Anm6jw14I5M2tI9l6ww6ZXEMhIELTvT8", type: "drive" },
-        { title: "Cómo Usar Olivo Courier", url: "1JpK6JMpuZ8u0-2O8pAVd_AqLXNEN9oYW", type: "drive" },
-      ]},
-      { label: "Módulo 13 · Courier por País", videos: [
-        { title: "Courier México", url: "1eMSsIGzqfhL_GPi8mAXsYmLzE5yfxT02", type: "drive" },
-        { title: "Courier Bolivia · P1", url: "13Sy6HEPB2Z_-PIyIONi_M3wPwT2UHTw4", type: "drive" },
-        { title: "Courier Bolivia · P2", url: "1WzOfTmtHXJC6EVutkFjEwL9ljKiZhOXD", type: "drive" },
-        { title: "Courier Ecuador", url: "1qrViScQKO9b1UZRr7GgH7I3cYKfAMHO9", type: "drive" },
-        { title: "Courier Chile", url: "17WxtpVMQhXJCxvP6pXkaE0jPDX0UBp6Y", type: "drive" },
-        { title: "Courier Argentina · P1", url: "15QBImFCg-ef-Eeg3LvFMiGP-f9NSMgM1", type: "drive" },
-        { title: "Courier Argentina · P2", url: "1LFd20_DNq8q4RUy-sW6FCMkvi-F8OGwa", type: "drive" },
-        { title: "Courier Rep. Dominicana · P1", url: "1B7KXfN81tBRt-KYfz0lVGiaeSr-3o27s", type: "drive" },
-        { title: "Courier Rep. Dominicana · P2", url: "1o5aVkUuiA-QI7DLL1XTMnkDTszH9_8jC", type: "drive" },
-        { title: "Courier El Salvador", url: "1kfBkoeemEuozms-3_tl8yivRj6_Vwviz", type: "drive" },
-        { title: "Courier Uruguay", url: "17K4YwpZns6qohEBUJ7cukE39t_kj_nvI", type: "drive" },
-        { title: "Courier España", url: "1d7WSZfk6oYKYjmJHPnsw60hGN_B3qPQp", type: "drive" },
-        { title: "Courier Guatemala", url: "1ukxAhi-wTfGcHl3z7f7Mn34ClIXsFmdA", type: "drive" },
-        { title: "Courier Paraguay", url: "1WVY_BRW-jBwfQsbtKlRKIAO6yvrK7Vkn", type: "drive" },
-        { title: "Courier Costa Rica", url: "1C_VC1f9togPSRFeRAT6pv-NppZ63oc1H", type: "drive" },
-        { title: "Courier Cuba", url: "1o4qiZQnAPHcHL2bNmwAnHQ8agazaPpJQ", type: "drive" },
-        { title: "Courier Nicaragua", url: "1y6JF4lyMuQZkPQoOqPD6j5rcQ4a4KjOL", type: "drive" },
-        { title: "Courier Brasil", url: "1e-Fxl2v6wjckt5JUwTA3bEA1pJTrPWQF", type: "drive" },
-      ]},
-      { label: "Módulo 14 · Casos Prácticos USA", videos: [
-        { title: "Amazon - La Más Grande de USA", url: "117TwgiUOv7JPHEulfC-dmna-gJFxSm1x", type: "drive" },
-        { title: "Mundo de la Tecnología", url: "1cySpKy4aC4jS4iLkeMtcZxYduAsGH06o", type: "drive" },
-        { title: "Mundo de las Zapatillas", url: "1MeCK_NP4uBlsOqQ4hy0nFNpyAcvIPxYw", type: "drive" },
-        { title: "Mundo del Skincare", url: "1YueIBtCFCOxC_p2G-vYodsGfB-VZxic0", type: "drive" },
-        { title: "Mundo de los Cosméticos", url: "1WDmgSvXK4lVSRpZZeEDhDlhIrOwv5IfC", type: "drive" },
-        { title: "Mundo de los Relojes", url: "1AQkqf0JA9S4Y0GAOwKZzT3IITzXpPOTq", type: "drive" },
-        { title: "Todo por 1.75 Dólar", url: "16IB-OvdldVYs-qqEj6pfFt1C-arQD_EG", type: "drive" },
-        { title: "Mystery Boxes", url: "16c3XQ0uTx97Bf-8Xh749KXR3jFyKaMlE", type: "drive" },
-        { title: "Mundo de los Juguetes", url: "1tAnUWMAyHvov1XRnjqq8-GFbCcjVMAt7", type: "drive" },
-        { title: "Mystery Box Boxycharm", url: "1g2zubR0pz0dbS1TzxrWlZfKUMRHpgz57", type: "drive" },
-        { title: "Juntar Pedidos en USA", url: "1VtFLk4b7iV1QzwRFbNKeVZRmvzwygeMt", type: "drive" },
-      ]},
-      { label: "Módulo 15 · Método Viajeros", videos: [
-        { title: "Teoría Viajeros", url: "1vBN5I4vqt1jI6Pb3r2b5wxvWVgF6jt5y", type: "drive" },
-        { title: "Mundo Apple - Comparto mi Maleta", url: "15YZjAuNaqsCrVVMVplfj2nxfQWbwz2BZ", type: "drive" },
-        { title: "Mundo de Celulares Usados", url: "1cK0kJ7QJABqE-sJrzag1PHE1Ev7aePIL", type: "drive" },
-        { title: "Mundo Gamer", url: "1KZqHviTP1HkY15Souy98O7qbUCnIk29G", type: "drive" },
-        { title: "Mundo del Minoxidil", url: "1wS7htFWJA_fcVEgcALflziGEjml-C8I8", type: "drive" },
-      ]},
-      { label: "Módulo 16 · Hacks para Amazon", videos: [{ title: "Camel Camel Camel", url: "13JhWJ5xpNZnchotI5Boy4FAOWoT9pwZl", type: "drive" }]},
-      { label: "Módulo 17 · Importaciones de China", videos: [
-        { title: "Básico Aliexpress y Shein", url: "1CLK91lJsfm7RBzsBRjel8u7DzfCW0e_T", type: "drive" },
-        { title: "Alibaba", url: "1Q9za3GKqLclT5357GXz4DESMIyQs71Tw", type: "drive" },
-        { title: "Caso Práctico - Directa menos de $200", url: "1RaGC5odBeIYKihs3i5dYz1h2KAmdiM8z", type: "drive" },
-        { title: "Caso Práctico - $200 a más", url: "1MMU9h1r2ta1i-851IVaG0tPu8gBzmMXP", type: "drive" },
-      ]},
-      { label: "Módulo 18 · Otras Plataformas China", videos: [{ title: "Otras Plataformas de China", url: "1B4NcemAiVLMEqyXkVqi05_TbH4spAwn7", type: "drive" }]},
-      { label: "Módulo 19 · Hong Kong", videos: [{ title: "Hong Kong Sourcing", url: "1hc6QUe4HNT0fs8JBAlbmlGxWecj3kGrg", type: "drive" }]},
-      { label: "Módulo 20 · Korea", videos: [{ title: "Trade Korea", url: "1i-RDA-LgYBp7SDtFPXZYm7IYGGgLnUJg", type: "drive" }]},
-      { label: "Módulo 21 · Taiwan", videos: [{ title: "Trade Taiwan", url: "1i-RDA-LgYBp7SDtFPXZYm7IYGGgLnUJg", type: "drive" }]},
-      { label: "Módulo 22 · India", videos: [{ title: "Trade India", url: "1dzAyVT33wUKHA5yAj1ZrIBEsGEhVOzWz", type: "drive" }]},
-      { label: "Módulo 23 · Método Yiwu", videos: [
-        { title: "Método Yiwu", url: "1J83LHWMCw4mk4K2lNMaRqynuYKiC3xCf", type: "drive" },
-        { title: "Caso Práctico Método Yiwu", url: "1Vz92gGLXj4pgNT33hkp2PFxLxM1AKvWC", type: "drive" },
-      ]},
-      { label: "Módulo 24 · Misiones Comerciales", videos: [
-        { title: "Yiwu Market", url: "1J83LHWMCw4mk4K2lNMaRqynuYKiC3xCf", type: "drive" },
-        { title: "Canton Fair", url: "1Vz92gGLXj4pgNT33hkp2PFxLxM1AKvWC", type: "drive" },
-      ]},
-      { label: "Módulo 25 · Panamá", videos: [{ title: "Panamá - Misión Comercial", url: "1xTkq7OA31ePgGxV8PGzMQ92Gji1AlhUB", type: "drive" }]},
-      { label: "Módulo 26 · Veritrade", videos: [{ title: "Veritrade", url: "1WFdpXBctd9BlPg5t2pSu13F6VfgAgdJO", type: "drive" }]},
-      { label: "Módulo 27 · Ventas Orgánicas", videos: [
-        { title: "Introducción Ventas Orgánicas", url: "1UjQIGKxq_A0e6MRf9YWm8HPLCGRwqDKG", type: "drive" },
-        { title: "Modalidad de Venta", url: "1Fu-ZiAy9y_x_7Xt7XrbIoWP1jZTM7pJU", type: "drive" },
-        { title: "Modalidad de Compra", url: "18Aq2ZLf2rrNo0R1UktKo0EFCFUkPgRJz", type: "drive" },
-        { title: "Principios del Nuevo Mundo Digital", url: "1-PD99pgHkZXTbrLFFzafTvmTndmeU5JL", type: "drive" },
-        { title: "Comportamiento del Consumidor Moderno", url: "1pRyrRT3eF8WrpjLburHnifuEEI35Xo_M", type: "drive" },
-        { title: "3 Ideas a Tomar en Cuenta", url: "1Y8SMYp-HQ-07IYnl-IgE8HiyjXDmUd_X", type: "drive" },
-        { title: "Gatillos Mentales", url: "18Uz-B7zJscvCLN7ES9gUgWzktNZ11lwW", type: "drive" },
-        { title: "Canva", url: "14l_khbH2a_QxL1BGroBMaNlvsw0mEAAG", type: "drive" },
-        { title: "Redes Sociales para Negocios", url: "1T1yGKpgh_Yv6oNqloX9l_i620vxf8Ght", type: "drive" },
-        { title: "Links para tu Negocio", url: "17zRVPo9dVmKw9wLd72gvFfWg9_cgr794", type: "drive" },
-        { title: "Estrategias de Neuromarketing", url: "1X59_CDNbIz-u09AtS0VW1vzmJu4YrMBs", type: "drive" },
-        { title: "Caso Práctico Método Olivo Sales", url: "1sUY9vZ0I2UHTRD2Z9G95Nj0_PRmFYK6P", type: "drive" },
-        { title: "Psicología del Consumidor", url: "1HzkouFxpzAhQ8rvWl8xTZpJmHsaGM_Dc", type: "drive" },
-        { title: "Hambre Éxito", url: "1BiAx24VrXip5oKHSDmRkq8aqIEgjjfiD", type: "drive" },
-        { title: "Principios del Consumidor", url: "1EEzmDQtQb_BBhZeMA8R6MHPoZ9BFqn1R", type: "drive" },
-        { title: "3 Partes, Propuesta de Valor", url: "1UyI1fkdaMAyvkD8R_A-RqeKAbNz4T2m9", type: "drive" },
-      ]},
-      { label: "Módulo 28 · Bonus", videos: [
-        { title: "Bonus: Uso de PayPal", url: "1fjwwVrTP0W3-CBgiD04Jr525ZVDjTUyU", type: "drive" },
-        { title: "Bonus: Búsqueda de Marcas", url: "1i3dDCZWiH2ZJy_gb-lNzXDHxYjNkyTWb", type: "drive" },
-      ]},
-      { label: "Módulo 29 · Sesiones en Vivo", videos: [
-        { title: "Primera Sesión en Vivo", url: "1Mxg_AFazJKIsZKPi3AI3Tzy3chWqjJH8", type: "drive" },
-        { title: "Segunda Sesión en Vivo", url: "154qw_92ZiRvm_SNRUcIi2ROuBkN0l0XX", type: "drive" },
-        { title: "Tercera Sesión en Vivo", url: "1vQaFkzXT5W68dP7yGPP6c3N6ctR-E_FZ", type: "drive" },
-        { title: "Cuarta y Última Sesión en Vivo", url: "1LglSkVm3dMbCdHPnJQnPJZvNCVWnUosG", type: "drive" },
-      ]},
+    name: "IMPORTACIÓN",
+    courses: [
+      {
+        name: "REVU IMPORT", flat: true,
+        modules: [{ label: "Clases", videos: [
+          { title: "Fundamentos e Incoterms", url: "https://www.dropbox.com/scl/fi/d8s2lcaphxqwxvw8exgj1/Clase-01-Revu-School.mp4?rlkey=qqk1xd0ar5l605dcqiwetuyih&st=dgy3qmc2&dl=1", type: "video" },
+          { title: "Importación de USA", url: "https://www.dropbox.com/scl/fi/0p28iga4089wh8dw05z9b/Clase-Esp.-02-29_06.mp4?rlkey=a99n20czfda9wqnle80v4uigh&st=n07jc5xm&dl=1", type: "video" },
+          { title: "Alibaba y Negociación", url: "https://www.dropbox.com/scl/fi/8s33ubuy0gcd74gbnvtl4/clase-03-importaciones-revu-03.mp4?rlkey=aem6ah7v08b1prvt96f5udym0&st=loqbe6h8&dl=1", type: "video" },
+          { title: "Importación Marítima", url: "https://www.dropbox.com/scl/fi/952bbvgzi4s527vs4vr8q/clase-04-importaciones-revu-03.mp4?rlkey=ug6636spykbd4uydf4az5refg&st=gtxow10x&dl=1", type: "video" },
+        ]}]
+      },
+      {
+        name: "SOL IMPORTACIONES", flat: false,
+        modules: [
+          { label: "Módulo 1 · Presentación", videos: [{ title: "Presentación", url: "1mW20dMcAjtnxYhjE59FND42_dvhFFYi0", type: "drive" }]},
+          { label: "Módulo 2 · Teoría y Productos Novedosos", videos: [
+            { title: "Aspectos Generales", url: "17r1dTy8joNxCEi-mvdTP5w8LnIXvwfek", type: "drive" },
+            { title: "Productos Novedosos", url: "1S3vpHC-mVobGKm0b8gAFEeZEIxIZ8-Gv", type: "drive" },
+            { title: "Estadísticas de Comercio Internacional", url: "1yYG10SmRkGXluRVgwb962UzbxNLO2sXA", type: "drive" },
+            { title: "Importaciones de China, Panamá y EEUU", url: "1DaOEPAbtIFXpXR9_pFBBNu1X7fFD2ebl", type: "drive" },
+          ]},
+          { label: "Módulo 3 · Sociedad y Regímenes Tributarios", videos: [
+            { title: "Sociedades y Regímenes Tributarios", url: "1WYxGtwFajKN_Q2ZgOJ3pI10kB0_7NG3a", type: "drive" },
+            { title: "Formalización y Régimen Tributario Perú", url: "1kfUVXAoZx5Edl-bbMj5DODCSqjzmdZKo", type: "drive" },
+          ]},
+          { label: "Módulo 4 · Actividades Claves", videos: [
+            { title: "Actividades Claves para Importar", url: "1cToi0FoQIUaPiQzYQ9vDyngZX6WS4eRM", type: "drive" },
+            { title: "Tipos de Despacho Aduanero", url: "1w_nirvkrJyU27DkoFRqhq-7sigdzE6Wf", type: "drive" },
+            { title: "Documentos Importantes", url: "136ONc8W96gGL-wYWkWcrl5Fn6servZC7", type: "drive" },
+            { title: "Tipos de Transporte Internacional", url: "1PCFb2B6V5zHmj49fr-E0hCXHaEx0wfJU", type: "drive" },
+          ]},
+          { label: "Módulo 5 · Impuestos para Perú", videos: [{ title: "Impuestos para Perú", url: "1me1KCj6Gg8sO6VCnxShYqELhLAwNGpIm", type: "drive" }]},
+          { label: "Módulo 6 · Impuestos por País", videos: [
+            { title: "Bolivia", url: "1WLFXnjMACZ7IKofI6mW2bvzA1nJO6VVI", type: "drive" },
+            { title: "Ecuador", url: "1RzTf2KHU6B41uzy2S-YXa6Ki5WfQHe9e", type: "drive" },
+            { title: "Colombia", url: "1SQ1zbSS1NCYC9giSborjQYl7MWD295I4", type: "drive" },
+            { title: "Chile", url: "1A79Zo-gKmG5bUYwLyQcsz2SdhkHR2YkX", type: "drive" },
+            { title: "México", url: "1WkOrg_bRcGqdSG_Sgxz6Ac69Xyg8rJ1u", type: "drive" },
+            { title: "Venezuela", url: "1DI8IYqjMcwhL3EWiJ9MrEVgkNToN-cUr", type: "drive" },
+            { title: "Guatemala", url: "1ruhU0jcydizHo4hki1MOxbffAClG3vSg", type: "drive" },
+            { title: "Panamá", url: "1h1E4TVMpBZP1DBzLDmfIEB53rec9mwwN", type: "drive" },
+            { title: "El Salvador", url: "1psKEM9iFELkdH-FUSOCGfnBSWVqbaDif", type: "drive" },
+            { title: "República Dominicana", url: "13kK_kxzMs4urU8O-_-4lmr64jDtECsyy", type: "drive" },
+            { title: "Honduras", url: "1mYNerE1_Cq0yWXbCEhaMFRC3DJTOh66q", type: "drive" },
+            { title: "Nicaragua", url: "1BLjdek1saLwABWBNgYKQ1TiqjF2dHYeV", type: "drive" },
+            { title: "Costa Rica", url: "1f6q0p95eJYTSRJ_fdRjgbxAJyZce6u3y", type: "drive" },
+            { title: "España", url: "1WiwYUrtizGWOd3qk5Ucd_3MrNI7xVXew", type: "drive" },
+            { title: "Argentina", url: "1LpR_Da71apyTPlKXscO9Fr0f1jhmMKvM", type: "drive" },
+            { title: "Uruguay", url: "13Xs9WKGGDBi3KRoJwhcNVkleYuy_OW1r", type: "drive" },
+            { title: "Uruguay · Parte 2", url: "1idJwMLdqvhlIO7k33JPAT4qAAXDeGeuL", type: "drive" },
+          ]},
+          { label: "Módulo 7 · Partidas Arancelarias", videos: [{ title: "Partidas Arancelarias", url: "1SyYzxuAkkhZpfz2UzlGviEKC3zS5nhkd", type: "drive" }]},
+          { label: "Módulo 8 · Teoría y Restricciones", videos: [
+            { title: "Tipos de Proveedores", url: "1R7UMHtoVCcdiSoWsxLH2V3nyQd1G1hvJ", type: "drive" },
+            { title: "Tipos de Mercancía", url: "1_o6eC8cgmL1tvpAFkKItpa30ZoiM-MJh", type: "drive" },
+            { title: "Organismos de Estado que Tramitan Permisos", url: "1DQqCBip0l_gZl5DgYMwXTKeWy-bUWTdJ", type: "drive" },
+          ]},
+          { label: "Módulo 9 · Incoterms", videos: [{ title: "Incoterms", url: "1R1JDWEJ9JvMT8ocMhUziOt6UNo-uD7fB", type: "drive" }]},
+          { label: "Módulo 10 · Agentes en una Importación", videos: [
+            { title: "Empresas de Inspección de Calidad", url: "19kH7AWrH8fqUyNEdxx7n6h9wWB4yilLm", type: "drive" },
+            { title: "Couriers de Envíos Postales", url: "1c0Kk1ZV5qvZ8JYxfgxQQVhosa8ayrfaZ", type: "drive" },
+            { title: "Intermediarios de una Importación", url: "1fTLMeKr0MhBOMC0VDCe5BlgkwXcZAIYZ", type: "drive" },
+            { title: "Medios de Pago", url: "1nJeqqwrJPdewKdF8dHiAUVJ0m8hSv2Z1", type: "drive" },
+          ]},
+          { label: "Módulo 11 · Final Teoría", videos: [{ title: "Final Teoría", url: "1QtVQ2YlX7y5iTN90o9izCljmN3JBXbYB", type: "drive" }]},
+          { label: "Módulo 12 · Importación de USA", videos: [
+            { title: "Páginas Directas", url: "1Uhl-Q6T8zSRVR7-BlCeZWr9ZYEyRfYpL", type: "drive" },
+            { title: "Teoría Casilleros y Viajeros", url: "1mjn-tnt18ikIT_797pZIXzTnqx-qcXSy", type: "drive" },
+            { title: "Creación de Casillero Perú", url: "1Anm6jw14I5M2tI9l6ww6ZXEMhIELTvT8", type: "drive" },
+            { title: "Cómo Usar Olivo Courier", url: "1JpK6JMpuZ8u0-2O8pAVd_AqLXNEN9oYW", type: "drive" },
+          ]},
+          { label: "Módulo 13 · Courier por País", videos: [
+            { title: "Courier México", url: "1eMSsIGzqfhL_GPi8mAXsYmLzE5yfxT02", type: "drive" },
+            { title: "Courier Bolivia · P1", url: "13Sy6HEPB2Z_-PIyIONi_M3wPwT2UHTw4", type: "drive" },
+            { title: "Courier Bolivia · P2", url: "1WzOfTmtHXJC6EVutkFjEwL9ljKiZhOXD", type: "drive" },
+            { title: "Courier Ecuador", url: "1qrViScQKO9b1UZRr7GgH7I3cYKfAMHO9", type: "drive" },
+            { title: "Courier Chile", url: "17WxtpVMQhXJCxvP6pXkaE0jPDX0UBp6Y", type: "drive" },
+            { title: "Courier Argentina · P1", url: "15QBImFCg-ef-Eeg3LvFMiGP-f9NSMgM1", type: "drive" },
+            { title: "Courier Argentina · P2", url: "1LFd20_DNq8q4RUy-sW6FCMkvi-F8OGwa", type: "drive" },
+            { title: "Courier Rep. Dominicana · P1", url: "1B7KXfN81tBRt-KYfz0lVGiaeSr-3o27s", type: "drive" },
+            { title: "Courier Rep. Dominicana · P2", url: "1o5aVkUuiA-QI7DLL1XTMnkDTszH9_8jC", type: "drive" },
+            { title: "Courier El Salvador", url: "1kfBkoeemEuozms-3_tl8yivRj6_Vwviz", type: "drive" },
+            { title: "Courier Uruguay", url: "17K4YwpZns6qohEBUJ7cukE39t_kj_nvI", type: "drive" },
+            { title: "Courier España", url: "1d7WSZfk6oYKYjmJHPnsw60hGN_B3qPQp", type: "drive" },
+            { title: "Courier Guatemala", url: "1ukxAhi-wTfGcHl3z7f7Mn34ClIXsFmdA", type: "drive" },
+            { title: "Courier Paraguay", url: "1WVY_BRW-jBwfQsbtKlRKIAO6yvrK7Vkn", type: "drive" },
+            { title: "Courier Costa Rica", url: "1C_VC1f9togPSRFeRAT6pv-NppZ63oc1H", type: "drive" },
+            { title: "Courier Cuba", url: "1o4qiZQnAPHcHL2bNmwAnHQ8agazaPpJQ", type: "drive" },
+            { title: "Courier Nicaragua", url: "1y6JF4lyMuQZkPQoOqPD6j5rcQ4a4KjOL", type: "drive" },
+            { title: "Courier Brasil", url: "1e-Fxl2v6wjckt5JUwTA3bEA1pJTrPWQF", type: "drive" },
+          ]},
+          { label: "Módulo 14 · Casos Prácticos USA", videos: [
+            { title: "Amazon - La Más Grande de USA", url: "117TwgiUOv7JPHEulfC-dmna-gJFxSm1x", type: "drive" },
+            { title: "Mundo de la Tecnología", url: "1cySpKy4aC4jS4iLkeMtcZxYduAsGH06o", type: "drive" },
+            { title: "Mundo de las Zapatillas", url: "1MeCK_NP4uBlsOqQ4hy0nFNpyAcvIPxYw", type: "drive" },
+            { title: "Mundo del Skincare", url: "1YueIBtCFCOxC_p2G-vYodsGfB-VZxic0", type: "drive" },
+            { title: "Mundo de los Cosméticos", url: "1WDmgSvXK4lVSRpZZeEDhDlhIrOwv5IfC", type: "drive" },
+            { title: "Mundo de los Relojes", url: "1AQkqf0JA9S4Y0GAOwKZzT3IITzXpPOTq", type: "drive" },
+            { title: "Todo por 1.75 Dólar", url: "16IB-OvdldVYs-qqEj6pfFt1C-arQD_EG", type: "drive" },
+            { title: "Mystery Boxes", url: "16c3XQ0uTx97Bf-8Xh749KXR3jFyKaMlE", type: "drive" },
+            { title: "Mundo de los Juguetes", url: "1tAnUWMAyHvov1XRnjqq8-GFbCcjVMAt7", type: "drive" },
+            { title: "Mystery Box Boxycharm", url: "1g2zubR0pz0dbS1TzxrWlZfKUMRHpgz57", type: "drive" },
+            { title: "Juntar Pedidos en USA", url: "1VtFLk4b7iV1QzwRFbNKeVZRmvzwygeMt", type: "drive" },
+          ]},
+          { label: "Módulo 15 · Método Viajeros", videos: [
+            { title: "Teoría Viajeros", url: "1vBN5I4vqt1jI6Pb3r2b5wxvWVgF6jt5y", type: "drive" },
+            { title: "Mundo Apple - Comparto mi Maleta", url: "15YZjAuNaqsCrVVMVplfj2nxfQWbwz2BZ", type: "drive" },
+            { title: "Mundo de Celulares Usados", url: "1cK0kJ7QJABqE-sJrzag1PHE1Ev7aePIL", type: "drive" },
+            { title: "Mundo Gamer", url: "1KZqHviTP1HkY15Souy98O7qbUCnIk29G", type: "drive" },
+            { title: "Mundo del Minoxidil", url: "1wS7htFWJA_fcVEgcALflziGEjml-C8I8", type: "drive" },
+          ]},
+          { label: "Módulo 16 · Hacks para Amazon", videos: [{ title: "Camel Camel Camel", url: "13JhWJ5xpNZnchotI5Boy4FAOWoT9pwZl", type: "drive" }]},
+          { label: "Módulo 17 · Importaciones de China", videos: [
+            { title: "Básico Aliexpress y Shein", url: "1CLK91lJsfm7RBzsBRjel8u7DzfCW0e_T", type: "drive" },
+            { title: "Alibaba", url: "1Q9za3GKqLclT5357GXz4DESMIyQs71Tw", type: "drive" },
+            { title: "Caso Práctico - Directa menos de $200", url: "1RaGC5odBeIYKihs3i5dYz1h2KAmdiM8z", type: "drive" },
+            { title: "Caso Práctico - $200 a más", url: "1MMU9h1r2ta1i-851IVaG0tPu8gBzmMXP", type: "drive" },
+          ]},
+          { label: "Módulo 18 · Otras Plataformas China", videos: [{ title: "Otras Plataformas de China", url: "1B4NcemAiVLMEqyXkVqi05_TbH4spAwn7", type: "drive" }]},
+          { label: "Módulo 19 · Hong Kong", videos: [{ title: "Hong Kong Sourcing", url: "1hc6QUe4HNT0fs8JBAlbmlGxWecj3kGrg", type: "drive" }]},
+          { label: "Módulo 20 · Korea", videos: [{ title: "Trade Korea", url: "1i-RDA-LgYBp7SDtFPXZYm7IYGGgLnUJg", type: "drive" }]},
+          { label: "Módulo 21 · Taiwan", videos: [{ title: "Trade Taiwan", url: "1i-RDA-LgYBp7SDtFPXZYm7IYGGgLnUJg", type: "drive" }]},
+          { label: "Módulo 22 · India", videos: [{ title: "Trade India", url: "1dzAyVT33wUKHA5yAj1ZrIBEsGEhVOzWz", type: "drive" }]},
+          { label: "Módulo 23 · Método Yiwu", videos: [
+            { title: "Método Yiwu", url: "1J83LHWMCw4mk4K2lNMaRqynuYKiC3xCf", type: "drive" },
+            { title: "Caso Práctico Método Yiwu", url: "1Vz92gGLXj4pgNT33hkp2PFxLxM1AKvWC", type: "drive" },
+          ]},
+          { label: "Módulo 24 · Misiones Comerciales", videos: [
+            { title: "Yiwu Market", url: "1J83LHWMCw4mk4K2lNMaRqynuYKiC3xCf", type: "drive" },
+            { title: "Canton Fair", url: "1Vz92gGLXj4pgNT33hkp2PFxLxM1AKvWC", type: "drive" },
+          ]},
+          { label: "Módulo 25 · Panamá", videos: [{ title: "Panamá - Misión Comercial", url: "1xTkq7OA31ePgGxV8PGzMQ92Gji1AlhUB", type: "drive" }]},
+          { label: "Módulo 26 · Veritrade", videos: [{ title: "Veritrade", url: "1WFdpXBctd9BlPg5t2pSu13F6VfgAgdJO", type: "drive" }]},
+          { label: "Módulo 27 · Ventas Orgánicas", videos: [
+            { title: "Introducción Ventas Orgánicas", url: "1UjQIGKxq_A0e6MRf9YWm8HPLCGRwqDKG", type: "drive" },
+            { title: "Modalidad de Venta", url: "1Fu-ZiAy9y_x_7Xt7XrbIoWP1jZTM7pJU", type: "drive" },
+            { title: "Modalidad de Compra", url: "18Aq2ZLf2rrNo0R1UktKo0EFCFUkPgRJz", type: "drive" },
+            { title: "Principios del Nuevo Mundo Digital", url: "1-PD99pgHkZXTbrLFFzafTvmTndmeU5JL", type: "drive" },
+            { title: "Comportamiento del Consumidor Moderno", url: "1pRyrRT3eF8WrpjLburHnifuEEI35Xo_M", type: "drive" },
+            { title: "3 Ideas a Tomar en Cuenta", url: "1Y8SMYp-HQ-07IYnl-IgE8HiyjXDmUd_X", type: "drive" },
+            { title: "Gatillos Mentales", url: "18Uz-B7zJscvCLN7ES9gUgWzktNZ11lwW", type: "drive" },
+            { title: "Canva", url: "14l_khbH2a_QxL1BGroBMaNlvsw0mEAAG", type: "drive" },
+            { title: "Redes Sociales para Negocios", url: "1T1yGKpgh_Yv6oNqloX9l_i620vxf8Ght", type: "drive" },
+            { title: "Links para tu Negocio", url: "17zRVPo9dVmKw9wLd72gvFfWg9_cgr794", type: "drive" },
+            { title: "Estrategias de Neuromarketing", url: "1X59_CDNbIz-u09AtS0VW1vzmJu4YrMBs", type: "drive" },
+            { title: "Caso Práctico Método Olivo Sales", url: "1sUY9vZ0I2UHTRD2Z9G95Nj0_PRmFYK6P", type: "drive" },
+            { title: "Psicología del Consumidor", url: "1HzkouFxpzAhQ8rvWl8xTZpJmHsaGM_Dc", type: "drive" },
+            { title: "Hambre Éxito", url: "1BiAx24VrXip5oKHSDmRkq8aqIEgjjfiD", type: "drive" },
+            { title: "Principios del Consumidor", url: "1EEzmDQtQb_BBhZeMA8R6MHPoZ9BFqn1R", type: "drive" },
+            { title: "3 Partes, Propuesta de Valor", url: "1UyI1fkdaMAyvkD8R_A-RqeKAbNz4T2m9", type: "drive" },
+          ]},
+          { label: "Módulo 28 · Bonus", videos: [
+            { title: "Bonus: Uso de PayPal", url: "1fjwwVrTP0W3-CBgiD04Jr525ZVDjTUyU", type: "drive" },
+            { title: "Bonus: Búsqueda de Marcas", url: "1i3dDCZWiH2ZJy_gb-lNzXDHxYjNkyTWb", type: "drive" },
+          ]},
+          { label: "Módulo 29 · Sesiones en Vivo", videos: [
+            { title: "Primera Sesión en Vivo", url: "1Mxg_AFazJKIsZKPi3AI3Tzy3chWqjJH8", type: "drive" },
+            { title: "Segunda Sesión en Vivo", url: "154qw_92ZiRvm_SNRUcIi2ROuBkN0l0XX", type: "drive" },
+            { title: "Tercera Sesión en Vivo", url: "1vQaFkzXT5W68dP7yGPP6c3N6ctR-E_FZ", type: "drive" },
+            { title: "Cuarta y Última Sesión en Vivo", url: "1LglSkVm3dMbCdHPnJQnPJZvNCVWnUosG", type: "drive" },
+          ]},
+        ]
+      },
+      {
+        name: "NETZUN", flat: false,
+        modules: [
+          { label: "Módulo 1 · Fundamentos de Importación", videos: [
+            { title: "Presentación del Docente y Curso", url: "1Qo9tu3nvVQGMwMYe28kjAX9fyC3Z-zmL", type: "drive" },
+            { title: "Importación para el Consumo y Categoría de Bienes", url: "1-Id4NNv9Z2nwfVmZDBYfwU6jCzmwu1O2", type: "drive" },
+            { title: "Importa Fácil y Envíos de Entrega Rápida", url: "1gEorMq2hoclWFGlDSILApkoeDKA16R42", type: "drive" },
+            { title: "Referencias de Proveedores", url: "1mIfnPJnSu8GkFUH68tubsAMaf3HPiu4p", type: "drive" },
+            { title: "Incoterms", url: "1Sbf3CltsFEWtCN-LVQmve1_NQg3c4Y9W", type: "drive" },
+            { title: "La Cotización del Proveedor", url: "1DaLCXeq-Zi5ViTiGBV7ask1ir_6FnQSA", type: "drive" },
+            { title: "Tratamiento Arancelario", url: "1EIb3TNyazI9UcJ-FN804xO9NWx2K3mX9", type: "drive" },
+            { title: "Cálculo de Derechos e Impuestos", url: "1kRcTYC9PqSBifJ8HC3TaWHQiDMdOOhmp", type: "drive" },
+            { title: "Operadores en el Proceso de Importación", url: "1_cCPFI3R8RTWGsOvK0kBIi-4Ea_YJtye", type: "drive" },
+            { title: "Documentos en el Proceso de Importación", url: "1BatZNle2tAxCdtN4cKrAQB58TxuRBwDa", type: "drive" },
+            { title: "Modalidades de Despacho y Canales de Control", url: "1QG3uDrR8wqLWI4mnITvuOf5gjpCJaQ5Q", type: "drive" },
+            { title: "5 Tips para una Importación Exitosa", url: "1SR8hk13MCyF5ie10042NV-Q3YUMH8760", type: "drive" },
+          ]},
+          { label: "Módulo 2 · Optimización y Costos", videos: [
+            { title: "Presentación del Docente y Curso", url: "1O91vHaYw70r73omyu66fGXvprJpNoiXp", type: "drive" },
+            { title: "Optimización de Costos en la Importación", url: "1-IIN8hV-ziMAx0--EWKowf92ZJ32X2SU", type: "drive" },
+            { title: "Criterios de Evaluación de Proveedores", url: "1Mb6-agjJUNxgJCXuNeyA-86gxAExAn8J", type: "drive" },
+            { title: "Importancia del Inventario", url: "1PnB2WTvbnmA8qXMR9iGso_3Xww_Ml3ru", type: "drive" },
+            { title: "Contrato de Compra y Venta Internacional", url: "1NIoKi8G8EDNYuq9_mLVLmU_8NkvA6UJf", type: "drive" },
+            { title: "Características de Formas y Medios de Pago", url: "101Ik31EvBW3utDOt8fUlAR4_OCC9mYVI", type: "drive" },
+            { title: "Carta de Crédito", url: "1Nfi3IwXSuvQcsmNZOj7JIygEUJdKo1JK", type: "drive" },
+            { title: "Costos en el Transporte Marítimo", url: "1SJ6XCyMy_M9tW6fTbAPxcrjg7kW5tCvS", type: "drive" },
+            { title: "Costos en el Transporte Aéreo", url: "1G03ucb28VUfXuwUt_2BCXytdISLvMNZ8", type: "drive" },
+            { title: "Costos del Despacho Aduanero", url: "13IgWxrT57WwBy24qv5B6VaMoMcZwS4Ds", type: "drive" },
+            { title: "Cálculo de Derechos e Impuestos", url: "1RZA2SNmDR6jqGjeYfFdhuARMeWVCjSZt", type: "drive" },
+            { title: "Otros Costos Operativos", url: "1DeyNycJPetD1KzXUhJpB6eOUvP_puRpn", type: "drive" },
+            { title: "Caso de Costos de Importación", url: "124aL2nFhZnZTi2UnPPxkZJrbVonen-7h", type: "drive" },
+            { title: "Ejecución de la Operación", url: "1qVvGijqucszeJBvs-fXz_01TgL5AuVc_", type: "drive" },
+            { title: "Factores y Procedimientos", url: "1P_KVqGGnS-230L5yVnNxkjHfHewZQtD6", type: "drive" },
+            { title: "5 Tips para Importaciones Sostenibles", url: "1jC_9qLoP9H5pTlhQ0R9aMmsHxJELbftS", type: "drive" },
+            { title: "Conclusiones y Despedida del Curso", url: "1CsKgnFBvqSDN9X_F3ev6QlvJi2UJIE9h", type: "drive" },
+          ]},
+          { label: "Módulo 3 · Importar desde China", videos: [
+            { title: "Presentación del Docente", url: "1OieEKrRMZL_XvxCsYHRlMyBfoa3hKUZC", type: "drive" },
+            { title: "China la Fábrica del Mundo", url: "18CjGrkvaWqyyiAyx1yMIHPqo_WRowQrQ", type: "drive" },
+            { title: "El Beneficio Diferencial de Importar de China", url: "1kCE0tL94IkaXTFK8uQb5kVg7dKRMKeNn", type: "drive" },
+            { title: "Quiénes Pueden Importar de China", url: "183cCV7YNcHLVT4TMwntdFmLdlKTi4RwT", type: "drive" },
+            { title: "Cuánto Capital se Necesita", url: "1HZraYwm5I4-AXkQTSCOgpbiGqRK-M8cd", type: "drive" },
+            { title: "Los Tipos de Importador", url: "1lI1xfRRaLsnBDbaC6Jt2LMn6BSdVc_7S", type: "drive" },
+            { title: "Alibaba y sus 40 Aplicaciones", url: "1AkghauAPpcqwfB24KSK-5DQPxBM5vqBP", type: "drive" },
+            { title: "Alibaba vs Aliexpress", url: "16plwEylIie_7wubwMgS7VopGgr-SkT30", type: "drive" },
+            { title: "Más Plataformas, Más Proveedores", url: "1WhtJzzeVBZ0D0SAUUe__yw1WbOZ63PLd", type: "drive" },
+            { title: "Minisites y Contacto Inmediato", url: "1hjjqgu1Qt-fbw4z8O6uzECSCEXPTj4rF", type: "drive" },
+            { title: "WeChat el WhatsApp Chino", url: "18ZcgBiP7QSayz2qd7Ztp_hau6G0FuM-u", type: "drive" },
+            { title: "Preguntas Clave para Todo Proveedor", url: "1QUjPGBAjVdeo30Y-swScG1nTYmPQ8YFC", type: "drive" },
+            { title: "Control de Muestras y Auditorías", url: "1MzeUXBGG4_HVbJEpYq-rF17ZdYYejRTF", type: "drive" },
+          ]},
+          { label: "Módulo 4 · Negocios Internacionales", videos: [
+            { title: "Presentación del Profesor y del Tema", url: "1lLe4HdgZHaa4dVZzRlrG7vyzyWu38XLb", type: "drive" },
+            { title: "Las Revoluciones Industriales", url: "1P-d3ItrJicNTZvJz1mVrWbIRA2WO3_jg", type: "drive" },
+            { title: "La Globalización y Patrón de Internacionalización", url: "1fCykKNKYB62WtIw7joeBKK2176OwGUoM", type: "drive" },
+            { title: "Los Negocios Internacionales en el Contexto 2020", url: "1ajQSoOoct6TioHJ_TKEuhFPNGcRIrFmz", type: "drive" },
+            { title: "El Rol de las Instituciones Gubernamentales", url: "1gedV00zSw_9gJyPHzQJekL46IhXseKNi", type: "drive" },
+            { title: "Principales Acuerdos Comerciales de Perú", url: "1d0LwlDB4XdFQ8yg1BbzhMedLh6Kc1TBF", type: "drive" },
+            { title: "Terminología e Incoterms del Comercio Internacional", url: "1WxvNqoh-Am2XBs7Krqun8yKUENkccBEE", type: "drive" },
+            { title: "Conociendo el Mercado Meta", url: "1roA-zBqN5LlTOGWFbWJJG-8fsz_lauTx", type: "drive" },
+            { title: "Análisis PESTAL · Parte 1", url: "12dCIQ_yKAc7IujSPtanhDXzzzc7k3I-H", type: "drive" },
+            { title: "Análisis PESTAL · Parte 2", url: "1E4ESxq5bcOCDQ4USdQEdok7b6a1MDxZz", type: "drive" },
+            { title: "Los Negocios Internacionales por Internet", url: "1vo7CfitHjvN8EjupagAv_UGBO0UDf_6J", type: "drive" },
+            { title: "Principales Socios Comerciales de Perú", url: "1eznmkeF4Ofs-Okcnot6XMJ6PH12H-9rv", type: "drive" },
+            { title: "Mercados y Productos más Atractivos para Perú", url: "1IRJOg1altCW7aQ5BnOD1O58nenwLNe4D", type: "drive" },
+            { title: "Lo Nuevo de Perú que Vale la Pena Atender", url: "1hNva2kn3T5KDQCCIpG4wOQyTc0hJA5Nh", type: "drive" },
+            { title: "Conclusiones", url: "1HrllOXUry-quecGX7Q3btIfyJv4u-hN6", type: "drive" },
+          ]},
+          { label: "Módulo 5 · Exportación", videos: [
+            { title: "Presentación del Docente", url: "1G3ofVaHIDQvNjAsnPPdpEF6ROxgG6ehE", type: "drive" },
+            { title: "Conociendo la Exportación", url: "1uuWpd5pHuaqTUurw5Q7vFJdR6uBBlUxL", type: "drive" },
+            { title: "Tipos de Exportación", url: "1w-PIymbr0-xx7BVDaCFcuW3hvnK-8RDj", type: "drive" },
+            { title: "Exportación Marítima", url: "17kV24j_6ECioj95tYfNqP5Lh88mvlTnL", type: "drive" },
+            { title: "Exportación Aérea", url: "1FNpB4bDAJrqGu1SNN5QLjmzBlVnSzk0I", type: "drive" },
+            { title: "Terrestre, Fluvial y Otros", url: "13RY-MQ4iLrZoFEgmSQgxqXZXL11Iz9Th", type: "drive" },
+            { title: "Exportación Definitiva", url: "1ELxNJsZHpOX8wjDpyVe65S0qfDsJGlmL", type: "drive" },
+            { title: "Exportación Temporal", url: "1AObb7Ih006ayRjKA1koejVwZF9PXllus", type: "drive" },
+            { title: "Exportación Directa - Indirecta", url: "1jG_S7obHsnzcrPFAcKgC2lLzwGwAwjU7", type: "drive" },
+            { title: "Qué son los Incoterms", url: "1eiLI32iFuhGKJRti4dfS6GYVBTc96lyy", type: "drive" },
+            { title: "Incoterms para el Transporte Marítimo", url: "11bJK8tVuolQt6oq63g5HTp2GzJQgw5W2", type: "drive" },
+            { title: "Documentos Principales para Exportar", url: "1fa1Hy5sPnYruCx6YXAxhS0oXiHbKVDRB", type: "drive" },
+            { title: "Documentos Opcionales", url: "1YX_bdCYjNXXtS-zpfPln2z4A5rQKQSR4", type: "drive" },
+            { title: "Caso Práctico de Exportación", url: "1Cjfw8R2SKLI29W3m9in-wA9R8ggiASG4", type: "drive" },
+          ]},
+        ]
+      },
     ]
   },
+
   {
-    name: "NETZUN", flat: false,
-    modules: [
-      { label: "Módulo 1 · Fundamentos de Importación", videos: [
-        { title: "Presentación del Docente y Curso", url: "1Qo9tu3nvVQGMwMYe28kjAX9fyC3Z-zmL", type: "drive" },
-        { title: "Importación para el Consumo y Categoría de Bienes", url: "1-Id4NNv9Z2nwfVmZDBYfwU6jCzmwu1O2", type: "drive" },
-        { title: "Importa Fácil y Envíos de Entrega Rápida", url: "1gEorMq2hoclWFGlDSILApkoeDKA16R42", type: "drive" },
-        { title: "Referencias de Proveedores", url: "1mIfnPJnSu8GkFUH68tubsAMaf3HPiu4p", type: "drive" },
-        { title: "Incoterms", url: "1Sbf3CltsFEWtCN-LVQmve1_NQg3c4Y9W", type: "drive" },
-        { title: "La Cotización del Proveedor", url: "1DaLCXeq-Zi5ViTiGBV7ask1ir_6FnQSA", type: "drive" },
-        { title: "Tratamiento Arancelario", url: "1EIb3TNyazI9UcJ-FN804xO9NWx2K3mX9", type: "drive" },
-        { title: "Cálculo de Derechos e Impuestos", url: "1kRcTYC9PqSBifJ8HC3TaWHQiDMdOOhmp", type: "drive" },
-        { title: "Operadores en el Proceso de Importación", url: "1_cCPFI3R8RTWGsOvK0kBIi-4Ea_YJtye", type: "drive" },
-        { title: "Documentos en el Proceso de Importación", url: "1BatZNle2tAxCdtN4cKrAQB58TxuRBwDa", type: "drive" },
-        { title: "Modalidades de Despacho y Canales de Control", url: "1QG3uDrR8wqLWI4mnITvuOf5gjpCJaQ5Q", type: "drive" },
-        { title: "5 Tips para una Importación Exitosa", url: "1SR8hk13MCyF5ie10042NV-Q3YUMH8760", type: "drive" },
-      ]},
-      { label: "Módulo 2 · Optimización y Costos", videos: [
-        { title: "Presentación del Docente y Curso", url: "1O91vHaYw70r73omyu66fGXvprJpNoiXp", type: "drive" },
-        { title: "Optimización de Costos en la Importación", url: "1-IIN8hV-ziMAx0--EWKowf92ZJ32X2SU", type: "drive" },
-        { title: "Criterios de Evaluación de Proveedores", url: "1Mb6-agjJUNxgJCXuNeyA-86gxAExAn8J", type: "drive" },
-        { title: "Importancia del Inventario", url: "1PnB2WTvbnmA8qXMR9iGso_3Xww_Ml3ru", type: "drive" },
-        { title: "Contrato de Compra y Venta Internacional", url: "1NIoKi8G8EDNYuq9_mLVLmU_8NkvA6UJf", type: "drive" },
-        { title: "Características de Formas y Medios de Pago", url: "101Ik31EvBW3utDOt8fUlAR4_OCC9mYVI", type: "drive" },
-        { title: "Carta de Crédito", url: "1Nfi3IwXSuvQcsmNZOj7JIygEUJdKo1JK", type: "drive" },
-        { title: "Costos en el Transporte Marítimo", url: "1SJ6XCyMy_M9tW6fTbAPxcrjg7kW5tCvS", type: "drive" },
-        { title: "Costos en el Transporte Aéreo", url: "1G03ucb28VUfXuwUt_2BCXytdISLvMNZ8", type: "drive" },
-        { title: "Costos del Despacho Aduanero", url: "13IgWxrT57WwBy24qv5B6VaMoMcZwS4Ds", type: "drive" },
-        { title: "Cálculo de Derechos e Impuestos", url: "1RZA2SNmDR6jqGjeYfFdhuARMeWVCjSZt", type: "drive" },
-        { title: "Otros Costos Operativos", url: "1DeyNycJPetD1KzXUhJpB6eOUvP_puRpn", type: "drive" },
-        { title: "Caso de Costos de Importación", url: "124aL2nFhZnZTi2UnPPxkZJrbVonen-7h", type: "drive" },
-        { title: "Ejecución de la Operación", url: "1qVvGijqucszeJBvs-fXz_01TgL5AuVc_", type: "drive" },
-        { title: "Factores y Procedimientos", url: "1P_KVqGGnS-230L5yVnNxkjHfHewZQtD6", type: "drive" },
-        { title: "5 Tips para Importaciones Sostenibles", url: "1jC_9qLoP9H5pTlhQ0R9aMmsHxJELbftS", type: "drive" },
-        { title: "Conclusiones y Despedida del Curso", url: "1CsKgnFBvqSDN9X_F3ev6QlvJi2UJIE9h", type: "drive" },
-      ]},
-      { label: "Módulo 3 · Importar desde China", videos: [
-        { title: "Presentación del Docente", url: "1OieEKrRMZL_XvxCsYHRlMyBfoa3hKUZC", type: "drive" },
-        { title: "China la Fábrica del Mundo", url: "18CjGrkvaWqyyiAyx1yMIHPqo_WRowQrQ", type: "drive" },
-        { title: "El Beneficio Diferencial de Importar de China", url: "1kCE0tL94IkaXTFK8uQb5kVg7dKRMKeNn", type: "drive" },
-        { title: "Quiénes Pueden Importar de China", url: "183cCV7YNcHLVT4TMwntdFmLdlKTi4RwT", type: "drive" },
-        { title: "Cuánto Capital se Necesita", url: "1HZraYwm5I4-AXkQTSCOgpbiGqRK-M8cd", type: "drive" },
-        { title: "Los Tipos de Importador", url: "1lI1xfRRaLsnBDbaC6Jt2LMn6BSdVc_7S", type: "drive" },
-        { title: "Alibaba y sus 40 Aplicaciones", url: "1AkghauAPpcqwfB24KSK-5DQPxBM5vqBP", type: "drive" },
-        { title: "Alibaba vs Aliexpress", url: "16plwEylIie_7wubwMgS7VopGgr-SkT30", type: "drive" },
-        { title: "Más Plataformas, Más Proveedores", url: "1WhtJzzeVBZ0D0SAUUe__yw1WbOZ63PLd", type: "drive" },
-        { title: "Minisites y Contacto Inmediato", url: "1hjjqgu1Qt-fbw4z8O6uzECSCEXPTj4rF", type: "drive" },
-        { title: "WeChat el WhatsApp Chino", url: "18ZcgBiP7QSayz2qd7Ztp_hau6G0FuM-u", type: "drive" },
-        { title: "Preguntas Clave para Todo Proveedor", url: "1QUjPGBAjVdeo30Y-swScG1nTYmPQ8YFC", type: "drive" },
-        { title: "Control de Muestras y Auditorías", url: "1MzeUXBGG4_HVbJEpYq-rF17ZdYYejRTF", type: "drive" },
-      ]},
-      { label: "Módulo 4 · Negocios Internacionales", videos: [
-        { title: "Presentación del Profesor y del Tema", url: "1lLe4HdgZHaa4dVZzRlrG7vyzyWu38XLb", type: "drive" },
-        { title: "Las Revoluciones Industriales", url: "1P-d3ItrJicNTZvJz1mVrWbIRA2WO3_jg", type: "drive" },
-        { title: "La Globalización y Patrón de Internacionalización", url: "1fCykKNKYB62WtIw7joeBKK2176OwGUoM", type: "drive" },
-        { title: "Los Negocios Internacionales en el Contexto 2020", url: "1ajQSoOoct6TioHJ_TKEuhFPNGcRIrFmz", type: "drive" },
-        { title: "El Rol de las Instituciones Gubernamentales", url: "1gedV00zSw_9gJyPHzQJekL46IhXseKNi", type: "drive" },
-        { title: "Principales Acuerdos Comerciales de Perú", url: "1d0LwlDB4XdFQ8yg1BbzhMedLh6Kc1TBF", type: "drive" },
-        { title: "Terminología e Incoterms del Comercio Internacional", url: "1WxvNqoh-Am2XBs7Krqun8yKUENkccBEE", type: "drive" },
-        { title: "Conociendo el Mercado Meta", url: "1roA-zBqN5LlTOGWFbWJJG-8fsz_lauTx", type: "drive" },
-        { title: "Análisis PESTAL · Parte 1", url: "12dCIQ_yKAc7IujSPtanhDXzzzc7k3I-H", type: "drive" },
-        { title: "Análisis PESTAL · Parte 2", url: "1E4ESxq5bcOCDQ4USdQEdok7b6a1MDxZz", type: "drive" },
-        { title: "Los Negocios Internacionales por Internet", url: "1vo7CfitHjvN8EjupagAv_UGBO0UDf_6J", type: "drive" },
-        { title: "Principales Socios Comerciales de Perú", url: "1eznmkeF4Ofs-Okcnot6XMJ6PH12H-9rv", type: "drive" },
-        { title: "Mercados y Productos más Atractivos para Perú", url: "1IRJOg1altCW7aQ5BnOD1O58nenwLNe4D", type: "drive" },
-        { title: "Lo Nuevo de Perú que Vale la Pena Atender", url: "1hNva2kn3T5KDQCCIpG4wOQyTc0hJA5Nh", type: "drive" },
-        { title: "Conclusiones", url: "1HrllOXUry-quecGX7Q3btIfyJv4u-hN6", type: "drive" },
-      ]},
-      { label: "Módulo 5 · Exportación", videos: [
-        { title: "Presentación del Docente", url: "1G3ofVaHIDQvNjAsnPPdpEF6ROxgG6ehE", type: "drive" },
-        { title: "Conociendo la Exportación", url: "1uuWpd5pHuaqTUurw5Q7vFJdR6uBBlUxL", type: "drive" },
-        { title: "Tipos de Exportación", url: "1w-PIymbr0-xx7BVDaCFcuW3hvnK-8RDj", type: "drive" },
-        { title: "Exportación Marítima", url: "17kV24j_6ECioj95tYfNqP5Lh88mvlTnL", type: "drive" },
-        { title: "Exportación Aérea", url: "1FNpB4bDAJrqGu1SNN5QLjmzBlVnSzk0I", type: "drive" },
-        { title: "Terrestre, Fluvial y Otros", url: "13RY-MQ4iLrZoFEgmSQgxqXZXL11Iz9Th", type: "drive" },
-        { title: "Exportación Definitiva", url: "1ELxNJsZHpOX8wjDpyVe65S0qfDsJGlmL", type: "drive" },
-        { title: "Exportación Temporal", url: "1AObb7Ih006ayRjKA1koejVwZF9PXllus", type: "drive" },
-        { title: "Exportación Directa - Indirecta", url: "1jG_S7obHsnzcrPFAcKgC2lLzwGwAwjU7", type: "drive" },
-        { title: "Qué son los Incoterms", url: "1eiLI32iFuhGKJRti4dfS6GYVBTc96lyy", type: "drive" },
-        { title: "Incoterms para el Transporte Marítimo", url: "11bJK8tVuolQt6oq63g5HTp2GzJQgw5W2", type: "drive" },
-        { title: "Documentos Principales para Exportar", url: "1fa1Hy5sPnYruCx6YXAxhS0oXiHbKVDRB", type: "drive" },
-        { title: "Documentos Opcionales", url: "1YX_bdCYjNXXtS-zpfPln2z4A5rQKQSR4", type: "drive" },
-        { title: "Caso Práctico de Exportación", url: "1Cjfw8R2SKLI29W3m9in-wA9R8ggiASG4", type: "drive" },
-      ]},
+    name: "IA PARA NEGOCIOS",
+    courses: [
+      {
+        name: "IA PARA FINANZAS", flat: true,
+        modules: [{ label: "IA para Finanzas", videos: [
+          { title: "Análisis financiero con IA (ChatGPT)", url: "1LYrKgnMwiGw_8LXmb-xtyVtc5wri38em", type: "drive" },
+          { title: "Implementar IA en finanzas empresariales", url: "15W98xmkcSsJ7bMPuFOjIQVqCmBG0WnG4", type: "drive" },
+          { title: "Listas de control con IA en auditoría y contabilidad", url: "12a0iWCJakNhh4QsRbCoUznzdrjziENzS", type: "drive" },
+          { title: "Análisis de datos financieros con IA en Google Sheets", url: "1rQmnOuM4BBe581jt4zUNJFjgkmKlKpOQ", type: "drive" },
+          { title: "IA en inventarios: caso Amazon", url: "1U3PJQ3pzLXnixmEkoh82480hHP_rmBy_", type: "drive" },
+          { title: "IA para revisión de contratos: caso JP Morgan", url: "1AEAnMZWE91nl7PmOf2uS0R57q9xGt31m", type: "drive" },
+          { title: "Riesgos y errores de la IA en finanzas", url: "1edzq9c5DEObc_kIO0H_RQqhh3_wRMNzS", type: "drive" },
+          { title: "Implementar IA en finanzas con equipos tech", url: "1x9uZpYzSzdIc6U8j_AA6pb_XJ-oN-hRF", type: "drive" },
+          { title: "IA en análisis de datos y decisiones financieras", url: "1rjiXSo-Xli-20TlPg39mH4MKXc57aZad", type: "drive" },
+          { title: "Introducción a IA en finanzas (curso)", url: "161wvU2oJw_NiUG3G5aBXzXV_WBqKzIgD", type: "drive" },
+          { title: "Simulación financiera y punto de equilibrio con IA", url: "16t-VnS-qkhNKz4SR5gL3iIWgMnK4u-FS", type: "drive" },
+        ]}]
+      },
+      {
+        name: "IA MASTERY · BRUNO SANDERS", flat: true,
+        modules: [{ label: "IA Mastery", videos: [
+          { title: "Bienvenido a ChatGPT IA Mastery", url: "12nxhbfR_kUzLvS9fd7-U1YSuqjngfhCf", type: "drive" },
+          { title: "Una mirada al pasado para entender el presente de la IA", url: "1a1OCHaovZKrPtRC9320dwvx5IIrne62G", type: "drive" },
+          { title: "Comprendiendo el interior de ChatGPT y su red neuronal", url: "1XKfXxBRYUHUSbxUtKjJ5wxOtgbw0rUf1", type: "drive" },
+          { title: "Las limitaciones actuales de ChatGPT", url: "1Z-Ews0rQT11jXL_aUO4gmX0m4sF7aL8Y", type: "drive" },
+          { title: "Cómo evitar ser remplazado por la IA", url: "1If_tQoiO9LPg4l9Uh1AeiRkeFJoTHiAo", type: "drive" },
+          { title: "Los peligros de la AI que la mayoría ignoran", url: "1lA_dAF4D3FEHulCq76ZSIgC-nZWJU6sI", type: "drive" },
+          { title: "La verdadera oportunidad económica", url: "1hbBJE5vIeOA3VvYN6hiXVzxkR1YrPpD_", type: "drive" },
+          { title: "Entendiendo los modelos de lenguaje disponibles", url: "1Qe-I78QQF0Oy_7QY-vKd6kfIitWTYDAg", type: "drive" },
+          { title: "Cómo saber las fuentes de las que ha extraído tu respuesta", url: "1S6dgEeDMBjXjUXi_SgsF4h831hfP3rXj", type: "drive" },
+          { title: "Esto es TODO lo que ChatGPT puede hacer por ti", url: "146o7sd1pFq9N9P6M8sFLWgOdMybeC2LX", type: "drive" },
+          { title: "El truco para generar textos largos con ChatGPT", url: "1WF57knfTjiMZ7Jb75gsJQdK-2dOrPvKn", type: "drive" },
+          { title: "Listado de las mejores Herramientas IA para tu negocio", url: "1o9RsmUrGaAKP-x3oqTZPTI8EAbJh7if7", type: "drive" },
+          { title: "Generando tu propio avatar IA a partir de imágenes", url: "1TM7165mSoMbE66vr6InJVvMHabBcvlMr", type: "drive" },
+          { title: "Cómo diseñar una web para tu negocio con IA", url: "15kJFrkpB4cmcxtVUh__21IyJVqOtriyE", type: "drive" },
+          { title: "El paso a paso de un ecommerce exitoso con ChatGPT", url: "1avyGFatVWQ8j65doVKI5qmThe0ZZJeFG", type: "drive" },
+          { title: "Caso práctico REAL con ecommerce (3)", url: "1MzzuS1a02u8PKMzmbTv7H-GGurQOHkkj", type: "drive" },
+          { title: "Caso práctico REAL con ecommerce (3.1)", url: "1B8SMLRQoWsQsFadn77z4b5XVeFZoa2Zy", type: "drive" },
+          { title: "Caso práctico REAL con ecommerce (3.2)", url: "1rvCegnaKKi8rTiLw67Dkq1nrl3cJq2xR", type: "drive" },
+          { title: "Automatiza la inteligencia artificial", url: "1u0SMJSTff5gFlogBac4D6z_foaGP0vnz", type: "drive" },
+          { title: "Conclusiones finales que debes recordar", url: "1c4PZHZ4-_nakVsISvex6YniogKd4HZwY", type: "drive" },
+        ]}]
+      },
+      {
+        name: "ELEVA TU NEGOCIO", flat: false,
+        modules: [
+          { label: "Módulo 1 - Introducción", videos: [
+            { title: "Uso de la Plataforma Udemy: consejos para sacar el máximo", url: "1UIgUtQpSZ9Q02s92hr3p_NvtjfOc9beX", type: "drive" },
+            { title: "Estructura del curso que vas a comenzar", url: "1U4miZ7RdIH1VzL2cfg5OPTn9Wnppr9_j", type: "drive" },
+            { title: "Referentes e Influencias", url: "1IeqWD_R-9rNiwGjVC5y61jBfkJCXG2aq", type: "drive" },
+            { title: "¡Preséntate!", url: "1WNOQXhmAg_2CZj5iybzZF3cCiI8iOVtD", type: "drive" },
+          ]},
+          { label: "Módulo 2 - Introducción a ChatGPT", videos: [
+            { title: "Introducción a ChatGPT", url: "1Pz9CFH7Lam85rhglQTjT6mAKodhwQ79o", type: "drive" },
+            { title: "¿Qué es ChatGPT?", url: "1wRHtDG9TFtADbJGf2tiozjef7A-MkySM", type: "drive" },
+          ]},
+          { label: "Módulo 3 - Construyendo y escalando tu negocio", videos: [
+            { title: "Creando contenido largo y estructurando un índice", url: "1BxPCMlZvUi49NvJk7yg_yX2WdRT3ut8H", type: "drive" },
+            { title: "Asistencia de ChatGPT en SEO", url: "1y_Hfw8WLE9JNBc20CR4U1dwkhWLedgOz", type: "drive" },
+          ]},
+          { label: "Módulo 4 - Solicitud del Certificado", videos: [
+            { title: "Clase Extra", url: "1EVWkyn4vsC30Qwu-Jg1EoAoGct8GQ-Qi", type: "drive" },
+          ]},
+        ]
+      },
+      {
+        name: "CHATGPT · EMMA LLENSA", flat: true,
+        modules: [{ label: "ChatGPT - Emma Llensa", videos: [
+          { title: "ChatGPT: Herramienta secreta para marketers", url: "1YTGkz75e1MqzvuCLgqoCrfJhb90bnGlM", type: "drive" },
+        ]}]
+      },
+      {
+        name: "CURSO PROFESIONAL CHATGPT", flat: false,
+        modules: [
+          { label: "Módulo 1 - Introducción y configuración", videos: [
+            { title: "Prepara tu mente para trabajar con ChatGPT", url: "1ibfrtjiWd6DOaYQBwO6pbj8fOjcUQ8vw", type: "drive" },
+            { title: "Consejos para sacarle el máximo partido a este curso", url: "1KCnASXYrVX_QlcdCPPrnThXvdfFC0_RQ", type: "drive" },
+            { title: "Configura ChatGPT mientras aprendes a utilizar la IA", url: "1WVUFR-I4-vDnRJ14E0lNkFuP2w3fN8J5", type: "drive" },
+            { title: "Conversaciones en ChatGPT que te ayudarán a comunicarte", url: "1JCYGODwYoSTfrRh0DtxaGIHc1qNJB3f5", type: "drive" },
+          ]},
+          { label: "Módulo 2 - Entiende y domina los prompts", videos: [
+            { title: "¿Qué es un Prompt?", url: "1vyjQp-ha6GzvKnd-dQBxoEAHe61aMBHN", type: "drive" },
+            { title: "Entendiendo conceptos relacionados a Prompts", url: "1GnAvgc2z4-1oNq3j-cgehAr2qV2wNl5x", type: "drive" },
+            { title: "Aprende a crear prompts con una hoja de cálculo", url: "1t_57yKp-XDJkYRuWwzHj9CnBabjzCCHY", type: "drive" },
+            { title: "Estructura tus prompts básicos con RACE", url: "1uWi3NYBbWE28_Qsj7LpsCHi_jGOdSYkm", type: "drive" },
+            { title: "Estructura tus prompts con RPC", url: "1soTLPGAkDyXWey9qFPmEoWB9HAE5hlVQ", type: "drive" },
+            { title: "Pídele a la IA los prompts adaptados a ti", url: "12ea3AtTsNxXv7JsiNPSapuzYVIvzZJxq", type: "drive" },
+            { title: "Parámetros para darle contexto a ChatGPT", url: "1vO94SkJx_Hq2FjtDSkvJY3pwlt1GPady", type: "drive" },
+            { title: "Cómo crear tus propias plantillas de prompts", url: "1-7NQZDW8fklKTN8YtvWqIGlITvZEpkY0", type: "drive" },
+          ]},
+          { label: "Módulo 3 - Prácticas (1)", videos: [
+            { title: "Crea tu hoja de estilo para escribir con IA con tu voz", url: "1t_DHmO0JZHdBVPmegxfDB-RNznDUErP3", type: "drive" },
+            { title: "Crea tus propios recursos y documentos fácilmente", url: "1AcBqnKIABSC_iBn3e2gaXbF7t3AhPwYt", type: "drive" },
+            { title: "Cómo darle retroalimentación a la IA", url: "1HtgrJ_2iEXRxX6vC6g1FDCQNXfPlNqSp", type: "drive" },
+            { title: "Crea tus consultores y asesores con IA", url: "1MqYRqwKgbY4bz28a9_TWRd-NRGnGJcHq", type: "drive" },
+            { title: "Conversa con transcripciones y aprende", url: "1Bqnc9eJR-HSEeKhoSax_fqSglv8RIL9L", type: "drive" },
+            { title: "Aprende mejor creando tu traductor de conceptos", url: "160hXYzwB1qI-vOiYPmqusxKeX9FvLbuD", type: "drive" },
+          ]},
+          { label: "Módulo 4 - Prácticas (2)", videos: [
+            { title: "Retroalimentación para diapositivas y metodologías", url: "1I7zLfZRqYymANIMcLBJ-eg2T73W4u2Th", type: "drive" },
+            { title: "Cómo investigar a competidores de forma estratégica", url: "1nkTJfbxbtxGiQYVzmDFvJXNR5Zz9zXHK", type: "drive" },
+            { title: "Conversa con PDFs y aprende más rápido", url: "1DJHYDbJhmjgjK6mO3ildIK5YAIRC5b0A", type: "drive" },
+            { title: "Cómo crear imágenes con DALL-E de ChatGPT y Microsoft", url: "1cOya0XGo7QPIVT0znJCjEDacVYMM8zFH", type: "drive" },
+          ]},
+          { label: "Módulo 5 - Extras", videos: [
+            { title: "Microsoft Edge + Copilot", url: "1_AoBSyZM9zlDGMUnG73vCEz7NVnN7Xdc", type: "drive" },
+            { title: "CleanVoice para editar audios y multiplicar tu contenido", url: "1zm4PK984po4LThp8H16PUmnO5MNQLTOg", type: "drive" },
+          ]},
+        ]
+      },
     ]
-  },{
-    name: "IA MASTERY · BRUNO SANDERS", flat: true,
-    modules: [{ label: "IA Mastery - Bruno Sanders", videos: [
-      { title: "Bienvenido a ChatGPT IA Mastery", url: "12nxhbfR_kUzLvS9fd7-U1YSuqjngfhCf", type: "drive" },
-      { title: "Una mirada al pasado para entender el presente de la IA", url: "1a1OCHaovZKrPtRC9320dwvx5IIrne62G", type: "drive" },
-      { title: "Comprendiendo el interior de ChatGPT y su red neuronal", url: "1XKfXxBRYUHUSbxUtKjJ5wxOtgbw0rUf1", type: "drive" },
-      { title: "Las limitaciones actuales de ChatGPT", url: "1Z-Ews0rQT11jXL_aUO4gmX0m4sF7aL8Y", type: "drive" },
-      { title: "Cómo evitar ser remplazado por la IA", url: "1If_tQoiO9LPg4l9Uh1AeiRkeFJoTHiAo", type: "drive" },
-      { title: "Los peligros de la AI que la mayoría ignoran", url: "1lA_dAF4D3FEHulCq76ZSIgC-nZWJU6sI", type: "drive" },
-      { title: "La verdadera oportunidad económica", url: "1hbBJE5vIeOA3VvYN6hiXVzxkR1YrPpD_", type: "drive" },
-      { title: "Entendiendo los modelos de lenguaje disponibles", url: "1Qe-I78QQF0Oy_7QY-vKd6kfIitWTYDAg", type: "drive" },
-      { title: "Cómo saber las fuentes de las que ha extraído tu respuesta", url: "1S6dgEeDMBjXjUXi_SgsF4h831hfP3rXj", type: "drive" },
-      { title: "Esto es TODO lo que ChatGPT puede hacer por ti", url: "146o7sd1pFq9N9P6M8sFLWgOdMybeC2LX", type: "drive" },
-      { title: "El truco para generar textos largos con ChatGPT", url: "1WF57knfTjiMZ7Jb75gsJQdK-2dOrPvKn", type: "drive" },
-      { title: "Listado de las mejores Herramientas IA para tu negocio", url: "1o9RsmUrGaAKP-x3oqTZPTI8EAbJh7if7", type: "drive" },
-      { title: "Generando tu propio avatar IA a partir de imágenes", url: "1TM7165mSoMbE66vr6InJVvMHabBcvlMr", type: "drive" },
-      { title: "Cómo diseñar una web para tu negocio con IA", url: "15kJFrkpB4cmcxtVUh__21IyJVqOtriyE", type: "drive" },
-      { title: "El paso a paso de un ecommerce exitoso con ChatGPT", url: "1avyGFatVWQ8j65doVKI5qmThe0ZZJeFG", type: "drive" },
-      { title: "Caso práctico REAL con ecommerce (3)", url: "1MzzuS1a02u8PKMzmbTv7H-GGurQOHkkj", type: "drive" },
-      { title: "Caso práctico REAL con ecommerce (3.1)", url: "1B8SMLRQoWsQsFadn77z4b5XVeFZoa2Zy", type: "drive" },
-      { title: "Caso práctico REAL con ecommerce (3.2)", url: "1rvCegnaKKi8rTiLw67Dkq1nrl3cJq2xR", type: "drive" },
-      { title: "Automatiza la inteligencia artificial", url: "1u0SMJSTff5gFlogBac4D6z_foaGP0vnz", type: "drive" },
-      { title: "Conclusiones finales que debes recordar", url: "1c4PZHZ4-_nakVsISvex6YniogKd4HZwY", type: "drive" },
-    ]}]
-  }
+  },
+
+  {
+    name: "PROGRAMACIÓN",
+    courses: [
+      {
+        name: "DESARROLLO DE CHATBOT", flat: false,
+        modules: [
+          { label: "Módulo 1 - OpenAI API", videos: [
+            { title: "Cómo usar la API de OpenAI en tu producto", url: "1Er-6cwjYNpR2nqW1_LHrLGcwFEvjyjVq", type: "drive" },
+            { title: "Conociendo la documentación de la API de OpenAI", url: "1yVujUy60wVaa8QUWsU_HUOKrognH6wev", type: "drive" },
+            { title: "Cargar modelo de la API de OpenAI con Python", url: "1Eekhw44fsDMGbf4-0bXsPfymorH8vSln", type: "drive" },
+            { title: "Creación de ejemplo con la API de OpenAI", url: "1x8PZqDWkJ877DdWbIAMoeof00Zwzy-bz", type: "drive" },
+            { title: "Parámetros de Text Completion: temperature, top_p y n", url: "1rLyDAplN5xarS3ytRUEDbT64NvBgSvSs", type: "drive" },
+            { title: "Buenas prácticas al usar modelos de OpenAI", url: "1doFKr6RPe64uvx_gReySwWVE_NNTA2c-", type: "drive" },
+            { title: "Chat Completions", url: "1DaGoRcTXYC0JP77GV6eN1SVQI3juhQk_", type: "drive" },
+          ]},
+          { label: "Módulo 2 - Fine-tuning de modelos de OpenAI", videos: [
+            { title: "¿Por qué hacer fine-tuning a modelos de OpenAI?", url: "1qWJ3k40K53708yjkItHbqpZU3ttvqgz1", type: "drive" },
+            { title: "Costos de uso de OpenAI y tokenización de texto", url: "1jMHcNCojk8K7yqlK7lDfRaGyELaNQRag", type: "drive" },
+            { title: "Formato de datos para fine-tuning", url: "1h8PWorKhdCpC5xmNQFPTZCjbVQRFXx1v", type: "drive" },
+            { title: "Fine-tuning de modelo de OpenAI", url: "14Btqfp2S0U_IYWH1kmAJWB726c0Iem4z", type: "drive" },
+            { title: "Pruebas al modelo con fine-tuning", url: "1CU_kKsQuFWAgstrngWZ4kC4B_rGxYy1E", type: "drive" },
+            { title: "Optimizar el modelo: ajuste de parámetros en Playground", url: "1tnUdQ1z8CSNTEZITk-4vpbcrGyeHehRA", type: "drive" },
+          ]},
+          { label: "Módulo 3 - Integración a aplicación de chat", videos: [
+            { title: "Prueba de envío de mensajes del chatbot", url: "1TbxwfOkQld0eblwivpkbxyZXnCFWJU4a", type: "drive" },
+            { title: "Función main() del chatbot", url: "102B5zsilpdLM_arcQpl5PgL9FbDC1l-w", type: "drive" },
+            { title: "Integración del modelo de OpenAI a Telegram", url: "1DCE7FccoKwFWqkjB5vU-aAyhoJX0CoCK", type: "drive" },
+          ]},
+          { label: "Módulo 4 - Conclusión", videos: [
+            { title: "Recomendaciones finales y proyectos alternativos con IA", url: "1ICqrMRL42iz6FIhhkJqsBQaDHt0_6LTc", type: "drive" },
+          ]},
+        ]
+      },
+      {
+        name: "IA CON PYTHON", flat: false,
+        modules: [
+          { label: "Módulo 1 - Introducción", videos: [
+            { title: "Introducción al curso", url: "1NdiV5tTbtjpLVHEWmz1Ood-DJ6G6ow2O", type: "drive" },
+            { title: "Pre requisitos del curso", url: "10DfCPpp_3wpVuqYj_7pSs4pYpdsM6226", type: "drive" },
+            { title: "Un ejemplo en directo de IA", url: "1ElwsWUl0j6bdFSPCn-eYb0gkW8Aq2qWz", type: "drive" },
+          ]},
+          { label: "Módulo 2 - Cómo aprenden las máquinas", videos: [
+            { title: "Una recomendación acerca de cómo ver esta sección", url: "1uOFmcUYMhhJYdg8sOdPFb656Pq3JqWRZ", type: "drive" },
+            { title: "¿Qué es el aprendizaje por refuerzo?", url: "11gNtdA5UfE9cTHzQtkOpnHfk9JAppFNt", type: "drive" },
+            { title: "Notación de variables", url: "1YrbId0NZJimk5mnq0Z04Qi5a7619ZVcs", type: "drive" },
+            { title: "El agente del laberinto", url: "1kiXhpCV6whtT-3yTIVnfOrUe4anYTpq2", type: "drive" },
+            { title: "La ecuación de Bellman", url: "10uy-HazssG6ac8DyhpijcT2YyIx3EJwD", type: "drive" },
+            { title: "Calculando el resto de valores en los estados", url: "120Bn-x9bZpKb_CF_ZSwDVbBeOWOm6WQ-", type: "drive" },
+            { title: "El plan", url: "1LT0c4h-lskllrECMkM3nG1cSCXmuvINf", type: "drive" },
+            { title: "Búsquedas deterministas y no deterministas", url: "1vZ73_tlnIMJkTFiwnMo2N76RPGjkiLjC", type: "drive" },
+            { title: "Procesos estocásticos o cadenas de Markov", url: "1I_NHQ5fe9NeaLQ0ad8FDQO3ffWY83Rhp", type: "drive" },
+            { title: "Ecuación de Bellman con procesos estocásticos", url: "1sMmSZiVMvsAaH4Xfyvkkwu2TPfxy0tSO", type: "drive" },
+            { title: "Política o plan", url: "1Gs7xGAVyXlP5BIk2-DlyiQjEFk_Gqq3D", type: "drive" },
+            { title: "Factor de Penalización", url: "1tqwpthRvz5tM946QIMYJprl-8eNPQHKc", type: "drive" },
+            { title: "Q-Learning", url: "1WAzuYDlVGxQ76z0EjRh-WYNhIxSq9HwH", type: "drive" },
+            { title: "La diferencia temporal", url: "1tCPkebv6sNpx2FNQs44wsz0ncxT4HY77", type: "drive" },
+            { title: "Fin de la teoría", url: "1UNG3H9RNOznDTPkJd5t6PdBrSN-nSMIv", type: "drive" },
+          ]},
+          { label: "Módulo 3 - Instalación y requisitos previos", videos: [
+            { title: "Cómo instalar la librería AIGym", url: "19jka0riFHYNVWehBaksFZ8JA7Q7ev3p_", type: "drive" },
+            { title: "Probando OpenAI", url: "1Z7j87rBvb-RXwouuGf9IJkGiXbqRZC8D", type: "drive" },
+            { title: "Dependencias con Homebrew y Aptitude", url: "1zFADNaXzKLyfYYugnPcZO-3HoG1Jjug5", type: "drive" },
+            { title: "Instalar los entornos de Open AI Gym", url: "1Ypp8VE2FaC8jRCn5LT6Sfebr9xKb6ybj", type: "drive" },
+            { title: "Probando los entornos instalados", url: "167jRZsNIvMd0_XxLMmkQStJ7G_ESQeoC", type: "drive" },
+            { title: "Pytorch: la librería de Python para inteligencia artificial", url: "1jwjPz9c1Ttt3VRcQqMsXB8-2U6wf-Ysd", type: "drive" },
+          ]},
+          { label: "Módulo 4 - El proyecto de la Universidad de Berkeley", videos: [
+            { title: "Cómo tener Python 2.x y 3.x desde Anaconda", url: "1qvRToo4KYLQ92edzQUh2kQnKiTpUM8gT", type: "drive" },
+            { title: "El Github del proyecto de Berkeley para aprender", url: "18ic7gNCoKpS-mKZ2oE6X7Z8vq6VFVkq3", type: "drive" },
+            { title: "Cambiando los parámetros para hacer que nuestro agente aprenda", url: "1bHSVNCvEJdhsdVgAU_F93YZbx1z_xmhU", type: "drive" },
+          ]},
+          { label: "Módulo 5 - Primer contacto con la IA", videos: [
+            { title: "Cómo ver todos los entornos de test que tenemos instalados", url: "14N1EPXeIn71kvRoz62SEF1V6HBAnQ6CU", type: "drive" },
+            { title: "Ejecutar cualquier entorno de Open AI Gym", url: "1xzLJG45Kp_-TzXVBkE4hgO7wATZ4ZoQx", type: "drive" },
+            { title: "De reinforcement learning a líneas de código", url: "14ekOyJDxtZqduyn2htK6Kd3hxjm03Zj0", type: "drive" },
+            { title: "Un ejemplo de reinforcement learning con Q-Bert", url: "14tYCsYt3SRMaHp_QqVKRDDlBGXJUA1l3", type: "drive" },
+            { title: "Los espacios de acciones en OpenAI Gym", url: "1RR2bQf0xo2hqeqUrqoDlC-v3Ivksmy7y", type: "drive" },
+            { title: "Mostrando qué acciones y estados tenemos en un entorno", url: "1eDCT1GNbR-OVwI2M3VUYITK7-QIRjpsD", type: "drive" },
+          ]},
+          { label: "Módulo 6 - Mi primer agente: La montaña Rusa", videos: [
+            { title: "El problema de la montaña rusa", url: "1ClT4E-Xl5Tn_ODbn5AJ__-kIhFAJbw58", type: "drive" },
+            { title: "El entorno y los espacios de estado y acciones", url: "10EswD27aDEw7ges38G-htL2O1Iv-h2US", type: "drive" },
+            { title: "Un agente con decisiones aleatorias", url: "169z4qxTUhA8odiBRVrFM8M29504TJX4S", type: "drive" },
+            { title: "Nuestro propio algoritmo de Q-Learning", url: "1OzojawBPjAjUMH4xGRsENRmCCQLFKUUE", type: "drive" },
+            { title: "Inicialización de las variables", url: "1zRmLeLf8ZpChWLZSWhaWLnsUjzCncl2P", type: "drive" },
+            { title: "El método de discretización del espacio de estados", url: "1zSzjsKAY9092MIvse_sx0eaf1A0eoBnK", type: "drive" },
+            { title: "Elección de la acción", url: "1r9m0F6a2cmuuajbehzdnn8n1EvnkV8kw", type: "drive" },
+            { title: "El método de aprendizaje", url: "1Rve4qFrjIGMN5BrAFaZLsHcmBmLQ-F20", type: "drive" },
+            { title: "Entrenar a nuestro agente", url: "1OUdmK9x_pBSaSlBTO0lfUVQtllOgecQg", type: "drive" },
+            { title: "Evaluación del entrenamiento", url: "1OwgCX4RLyTPQF4d2B0spSHioxn8Vov2W", type: "drive" },
+            { title: "Comprobando nuestro aprendizaje", url: "1yUbSQfYxSq6NYLaL9hpqLRv27xzTEORw", type: "drive" },
+            { title: "Videos del resultado del agente", url: "1AXHAltsY7qRv2YTDm8YIHLTDblGuRi_J", type: "drive" },
+          ]},
+          { label: "Módulo 7 - Deep Learning al detalle", videos: [
+            { title: "Introducción al Deep Learning", url: "1uOFfbvXEr31aQiaa4qDI58xTejGSgjcl", type: "drive" },
+            { title: "El creador del concepto de Deep Learning", url: "1d-RGx0ioJAFlI-LL6Zf9AQfVx2G-NAgf", type: "drive" },
+            { title: "La neurona", url: "1UkEGjy1q9dPBuJ8k0kNQdn_zhKODpoJ2", type: "drive" },
+            { title: "Cómo procesa la información una neurona artificial", url: "1a_9FU-Tw7hcluJex3hBpJVk5jxWpY_Dv", type: "drive" },
+            { title: "Las funciones de activación", url: "1UPE4X41He5ReNPV8lTn5nmx-uez14mb_", type: "drive" },
+            { title: "Programación clásica vs redes neuronales", url: "1ye-PnXJLAgz_kvWt8qPCPqh9Ytw73-N9", type: "drive" },
+            { title: "La función de costes", url: "1VrlplB6VF1y9S62Xx5UhXq0azflu2W1U", type: "drive" },
+            { title: "El método de optimización del gradiente descendente", url: "1SnZgB-DbB7Uo0JaLaXGCT7mxS_j_yiBR", type: "drive" },
+            { title: "Gradiente descendiente estocástico", url: "1STTRMk0oEBpyD0rLjGqmbtXcqEAdDuDt", type: "drive" },
+            { title: "Propagación hacia atrás", url: "1oEPLiB-p9RiJgeVhhtKo1l8BwVdHDpi-", type: "drive" },
+            { title: "Redes neuronales profundas", url: "12PupAzxpqpfgUstqzYu31btzYWBVflLI", type: "drive" },
+          ]},
+          { label: "Módulo 8 - Deep Q-Learning", videos: [
+            { title: "Aprendizaje en profundidad para problemas discretos", url: "1hE5IwozYOHduqHEHsm4jWFZyZ0my2lxf", type: "drive" },
+            { title: "Las redes neuronales", url: "1-9j27oHeD5gNptDExfeyx7QLywu7dzBg", type: "drive" },
+            { title: "Single Layer Perceptron", url: "1LIELkXOFj-ZL3k7-k39dpQzAgyI0T1Pm", type: "drive" },
+            { title: "El perceptron de una capa explicado", url: "1nD_lXGXUHMsOw24j__303tVMWtWwVUEs", type: "drive" },
+            { title: "Una implementación de QLearning con el perceptron", url: "1FjEKmlIbJXRO4phK3Aqj_plzTSO_efia", type: "drive" },
+            { title: "Separando métodos según su funcionalidad", url: "1CKEsCFu_0FsG7bp5gRKIcifyx22v0Ng7", type: "drive" },
+            { title: "Utilidades para complementar nuestro desarrollo", url: "1Fo4ABt14PUWejothwZCO0egCxUCMsm3d", type: "drive" },
+            { title: "Aprendiendo con la red neuronal", url: "1lqVg3J_fb4-0qL0fV4oLV3H8D0eVqvEU", type: "drive" },
+            { title: "Experiencia de repetición", url: "1BAj_29XDcjrmwBKd34wWjmzNmbo1pzcW", type: "drive" },
+            { title: "Implementando un buffer de experiencia cíclico", url: "1ZIwxUTttJIHSNPmi4tidjcenQoPnlFcF", type: "drive" },
+            { title: "Probando la experiencia de repetición de la red neuronal", url: "1hkn4abenJ1gIY9Tck0bg8HBzGO6k6aLB", type: "drive" },
+          ]},
+          { label: "Módulo 9 - Redes neuronales de convolución", videos: [
+            { title: "Cómo funciona el cerebro humano", url: "1bBOQY5qcP5MB6Gj2acebsRcxGYqBrPcD", type: "drive" },
+            { title: "Qué son las redes neuronales de convolución", url: "1O2B6ULoMQf_VES9K5KrC36oXqM-cd965", type: "drive" },
+            { title: "La operación de convolución", url: "1dXKXId_wehfKRPxppv07gmuol_VFxd4z", type: "drive" },
+            { title: "Ejemplos de convolución", url: "1NSd-EdmGCGrD0yS8gUoGPsXWKtZDItI2", type: "drive" },
+            { title: "La capa de ReLU", url: "1EG-HNrdhqiXeES2CuBDdjhyT5--5QIaJ", type: "drive" },
+            { title: "Max Pooling", url: "13HV-wuruaeJeMpDf-u2qQhW1OUp-Yx-S", type: "drive" },
+            { title: "Jugando con las capas de la CNN", url: "1BeRbfAJ4kMomtzBOpTckeORRakBoK64j", type: "drive" },
+            { title: "Flattening", url: "1u09x1nuBNkn7XZC9WpbUvkc2yt2guqjz", type: "drive" },
+            { title: "La capa de full connection", url: "15fIpMGL3uYcAIlkAY4WmRM1dMRkSLp6K", type: "drive" },
+            { title: "Un ejemplo de red neuronal artificial al final de la CNN", url: "1BRXd2SpEeMDtgBsAZoMt7B30kMK267MI", type: "drive" },
+            { title: "Función softmax regularizadora", url: "17sMpewm3R_GTmXGfGUXP9czhBoXAE0Gm", type: "drive" },
+            { title: "La entropía cruzada", url: "1ba3_hdbxkvzKRo1ZYTq7vGu5GrzZecyd", type: "drive" },
+          ]},
+          { label: "Módulo 10 - Mejorando nuestra red neuronal", videos: [
+            { title: "Red Neuronal Convolucional", url: "1aj12Eh1IAeE0r2YKGIXlYXoh6ZgN6MbE", type: "drive" },
+            { title: "Decidir qué algoritmo utilizar según el espacio de observación", url: "1PeF6BLAxA9kPlgQh3ydFhTc8Y7fKXAhK", type: "drive" },
+            { title: "Un fichero JSON para gestionar los parámetros", url: "1u2uyG80gxpiSMUsbyZgIno5EUPbvmmS6", type: "drive" },
+            { title: "Refactorización de parámetros de carga", url: "1mde8NB1lOxM29MEXyzT1ehavzeCEYtQ3", type: "drive" },
+            { title: "Reposar el conocimiento con Q-Network", url: "1HRh1QZR3K98P5L9B78CaauAM-blkul3w", type: "drive" },
+            { title: "Cargar y guardar los estados del agente", url: "1lRqh62gfjxpX28vskLfPQixJ6NJH0dhF", type: "drive" },
+            { title: "Refactorización de parámetros", url: "1-wGhR5BDcMHiZ0u_IdKhyS8bCJF-OrM_", type: "drive" },
+            { title: "Parser de argumentos de Python", url: "13W00tRxBne-w9NaB5vOEw2H5z6Rsu6ss", type: "drive" },
+            { title: "Cargar cualquier entorno de Atari", url: "19oFKLhkpL7x6N0g3ERiIjWZkRoNUXchU", type: "drive" },
+            { title: "Wrappers para configurar las IA de Atari", url: "1rPZOc08gyd2QcfohF8OQ4XHmPltGFCy1", type: "drive" },
+            { title: "La razón del reescalado de imágenes", url: "1diVm-9O2ENP8JuMNkWkEaWPsJU9ylTB8", type: "drive" },
+            { title: "Evitar memorizar la posición de salida", url: "1EO5XXbn28yBnR9voke_ij5xXuRtCrNC0", type: "drive" },
+            { title: "El botón de inicio y el sistema de vidas", url: "1NllX5wpUGerVW9ZTPXZQmOQNTE0ft4Dw", type: "drive" },
+            { title: "Optimizaciones de almacenamiento en memoria", url: "1o8KrncDHeEj1zIRcgya_97OpkQxsmxqa", type: "drive" },
+            { title: "Reescalar juegos de OpenAI Gym", url: "1EJDfbYreg9ot-A4T-fj6liHkuj4Ps73b", type: "drive" },
+            { title: "Cargando nuestro entorno de forma independiente", url: "1_ycmqqU8To9kSHCh_ynO2IXUjVgOXVC7", type: "drive" },
+            { title: "Entrenando a nuestro agente", url: "15tMo1Tem2uVwQtlp6wPlm-4i1HKfpUBV", type: "drive" },
+            { title: "Tensorboard X, una herramienta magnífica", url: "1WVD9O0yaJ0pitEuPMokoB0fU2xN4ho8k", type: "drive" },
+            { title: "Resolviendo los bugs de código al detalle", url: "1ATLLsXxoP5ZcKyZv16cjCUwfj22xoMhL", type: "drive" },
+            { title: "Pruebas finales y Tensorboard", url: "1VisDQd5QgCwVEx8TWfGvFK0ZfG8tG7ge", type: "drive" },
+          ]},
+          { label: "Módulo 11 - Entornos personalizados", videos: [
+            { title: "Aviso: sección con problemas", url: "12vxASFa2V2YP3KtYCW67orRF_O9YCBUA", type: "drive" },
+            { title: "Entrenando agentes en entornos personalizados", url: "1FaBrVI-J6gXXO0gLujgrzrzCLjDhdKb8", type: "drive" },
+            { title: "Plantilla para crear nuestros propios entornos", url: "1fls_tlx_zmJXwb6tfruj9roSNSnD0MZD", type: "drive" },
+            { title: "Presentando a CARLA", url: "1DPwwQW873_DtIrq_X4f7Ewybx8xbng7k", type: "drive" },
+            { title: "Cómo hacer una virtual para instalar Ubuntu", url: "1WM2HgVzE8Vvzdq2z3fadJKcEVc8RhK1V", type: "drive" },
+            { title: "Instalar Python y pip en Ubuntu", url: "1E2fhkz0INV4xS3wY3sxIgUoa1Lv5w8Wn", type: "drive" },
+            { title: "Instalar Open AI Gym en Ubuntu", url: "1T129E0up_TcL-TR6VVWEANK6e9LwbVik", type: "drive" },
+            { title: "Instalar Unreal Engine 4 y CARLA en Ubuntu", url: "1cxDM0BFRctar13SZzV7KUdKD8W_7Psdt", type: "drive" },
+          ]},
+          { label: "Módulo 12 - Algoritmo Deep-Actor-Critic", videos: [
+            { title: "Deep Actor Critic", url: "1_5wHio4OY-NMkaiUcpUHUaEM-iD7XwAx", type: "drive" },
+            { title: "Estructura del A2C", url: "16b67wl5mr48mFpZFE_6BM2sRZyLf9PG5", type: "drive" },
+            { title: "A2C para observaciones de baja dimensión", url: "1_kr7hgdgFNyXJpKFhpDT8kyoi6PdiaJZ", type: "drive" },
+            { title: "A2C para observaciones de alta dimensión", url: "1xIZXx-_pH9D0vAGDa3zuv3SA3qwrEr3n", type: "drive" },
+            { title: "Método run: actor y crítico oportuno", url: "13XLslBv10Dj998g2mPnrnHI5BMY-NJai", type: "drive" },
+            { title: "Transiciones para guardar experiencias de la política", url: "1zp2COyLwcfSz5Xgxq04iDxqsAA6xZCR0", type: "drive" },
+            { title: "Procesamiento de observaciones, acciones y políticas", url: "1k9p3KF93rPm6IfPkkjqI9inDv2vov9dT", type: "drive" },
+          ]},
+          { label: "Módulo 13 - Otros entornos", videos: [
+            { title: "Robótica, videojuegos y más en el mundo de la IA", url: "1lfjkkA8-9nuS_mxUu4tP-r4Y1061ul_t", type: "drive" },
+            { title: "Roboschool", url: "193-BR5A-w__YdotpE50vYXZQE5jB0QKs", type: "drive" },
+            { title: "Retro Gym", url: "1Vd7-F7shBGib-_dJwzvAKQ68ErlMjfD-", type: "drive" },
+            { title: "Starcraft 2", url: "1rWwkYwrv7SiMBG_g6LM4UsPb0eTm8wmo", type: "drive" },
+            { title: "Deep Mind", url: "1s4fQCa98NAkIyztMDxn7irMzyPcJuVfT", type: "drive" },
+          ]},
+          { label: "Módulo 14 - BONUS", videos: [
+            { title: "Enhorabuena por completar el curso", url: "1vfJ2ElEVZO_bwJRfyAosMy-or2Lc29HF", type: "drive" },
+          ]},
+        ]
+      },
+      {
+        name: "IA PARA JUEGOS", flat: true,
+        modules: [{ label: "IA para Juegos", videos: [
+          { title: "Ámbitos, parámetros y funciones en ensamblador x86", url: "1lsr9p5kOTAa0A3U7zA1XE5l6s__PvhEm", type: "drive" },
+          { title: "Árboles, caché y optimización con Templates y Placement", url: "189LypIVC7mlIha4-HB6RZnmHIUacMzd3", type: "drive" },
+          { title: "De C a ensamblador x86 de 32bits", url: "1cdR6tbyF30T6eDGChnVonVGkl77uADUr", type: "drive" },
+          { title: "Decision Trees (2): Técnicas avanzadas", url: "11upiPH5QAvH83vmXduh8HU9i4sgGwcTv", type: "drive" },
+          { title: "Decision Trees desde 0", url: "1a5xOTZrytUYPh-DU9_Z7WnNldX6cXZX9", type: "drive" },
+          { title: "IA con Behaviour Trees (1)", url: "1SDhYb35Pcyr4y9MMEiirhyiK5JrwT8hI", type: "drive" },
+          { title: "IA con Behaviour Trees (2)", url: "1Y6VB8VPcQJzdgksPwXDhBDegDULul2NW", type: "drive" },
+          { title: "IA con Steering Behaviours (1)", url: "1uyFHldX5prTybvpqBp7H5UkHkKL2ukza", type: "drive" },
+          { title: "IA con Steering Behaviours (2)", url: "1TN4OU76CFPM44dBg8Pb20oC8XS7mJNUG", type: "drive" },
+          { title: "IA con Steering Behaviours (3)", url: "1IxGzGIaFd9-HAbR0gfCtwi05MtC4by6Q", type: "drive" },
+          { title: "IA con Steering Behaviours (4)", url: "1AvmNYn67EHdm7MwmOJ0bf-dauOKmx1Er", type: "drive" },
+          { title: "ImGUI - Interfaz gráfica en modo inmediato (2)", url: "1zaeeWr29XAFGZnWWqGCgGlhsRBN87Tum", type: "drive" },
+          { title: "ImGUI - Interfaz gráfica en modo inmediato", url: "1HBkGsM2bebD6Oh89S1vpZFNXRNO6hYju", type: "drive" },
+          { title: "Interfaz de depuración, sistemas y toma de decisión", url: "17_Pd20IBJgozu9VGYk-1uVtYM5aiMncD", type: "drive" },
+          { title: "Introducción a ensamblador x86 de 32 bits", url: "1hnMLG5zpcGtD6F9Ynonj83y94_LCP0ZH", type: "drive" },
+          { title: "Movimiento cinemático vectorial en IA", url: "18QxhxOn-NGDSo6Y6UsopqB6UrdGbsecg", type: "drive" },
+          { title: "Programando en ensamblador x86 de 32 bits: Primeros pasos", url: "12bziV4S4ky6gCVkscU-_kSV7ZadPNr7O", type: "drive" },
+        ]}]
+      },
+    ]
+  },
+
+  {
+    name: "DISEÑO CON IA",
+    courses: [
+      {
+        name: "CANVA CON IA", flat: false,
+        modules: [
+          { label: "Módulo 1 - Comienza por aquí", videos: [
+            { title: "Bienvenidos a Canva IA Expert", url: "15aJPXqao_srYs9B7mn4N51GV06VQ8clm", type: "drive" },
+            { title: "¿Qué pasa si me trabo? Soporte 24/7", url: "1va1uqkAjk1CUooU3dcofPnZv_Mpyw5FN", type: "drive" },
+            { title: "Cómo sacarle provecho al entrenamiento", url: "1JA_puG9cnyKXX6UZpAmA667WF74IhUTt", type: "drive" },
+          ]},
+          { label: "Módulo 2 - Mi caja de herramientas de IA", videos: [
+            { title: "El poder de las herramientas de IA en imagen", url: "16GNF1Zk8SaEBLZ9x-U4KYMzonDrUH5iR", type: "drive" },
+            { title: "1ª herramienta: Canva", url: "1df_MmvGqIkQ4-updD4zy5A94UJRV-Zcs", type: "drive" },
+            { title: "2ª herramienta: Leonardo.AI", url: "1KwNpt-MN66VcyOHbYJ3orxwvaV_ScOK-", type: "drive" },
+            { title: "3ª herramienta: Ideogram", url: "1CiJW8op_6rvSKNeVWotQdn8w-ujH38Kt", type: "drive" },
+            { title: "4ª herramienta: Microsoft Bing", url: "1ejujwL_oC_wvsI_WhPcvPWfiUuH6kNPc", type: "drive" },
+            { title: "Instalando Conector Discord", url: "1XsbpFd77dg7CpbvO4eB5xh3DF2LQcSLz", type: "drive" },
+            { title: "5ª herramienta: BlueWillow", url: "14PPMhEgF0det-7qblxTKdtuQ8xaCll11", type: "drive" },
+            { title: "Actualización Bluewillow + Limewire", url: "1O3PmQeYQ06Qjd6ywgp53mLK2FVrAbnDS", type: "drive" },
+            { title: "6ª herramienta: Midjourney", url: "1PlByWTAys8GTrc0Uwner27mk18L1riiE", type: "drive" },
+            { title: "Instalando Insight Face Swap (Cambia caras)", url: "1F2K1Zxy5HcddMOoqViwLDpFoZC8zU4vo", type: "drive" },
+            { title: "Conectar todas las herramientas", url: "1QtpyXQ8m3e4AS1gR6vM4Dln2XBTYT_At", type: "drive" },
+            { title: "Haz esto y te etiqueto en mi Instagram", url: "1bNrWAM6vDI10VRkuod78gp3ZmxIHXnqC", type: "drive" },
+          ]},
+          { label: "Módulo 3 - Comandos poderosos", videos: [
+            { title: "Estructura perfecta para comando AI más DeepL", url: "1jlB1HZRAZVZ2p31X0WS_5O9GkDrFdmU5", type: "drive" },
+            { title: "Comando para aumentar tu alcance poniendo tu cara", url: "1z0q70WtSrhHtBqZp-459T_pW7Kw8w2h9", type: "drive" },
+            { title: "Comando con texto (Ideogram)", url: "1XbVHIdk3OOH6fU1YiMw_lAVnz3zBQ3YN", type: "drive" },
+            { title: "Comando especial para crear logos en 2D", url: "1ZeCRQQWjoNtlrdy3rTSYsj39QsJLL3CT", type: "drive" },
+            { title: "Comando especial para crear logos en 3D", url: "19EZ_WoAcxuO7UVFw2TFnqusq8aSWJgMT", type: "drive" },
+            { title: "Check de los comandos necesarios", url: "1quF2__23a_a-CimDAkl_JLCAO3tssJ2W", type: "drive" },
+          ]},
+          { label: "Módulo 4 - IA para tu negocio", videos: [
+            { title: "IA para productos (Ideogram + Midjourney)", url: "1kM7rfx5ggea4-jHYJbqsQofASXAUWu8I", type: "drive" },
+            { title: "Copiar estilo fotográfico con Midjourney", url: "1uU9tAn6NRMPjmcr48tCIfTSMNmKI5fbs", type: "drive" },
+            { title: "Generar ideas con inteligencia artificial", url: "1rz5__m_m6yThbwN8IUi9GYvlRbWRqKM4", type: "drive" },
+          ]},
+          { label: "Módulo 5 - Domina los momentum para vender más", videos: [
+            { title: "¿Qué es un momentum?", url: "1mEPD9OfEVSCo-RpMcgkTZRrKBDKsCsM9", type: "drive" },
+            { title: "Cómo utilizarlo con local físico (Gimnasio)", url: "1ZYoDGF0l9OV7H5JAN6mDsajrv-LnsCz0", type: "drive" },
+            { title: "Cómo utilizarlo con servicios (Coach, psicólogo, etc.)", url: "1MTF5yJhyoj5NEl9AaGjPPtIZy3LZ2S2P", type: "drive" },
+            { title: "Cómo utilizarlo con producto (Ortodoncia)", url: "1ZkQ-yN14WNhUCIlZCLKegBp2u1GyrVzu", type: "drive" },
+            { title: "Cómo utilizarlo con local físico", url: "1XsOcBfbi7-75xr-jBQAS5YVzBG1NaBTx", type: "drive" },
+          ]},
+        ]
+      },
+      {
+        name: "IMÁGENES CON MIDJOURNEY", flat: true,
+        modules: [{ label: "MidJourney", videos: [
+          { title: "Introducción: IA en diseño y MidJourney", url: "1fONGQDDSfLZu-fLU4wf6Vkf5XrS6Jlrq", type: "drive" },
+          { title: "Fundamentos de IA en diseño gráfico", url: "1A-xqbeR-GnimkiQRnj-t50mQoGPxK98Z", type: "drive" },
+          { title: "Proyecto del curso: kit visual de banda", url: "1GbKAXNzpj_AUIwNF1In93OzuDrUGmXbO", type: "drive" },
+          { title: "Principios de diseño + primeros pasos en MidJourney", url: "1GB38vOYFoQifX17X2yNNqlQDVGRYZHiO", type: "drive" },
+          { title: "Creación de logos, flyers y paletas con prompts", url: "1PgcBjisGGNc_FzT7vdeb5OLVU2-6Bk24", type: "drive" },
+          { title: "Creación de flyers, productos y mockups con IA", url: "1zGfJJTljgFXowjYybIGROJ-0GlfSoX7k", type: "drive" },
+          { title: "Fusión de imágenes con comando Blend", url: "1biwFgu657ex2259_UYyaj0MtTVMZ50Vq", type: "drive" },
+          { title: "Ética de la inteligencia artificial en diseño gráfico", url: "12sRK1fAISfXHEujiX9mTtdbW2lvSRvfE", type: "drive" },
+          { title: "Proyecto final: entrega del kit visual con IA", url: "1ZdhsbwF8mdxK8SFYl7l0ZkkQHZHPRKFa", type: "drive" },
+        ]}]
+      },
+      {
+        name: "ADOBE ILLUSTRATOR", flat: true,
+        modules: [{ label: "Illustrator", videos: [
+          { title: "Conceptos, secciones y herramientas", url: "1-ys_KSKeNvJyOg9OyDK8MsQs-kT9Kkvl", type: "drive" },
+          { title: "Configuración de trabajo y mesas dinámicas", url: "1m_u1wDnxkHEF8fUZJHFsufg-lNAfMZc-", type: "drive" },
+          { title: "Barra de opciones y grupos de selección", url: "1bmrpIWHs5xqlMJrisaf3SH2Ij-zAGoVg", type: "drive" },
+          { title: "Herramientas de selección", url: "1SFauapmXpnYbot_QKxEBuX-TNh6ChoPI", type: "drive" },
+          { title: "Herramienta PLUMA y sus familias", url: "1b98KQ_0336Gi7TlZ0s_uHh8M4fQ8OJsv", type: "drive" },
+          { title: "Herramienta PLUMA: Panel de control", url: "1lUZD7eOk54yDP01Eo9a3B84JSHXRLK_8", type: "drive" },
+          { title: "Práctica con herramienta PLUMA", url: "1yblJy0hJnReAfwB4ithFA1eo9AiM7bD2", type: "drive" },
+          { title: "Herramienta TEXTO y sus familias", url: "1x3iUanWm6McTMoiMehzeE-76FSSVBfJt", type: "drive" },
+          { title: "Creación de Proporción Áurea", url: "1DHpG7Vy9VC83rkIGoEFrikc5XbRNA-Q0", type: "drive" },
+          { title: "Segmentos, rectángulos y cuadrículas", url: "12M3vXxQdmqMVhF6sRGzvr-7nZDPV1CuE", type: "drive" },
+          { title: "Pincel, pincel manchas, borrador", url: "1J3RkVA703S8NbDCzpte5Jr0PFJcxHDM1", type: "drive" },
+          { title: "Busca trazos y Modos de forma", url: "1_2JlDI79MrCjRm77WFWPokB714VxnGC5", type: "drive" },
+          { title: "Vectorizando dibujo 1", url: "180kzIggjNrT1yYwvFYPT4BSB40iXMq3c", type: "drive" },
+          { title: "Vectorizando dibujo 2", url: "15o-7q9LR2BndaTrUb90j35G-IXDefIbv", type: "drive" },
+          { title: "Herramientas de Reforma", url: "1I5lCJn4FUy9Rwn0wQXavpV8L5c5xza4o", type: "drive" },
+          { title: "Muestras de color", url: "1eD49UnBMEfl-BsHH18llxP4MZmA-ZJoh", type: "drive" },
+          { title: "Herramienta Anchura y Familia, Transformaciones", url: "171_rvZVmz42Ag08TTXt_ZP3n7S9fin_S", type: "drive" },
+          { title: "Llamando e Importando Muestras", url: "1GCo0OZwSIhKpEwvb1gn9CHRpj0lIHUNr", type: "drive" },
+          { title: "Aplicando Armonía de Color", url: "19x_yZg3c8WoiDs_tEO0oFIovnnBBxGJo", type: "drive" },
+          { title: "Pintura Interactiva", url: "1ByhAjXJb4eLKrS9AgKxCCYAnD4L92LfH", type: "drive" },
+          { title: "Herramienta Malla", url: "1VtWUyq1rrvPotMqF3QLsEurteCcq5Ea2", type: "drive" },
+          { title: "Herramienta de Degradados", url: "16WCp1dQyuLpiZNHFTd23Yx66IbnMCf7s", type: "drive" },
+          { title: "Herramienta Cuenta gotas y Regla", url: "1HIiUtI51qYeMVooNp-AasaIU5EH_36T3", type: "drive" },
+          { title: "Herramienta Fusión a profundidad", url: "1vV9Ma69UmhUtHTWz1sxnWw5JFxRmf-9h", type: "drive" },
+          { title: "Herramienta Regla a profundidad", url: "1gfK3sO_37FCq3eNV0fp9oBaEqt3D6hJJ", type: "drive" },
+          { title: "Qué son los símbolos", url: "1-YPAvP2zPdX2RyS2hBMWCItHQ3kGgaMf", type: "drive" },
+          { title: "Crear Símbolos", url: "1joQBg3X9ykQiq9Yop5ghtsKSvnvWlciP", type: "drive" },
+          { title: "Administrar Símbolos", url: "1OHdGYDMX-LL9eZ9inPdtpTJg8tZpdPcn", type: "drive" },
+          { title: "Modificar Símbolos", url: "1P-QLPMDKuhsnXdLy0lGROf9_zzTX5lpl", type: "drive" },
+          { title: "Redefinición de Símbolos", url: "1YjIdRLe-LVsKlmTEb2mjBDjQTjQFk93n", type: "drive" },
+          { title: "Símbolos Dinámicos", url: "1R_C_VYgyteAU3yOcOVPDX8FekxpwF3Mc", type: "drive" },
+          { title: "La Importancia de Herramientas Guía", url: "1HeGHeRmf1aYUJqvzF0GmfL-uN4GB6-iK", type: "drive" },
+          { title: "Sangría y Márgenes de Impresión", url: "1kt6gSgASVmKDC0jNUZ0ZopFXR1xUus5N", type: "drive" },
+          { title: "Líneas Guía Parte 1", url: "1Or22-4_MKMTRs-s6nZdXqOFTfk9SUyTI", type: "drive" },
+          { title: "Líneas Guía Parte 2", url: "1zwB10rlHrd6LA_1EpfBZJFfBqusWRKg9", type: "drive" },
+        ]}]
+      },
+      {
+        name: "ADOBE INDESIGN", flat: false,
+        modules: [
+          { label: "Módulo 1 - Introducción", videos: [
+            { title: "Presentación del curso", url: "1MrWKZS5fI_mHhG6g3D33Ccj4fVlBbT2l", type: "drive" },
+          ]},
+          { label: "Módulo 2 - Espacio de trabajo", videos: [
+            { title: "Creación de atajos de teclado", url: "1gC4TNwU1VUVh3iEnM4xFnf4AXBsGs20V", type: "drive" },
+            { title: "Menús y personalización de menús", url: "1TUXzglX8U2ntQvQnotfdx2E0TMNsj9bs", type: "drive" },
+            { title: "Espacios de trabajo", url: "1Kc7DAdVLZx4ZCWgv33L7085eV0Tr6tui", type: "drive" },
+            { title: "Preferencias", url: "1y44-VhZIY32OW2oovMVuhLzNvP30b12e", type: "drive" },
+            { title: "Visualización y zoom", url: "1zLwfYkLZafflglQU0-yYYOfj7wZbDyAt", type: "drive" },
+            { title: "Guías", url: "1l2okc7WIm6U-f910_MMMOjJaL2skX_sC", type: "drive" },
+            { title: "Opciones previsualización de guías", url: "1sTskXqNbOYAFQqgog_BnuRTK6Z_1Zivx", type: "drive" },
+          ]},
+          { label: "Módulo 3 - Maquetación", videos: [
+            { title: "Presentación del proyecto", url: "1tRhSJ0pM6hteH76FCl8OgZDkFjiizRvh", type: "drive" },
+            { title: "Marcos de texto", url: "1SxYefHR6ntRdK6mRszO3BeHAnByr-TcJ", type: "drive" },
+            { title: "Creación de un nuevo documento", url: "1t53ZrnUXoiUPUxR0OhSSaXaiD4dndGSj", type: "drive" },
+            { title: "Importación de texto", url: "120XbxSs00IS__DamwlCeTzJ-XMRDy0rs", type: "drive" },
+            { title: "Opciones de importación de texto", url: "1K5R8a7Z5gRyYsIJci-PPhNZpGh6XwZnD", type: "drive" },
+            { title: "Trabajo con páginas", url: "14vemr0P7vcLzvsCon7AyauWl74dTr9J8", type: "drive" },
+            { title: "Trabajo con capas", url: "1q09x4Dl14yBRQjUKdqLSriUcQWzLb8hp", type: "drive" },
+            { title: "Páginas maestras para el documento", url: "1r1EoR7pENTiKUi9CswSod0zd1oP4z8OX", type: "drive" },
+            { title: "Proyecto Final - Novela I", url: "1Z98J32tygZlLdis1-emtmM9nZjO7FxX1", type: "drive" },
+          ]},
+          { label: "Módulo 4 - Tipografía", videos: [
+            { title: "Eliminación de caracteres extra", url: "1BIS2QS-dAqHGZBUJJ84Elog8tDZErs8u", type: "drive" },
+            { title: "Formato de carácter I", url: "1lX3-WF2KnjC76QYdAWxNvww5kgy9Xdpr", type: "drive" },
+            { title: "Formato de carácter II", url: "1_0XuEVRDqACLcDlgF7ckvPQLVCWWfOAS", type: "drive" },
+            { title: "Formato de párrafo I", url: "10rgf6SuFU0dG4nVCJdsb69mm-HwpS3_b", type: "drive" },
+            { title: "Formato de párrafo II - Capitulares y viñetas", url: "1D2oIslP0LQwdnSRv6uqaYWvipm6OhU4Q", type: "drive" },
+            { title: "Formato de párrafo III - Listas numeradas", url: "1UKtk528onZlAi3yderriypuHMd2cWEib", type: "drive" },
+            { title: "Formato de párrafo IV - Sombreado de texto", url: "1pmqYApYvBaDKBeC49eLe1GDMGcbOx12Z", type: "drive" },
+            { title: "Formato de párrafo V - Separación de sílabas y justificación", url: "1sqRj1_jucASSTYZmKuo7T25W2ff7fyg-", type: "drive" },
+            { title: "Panel pictogramas (Glifos)", url: "1yMMGxd62HIzx-ZQmR4py2yOIXmogja3A", type: "drive" },
+            { title: "TIP: Justificación completa", url: "1k6uqv9YpcN40EilpOvvGYNpt4UARCXXj", type: "drive" },
+          ]},
+          { label: "Módulo 5 - Tipografía y estilos", videos: [
+            { title: "Creación de estilo de párrafo - Título", url: "1TaMjJmX79VYoXEHzuK6STRWAVMhs_B_K", type: "drive" },
+            { title: "Creación de estilo de párrafo - Texto", url: "1S5XujnVEjacifrjVTDV1um9uXwulmZYf", type: "drive" },
+            { title: "Establecimiento de cuadrícula de línea base", url: "1I11_29RfM8HNXDSHLbs3pbbL_w5d1Iw4", type: "drive" },
+            { title: "Opciones de separación - Eliminación de viudas y huérfanas", url: "1CzRt86LA6JSkOlWIeLA39YCBPMKCb564", type: "drive" },
+            { title: "Opciones de composición y separación", url: "112JGH8UG41Ss2YoRF0rLndc4x8SVtEU-", type: "drive" },
+            { title: "Creación de estilo de carácter", url: "1AlO0rGR64lnO31RBVQnf-QMKX9r1frKy", type: "drive" },
+            { title: "Estilo de párrafo Capitulares", url: "1VY4ITbn7h1mXwlqkY8Eb_ikNl3UOb_kz", type: "drive" },
+            { title: "Estilo de párrafo Diálogos - Indentados", url: "1tzoXMwBPbL711Wfj4FOezcVUIYdiVFXh", type: "drive" },
+            { title: "Cornisas de nombre de capítulo", url: "1sNa3hLU7cJZNQ3ucdhbG7OnNry3qkE82", type: "drive" },
+            { title: "Cornisas automáticas - Variables de texto", url: "1-SCePWoxa2M1rXxrR3Sdb1ev4NAkIqSQ", type: "drive" },
+            { title: "EXTRA: Explicación de cornisas", url: "1ldB8BmMKC3F3Uchd3w8Ws6jgbziHsEDq", type: "drive" },
+            { title: "Creación de una tabla de contenido", url: "1xhHaGWQpL8AB739rspIzXrLDanyYfmt5", type: "drive" },
+            { title: "Tabla de contenido novela", url: "1KqmMxZcF1ZZB2qNsiThfATwKo-q-mKAh", type: "drive" },
+            { title: "Páginas de cortesía, créditos y dedicatoria", url: "1W2C7X2Dp-XYpZeziqMwNoP9mE40KV8R7", type: "drive" },
+            { title: "Proyecto final - Novela II", url: "1WS12tjMxLgyuy2rj4cE-2YfTSEhdx8mS", type: "drive" },
+            { title: "TIP: Texto subrayado", url: "1H6zLdD6Lp9VLDqaszyLgU7Nq5k-PtRot", type: "drive" },
+          ]},
+          { label: "Módulo 6 - Estilos avanzados", videos: [
+            { title: "Estilo siguiente", url: "1Ex1xJ-l4OThBLgWP1tYzSNzBugynic0x", type: "drive" },
+            { title: "Estilos anidados", url: "1AUhUuGMCsWRFl6NQZwcKjqa3EuIpPLHc", type: "drive" },
+            { title: "Estilos anidados repetidos", url: "17eP18PCr8ZDvlGsZxjlbAVKff_zS44rF", type: "drive" },
+            { title: "Estilo de objeto", url: "1UnM5fHENhzplOMT92wfPB9pdrMnmdT1F", type: "drive" },
+            { title: "Estilos de objeto y estilos de párrafo", url: "1fcntK_JPnvxoqVSkz46c3EZjVKU2iWpp", type: "drive" },
+            { title: "Efectos", url: "1sX-CaNYjI_PhD8q1RFDaqU1riyoPESS3", type: "drive" },
+            { title: "Proyecto estilos avanzados - Catálogo", url: "1HfePvazJcRcCXyiWFljSZaF9ejoF_b50", type: "drive" },
+          ]},
+          { label: "Módulo 7 - Tablas", videos: [
+            { title: "Tabuladores", url: "11HiSMc7L1-NR7vAtinni4RawpgXX_3Gu", type: "drive" },
+            { title: "TIP: Indentados y tabuladores hacia la derecha", url: "1ORUjy-VzKpdA6h9okEMslI9q7IYKP3cz", type: "drive" },
+            { title: "Creación de tablas", url: "1pGQD5IY__uTB2bpP-N5QKgQJFHRSUqbV", type: "drive" },
+            { title: "Estilos de celda", url: "14EpRnh9XfxAmXZMhid8F0COG_iX1_ZNP", type: "drive" },
+            { title: "Estilos de tabla", url: "1IDlhWvTDwVOXEcMPalzlNartzEc_usvv", type: "drive" },
+            { title: "Importación de tablas", url: "1LSUe0Q91CJIlGfSHv-PrGBOz6c9J-4uR", type: "drive" },
+            { title: "Proyecto final Tablas - Películas famosas", url: "1DQ1eAxBwUiG8rby-b7C9rjvGUy-7hbd1", type: "drive" },
+          ]},
+          { label: "Módulo 8 - Trabajo con gráficos e imágenes", videos: [
+            { title: "Dibujo de formas básicas", url: "1CaZr7-_6yj1YevG8wWgaNDfSoHNn2tzx", type: "drive" },
+            { title: "TIP: Retículas de objetos", url: "1W5VKLoYHgsRphUZmeuiHt611wo4aB-pj", type: "drive" },
+            { title: "Dibujo y efectos de líneas", url: "1xSsb8yOOd25cl5Hf9Y7x4j4EIOCTKUGb", type: "drive" },
+            { title: "Alineación y distribución de objetos", url: "12ZUvZAxjXwlRJKY_DnA8C-oeeYhc3Sqk", type: "drive" },
+            { title: "Buscatrazos", url: "1rna9VP_IUfprZcLyH9yIya9iTxiS_maM", type: "drive" },
+            { title: "Creación y edición de colores", url: "1SxuOH6yd2zmBECw9tFVoYaq4eTmxfta0", type: "drive" },
+            { title: "Creación de muestras de matices", url: "1WpimF8Yd9cNWNmcw8ag6ZmoGDYWWvHv7", type: "drive" },
+            { title: "Creación de muestras de degradados", url: "1Ptq1D_utFGZJoE1L968yY9ZxLoyZBVUx", type: "drive" },
+            { title: "Importación de imágenes", url: "1HG93VLi7QYHzq94fhS9Ghfnf19YMv_Tr", type: "drive" },
+            { title: "Opciones de marco gráfico", url: "1PzHPc5h5j3D13Y92WW2GsJ-I3dhmSJbk", type: "drive" },
+            { title: "TIP: Creación de armonías de color con imágenes", url: "1E_d18gWaEJJG-C08Ent4wr355CmTmzIT", type: "drive" },
+            { title: "Vínculos", url: "1qXs-NMRRcONqhgAGPFukrl74B7ArP1K0", type: "drive" },
+            { title: "Edición de capas psd y ai", url: "1LQELWn2sCYrJzLDMnX_NNOFAZMbuWLes", type: "drive" },
+            { title: "Contorneo de imágenes", url: "1OZyQ0IdkcNDYL1ESQCRbI1ke8POmD6ak", type: "drive" },
+            { title: "TIP: Efecto duotono con imágenes", url: "1W9cdLQuGY_gfhd4uES2VQgmD43KPr0De", type: "drive" },
+            { title: "Objetos anclados", url: "1Mp40TDaYjtIHu-qclL8XBTtS0ttfZnC8", type: "drive" },
+            { title: "Estilos de objeto anclado", url: "1KTmPYR2XR3ePAlv82tLdKEdc_e-yNUma", type: "drive" },
+            { title: "Pies de foto", url: "1In_YOO6fqgch9f9K2382Y3GjOMUNdNnK", type: "drive" },
+            { title: "TIP: Aplicar pies de foto en publicación", url: "1pQ3vndmNuHTxaLBQXsEpNMhq3xh0YJM4", type: "drive" },
+            { title: "Proyecto Final - Revista Fauna", url: "1Uuts5toDcVVvRgrb8LS0DPEepRif9g4n", type: "drive" },
+          ]},
+          { label: "Módulo 9 - Automatización", videos: [
+            { title: "Búsqueda y reemplazo de texto", url: "1Urqb2OO9cFE1-P39YYDLAehLTd-RIp5U", type: "drive" },
+            { title: "Extra: Explicación del script FindChangebyList", url: "1rBGz0M-GRk04-2B6ozy_B0QTX91xzP_J", type: "drive" },
+            { title: "Aplicación de estilos con búsqueda y reemplazo", url: "1aBQ_Coa4avn4K4bYWBaPX2BKx37lXACz", type: "drive" },
+            { title: "Convertir guión corto a guión largo", url: "1zDr0sHzaY9elyG4e8xiimTIAacEvSMJ_", type: "drive" },
+            { title: "Script para convertir a Mayús-Minús", url: "1lej_30a9oa43AJorsHnJCXBrae8PIYuu", type: "drive" },
+            { title: "Búsqueda y reemplazo básica", url: "1gb7BEGDFFFll739DziOUiJnjOlQJ-eRz", type: "drive" },
+            { title: "Script Aplicar estilos consecutivos", url: "1xrFZ7cKzBFxiujORcZY6JOtVD-ZTLBt2", type: "drive" },
+            { title: "Script Dividir marcos de texto", url: "11u7dX3tug_-hBk9Y6qDYmZO5aIWYfuMS", type: "drive" },
+            { title: "Script Aplicar páginas maestras", url: "1R0gyOKdEw7Zo3lxddywET6fTBD-rHzdl", type: "drive" },
+          ]},
+          { label: "Módulo 10 - Exportación", videos: [
+            { title: "Creación de PDF para revisión", url: "12-kJ7Q85cqTWdUCVZI8WhTOL1t8z-H9-", type: "drive" },
+            { title: "Comprobación preliminar del documento", url: "1UieE4qTSPzu2pYmeEB6nnzPf5Ahr_vgQ", type: "drive" },
+            { title: "Creación de PDF para impresión", url: "1l9DUrQvxtT4l-ntEF2ohbBuxl_wTy1hz", type: "drive" },
+          ]},
+          { label: "Módulo 11 - Conclusión", videos: [
+            { title: "Despedida del curso", url: "1sl7HPKNoao0vrwRQ0qSgVcki-XK3QXwZ", type: "drive" },
+          ]},
+        ]
+      },
+      {
+        name: "ADOBE LIGHTROOM", flat: true,
+        modules: [{ label: "Lightroom", videos: [
+          { title: "Video de inicio", url: "1cJLPfD2ZqrhKqHQcGVzddSQvO6iG5iN4", type: "drive" },
+          { title: "Importar a Lightroom", url: "18-MkD5UE_9i-5SdQFwGtj-YeLxKJR0xZ", type: "drive" },
+          { title: "Tipos de Importación", url: "1AiSW0jF_O7gXzEyawqgfGt2iK-Pp6DgX", type: "drive" },
+          { title: "Importar desde Memoria Externa", url: "1roupRA8UqSEJNr_tkDC4PUTQCgmctvAO", type: "drive" },
+          { title: "Palabras Clave", url: "18RqfzG-II8vbDVtn_umiZQ9i1Ui60TKE", type: "drive" },
+          { title: "Panorama", url: "1TBxfkTsboyAdOTDQueQQx5-7ztwJjp3L", type: "drive" },
+          { title: "Ajustes Preestablecidos de Revelado", url: "14jUm8XNNHjhMJqGuOznNMKMc3WDDzZwA", type: "drive" },
+          { title: "Negros, Sombras, Exposición, Altas Luces y Blancos", url: "1jM_zqu1pro0bcY9o_2MkjdlU9rhhWBQA", type: "drive" },
+          { title: "Introducción al Retoque", url: "1bDEYxhOlGAPevMd4iCnO1DSyB2hSiJOR", type: "drive" },
+          { title: "Curva de Tonos", url: "1IS4bRP-ew0asOU655OD_1B1U5xNA7sWy", type: "drive" },
+          { title: "Marca tu Estilo", url: "1xbB_zhD3ty7UHlmVu_n1uKEw5AChSkOA", type: "drive" },
+          { title: "HSL", url: "1cE-Ju3F08PNJsJ8r1cm-s4Dg1ufaCh1e", type: "drive" },
+          { title: "Filtro Radial", url: "1ClqrbXQ5CVDGURx4ldDXRS09QmCCRawF", type: "drive" },
+          { title: "Filtro Graduado", url: "1ACqdlLiSM9VIms8cvdI3IXIZk4YIhcx5", type: "drive" },
+          { title: "Pincel Parte 1", url: "1sKMh7d8y0d_2r9QUxK6JoQat11P3kY8R", type: "drive" },
+          { title: "Pincel Parte 2", url: "1KSwDtoZUhzohhU6myNWkl4cCUkyJzMfx", type: "drive" },
+          { title: "Crear Efectos Preestablecidos", url: "11ZM0V2Qr66inChn5UDi41M9OhgKsfdOc", type: "drive" },
+          { title: "Ejercicio 2", url: "1UpsAE4jQC2I61_CJTWxEiJkhgswhvCMW", type: "drive" },
+          { title: "Modo Detalle: Enfoque y Reducción de Ruido", url: "1PfF0VSsseAPsDd32qQK3Pl2kJyDftEl6", type: "drive" },
+          { title: "Corrección de Lente", url: "1_laZvQf3Ok557fYhxvC7VsN8OkMPp9LS", type: "drive" },
+          { title: "Herramienta Transformar", url: "1SqCEbeu1FR6zOv3QYQlG--MzF_jyJ5e-", type: "drive" },
+          { title: "Calibración", url: "1c1aFKibC8YILF97Mik8yImCXADDSMRip", type: "drive" },
+          { title: "Importar Ajustes", url: "10Y8HaDVuMKUvzOuyrbMKV8iFZdxVf5a7", type: "drive" },
+          { title: "Exportación", url: "1NTxaut3_aulKJc9vKh_PRKRkoqMO8Q8R", type: "drive" },
+          { title: "Exportar a Correo Electrónico", url: "1UpsAE4jQC2I61_CJTWxEiJkhgswhvCMW", type: "drive" },
+          { title: "Exportar a Redes Sociales", url: "1PfF0VSsseAPsDd32qQK3Pl2kJyDftEl6", type: "drive" },
+        ]}]
+      },
+      {
+        name: "ADOBE PHOTOSHOP", flat: true,
+        modules: [{ label: "Photoshop", videos: [
+          { title: "Introducción a Photoshop", url: "1uo74RK2AC74gEOMx8Sqi_YwF9W2nDi5y", type: "drive" },
+          { title: "Interfaz y espacio de trabajo", url: "1Xcb6QtnfvwIBGJECBR56Vjb-Hc_KqScm", type: "drive" },
+          { title: "Herramientas básicas", url: "1IuiWrtdvsgrhDHT9NCC1rl_fFaEVIB2o", type: "drive" },
+          { title: "Capas", url: "1ayz8nLKjDHDklqUWkc_WfC_L2AQKViTa", type: "drive" },
+          { title: "Transformaciones", url: "15gY6a2NYZUUNRIJjUc_49E6K-Hemd5VW", type: "drive" },
+          { title: "Formas y vectores", url: "1yWnOIAIj2P3t5RWWEGP8xW1lwKzlvysD", type: "drive" },
+          { title: "Texto", url: "19gctFkuy-zxq5HsvMQhiIerh76YDqQez", type: "drive" },
+          { title: "Imágenes y composición", url: "1dGNo8k9iFGuGdKzh7ZkfSJLG0VyV31il", type: "drive" },
+          { title: "Primer proyecto básico", url: "15iC4-pAaSC3e5WVFqCqYsrZb5aJ-BbFe", type: "drive" },
+          { title: "Proyecto Instagram: Póster de ciudad", url: "1kzjwGmQZgBTTSNwtItbmomfvvwoBT87k", type: "drive" },
+          { title: "Selecciones básicas", url: "1rZ5v2F24XoXNKAa0Np3bVn9ovUpxlyoP", type: "drive" },
+          { title: "Selecciones avanzadas", url: "1kY1IaKZkD2tE6wnF1SHkDqbtuHbP9siQ", type: "drive" },
+          { title: "Selecciones básicas (práctica)", url: "1leFl1pUD7S3DUoZP0-rQ5bNIL92PVoUL", type: "drive" },
+          { title: "Refinado de selecciones", url: "1na7MEojQhC7p74SI_JZk9Aby1Y4Nlipm", type: "drive" },
+          { title: "Proyecto duotono", url: "1tpJzYcs4RbrpSaH_eRVQ8reH-XUR5xIY", type: "drive" },
+          { title: "Ajustes de imagen", url: "19lS2nWM5o7SNYr8B2YLwxPcuRwViOTnY", type: "drive" },
+          { title: "Herramientas de corrección", url: "1gx_01RXVlCeg4xUblF0WJC6k3vEwRcOQ", type: "drive" },
+        ]}]
+      },
+      {
+        name: "ADOBE PREMIERE PRO", flat: false,
+        modules: [
+          { label: "Módulo 1 - Primeros Pasos", videos: [
+            { title: "Bienvenid@", url: "1BIn78NnVxpMBEGW9PH8-nF-uPPcX7SG6", type: "drive" },
+            { title: "Antes de empezar", url: "1Q8HLGMZHtZcxsS_SvMHZo8eFxqTuohvl", type: "drive" },
+            { title: "Creando un proyecto", url: "11CU2G699G4u3uKgAto1G6UBVqLMt68tQ", type: "drive" },
+            { title: "Entendiendo la interfaz", url: "11AaguHVeEONRtcXjgYPxTIM0Nv69OawO", type: "drive" },
+            { title: "Personalización del teclado", url: "1RP995VoSP-e5Jo5KBzskHNk_VRC1Jkw4", type: "drive" },
+            { title: "Crear secuencias y ajustes de secuencia", url: "1kfQX82sOANgmlYRw62M_-RilLLl1Cnlf", type: "drive" },
+            { title: "Ajustes del proyecto y preferencias", url: "13_3hZZqvA3Y261x7N0TQWZJgfAfTAAcx", type: "drive" },
+          ]},
+          { label: "Módulo 2 - Edición", videos: [
+            { title: "Importación y organización", url: "1Z4ef1SmjA-QLObBvQzWCz1nK7Ymx0tZo", type: "drive" },
+            { title: "Línea de tiempo", url: "1tHwqIj_28syoYuijDgGm8KexZ3zs2qFZ", type: "drive" },
+            { title: "Insertar y monitor origen", url: "18DYLhFxT73OmIV6WvFOVbmbYghdXEer3", type: "drive" },
+            { title: "Recortar", url: "1CnprAUIQ7V0CA1fj_TUFvnrrWeS0Lb7e", type: "drive" },
+            { title: "Editar desplazamiento", url: "1NLapLvKUbX4AqEsZ5e7rxzRqVZAGHHeV", type: "drive" },
+            { title: "Monitor de recorte", url: "10KEn31P8JWAfKvqSzLKUiFPP-vLvLHP6", type: "drive" },
+            { title: "Deslizar y desplazar", url: "1PQ6nwhKrXRHWCiznsTIem_zEGEzRZPSN", type: "drive" },
+            { title: "Mover y desplazar", url: "1jMQfd93D1IlgWV3J0IIetVx7EyPJphOj", type: "drive" },
+            { title: "FPS", url: "1TvU67AJOT3iHmu5SBnzkataKW9TK95Tn", type: "drive" },
+            { title: "Cambio de velocidad", url: "1mTDANDW8tU9wwWnlvPRHtsPwMZCffdKe", type: "drive" },
+            { title: "Remapeo de tiempo", url: "1CtiU9URo5frRIqQaRWVLjDLWCWd4k5rM", type: "drive" },
+            { title: "Interpolación de tiempo", url: "1M3K2D1PSSWs7q-whra8G_QznpG6a65hc", type: "drive" },
+            { title: "Congelar fotograma", url: "10my9522eJThfKp8l1F-TYn5GqJtMTIeG", type: "drive" },
+            { title: "Trabajar con fotografías", url: "17-dIZS4e3Tl_QYnmwYb7Q4CuAB5oCUeD", type: "drive" },
+            { title: "Controles de efectos", url: "12nK-BBk0587cN68g2XLQsfPGYxv2Dcnt", type: "drive" },
+            { title: "Animación de ajustes", url: "1zYCoOaExAC9pnYjfOC1XXiEW1tkrr_gz", type: "drive" },
+            { title: "Transiciones", url: "1HpnR4gRvAHSKg6UjBG2SiLos_SOBimQR", type: "drive" },
+            { title: "Marcadores", url: "19f-uyGHTHN6Y4BEIP4YCAt6ATy0M5ycZ", type: "drive" },
+            { title: "Historial", url: "1KptebLI5T8VehleoaZT1CIoo_AIvnOJL", type: "drive" },
+            { title: "Dynamic links", url: "1V2ghslX3OeJT7uEfg7fmVhuYAQWGooqo", type: "drive" },
+            { title: "Si Premiere te va lento", url: "1WxOos2gTq0BtuwmseAHh9rqYnqB9Vj6J", type: "drive" },
+          ]},
+          { label: "Módulo 3 - Gráficos Esenciales", videos: [
+            { title: "Títulos y rótulos (gráficos esenciales)", url: "1LzXcnidP4BjDMz2VExXv9rOhf4yoC7FP", type: "drive" },
+            { title: "Diseño interactivo tiempo", url: "1X26DrkJ8AhrQ4aDts-p0VClbjD0u_qR7", type: "drive" },
+            { title: "Títulos con desplazamiento", url: "1K3QLLel53MO2gBaBHjC5MiKfQCvr16T5", type: "drive" },
+            { title: "Aplicar máscara con texto", url: "1cMJinahe5V7GO7rbEAdU7rfj93le1rJV", type: "drive" },
+            { title: "Títulos con Photoshop", url: "1Ap0B_jMk4PvnX3goaPlo9FCzirBqmhgb", type: "drive" },
+            { title: "Motion Graphics desde After Effects", url: "1EtiUHN-_72rzYSaPRrrswY-wMHOE7xki", type: "drive" },
+            { title: "Plantillas de Motion Graphics", url: "1tCdOxwJqLYb7o4s44XizTbF-lAlHW4Co", type: "drive" },
+            { title: "Subtítulos", url: "1f4rxFyEOWAHkSIPXE3DX275JUT3ethfo", type: "drive" },
+          ]},
+          { label: "Módulo 4 - Efectos", videos: [
+            { title: "Efectos de video", url: "1ZEDpYbO96Um81e0ZLj-GVuLNi0yR3qSk", type: "drive" },
+            { title: "Aplicar efectos a toda la secuencia (capas de ajuste)", url: "1YInYkNwZAa8HHp9NjlSZsL7dy4CYSk0e", type: "drive" },
+            { title: "Aplicar efectos al original (máster)", url: "1qFq3ae9HsfzQOEbnK6Cax-GofFhw5caS", type: "drive" },
+            { title: "Anidar", url: "1opuP3CqZ7xgnOag-UeCgF8RbwDZn_ceR", type: "drive" },
+            { title: "Máscaras y seguimiento", url: "11jOa3afzvEf09Lhuqq-XTLY_Vfut6rxk", type: "drive" },
+            { title: "Modos de fusión", url: "1UXYOMWRvsP-JJIN7ah7_DT5mNENl9srv", type: "drive" },
+            { title: "Croma Key", url: "101bqsfeiny88I9gs5LqUtH-PlH9Mkn8f", type: "drive" },
+            { title: "Corrección de distorsión de lente", url: "1NsXCEeupcyi_RGvNKfMymNpAKXNy9HnO", type: "drive" },
+            { title: "Estabilizador de deformación", url: "1zEylhXkX5UoY-saUhkjqMKE-IKPCx5CJ", type: "drive" },
+          ]},
+          { label: "Módulo 5 - Color", videos: [
+            { title: "Conceptos básicos del color", url: "1iuH5kjdK0mbz6n1ka7iLopTjaaaeUhSd", type: "drive" },
+            { title: "Color de Lumetri", url: "1aaeJ5un3ol4U-JyNJ-xal2Olg2daxZLf", type: "drive" },
+            { title: "Curvas RGB", url: "1D2uyPrR9LxVTzlrOAGfQ3oaOjLIQSw8X", type: "drive" },
+            { title: "Coincidencia y ruedas de color", url: "1v9N8wrHXYZC_FfsKjiSiIf_7Aie5vz2n", type: "drive" },
+            { title: "HSL secundario", url: "1Xs7tqwjO9MjJjtVL3SS85zEUhmc273C5", type: "drive" },
+            { title: "Ámbitos de Lumetri", url: "1lk6oncXcQzlqFL1YBh1Yp_cVRHCWUGOA", type: "drive" },
+            { title: "Cómo trabajar con LUTs", url: "1YbJfW50qeGiq978PBwrFWT1hWi1aqpxp", type: "drive" },
+            { title: "Flujo Premiere + Davinci", url: "1H63YTMWOxAwIHdC4M3r1S6h_ZTqRW73W", type: "drive" },
+          ]},
+          { label: "Módulo 6 - Audio", videos: [
+            { title: "Conceptos básicos del audio", url: "1D5bSyncFZIbR_EwkPOTLG47HiCx_qEoW", type: "drive" },
+            { title: "Volumen", url: "1ZH63ZLC6UOASXLw2jAFm9s-vorXR18P-", type: "drive" },
+            { title: "Normalización", url: "1NkWMPpoQepzqTLUD215ojeQBhUtrYN1E", type: "drive" },
+            { title: "Cómo aplicar efectos a pistas y clips", url: "1gsOhjMbWRh96nF-nIOOVIIrRau1_FFn4", type: "drive" },
+            { title: "Ecualizador", url: "1Jsep-zqkyMX3d-FxICesmqdrYzFNSVuc", type: "drive" },
+            { title: "Dinámica, compresor, limitador, expansor y puerta", url: "1VW59CGBaoWTAzfe1Ow1s1N0SC7HmaNaS", type: "drive" },
+            { title: "Compresor multibanda", url: "1H2NV0-_qHBBTyilazIQcHh72tqbqqCH9", type: "drive" },
+            { title: "Mezclador", url: "1cJANcLEdXoe5GGnV7-c8U2JWnWmkXtOE", type: "drive" },
+            { title: "Animación de audio", url: "17Pu8hzBhfIl8sYf24Y5PKBIXx6wOWfOb", type: "drive" },
+            { title: "Sincronización", url: "1e2Ao4usGUBNE7e68qvjHNnFHwipC1Fhz", type: "drive" },
+            { title: "Reducción de ruido", url: "1iUstYPeDcMS9W-rMhdfpNSwuNNoWgRIf", type: "drive" },
+            { title: "Cómo editar y mejorar la voz", url: "1u9qfvssvF6GQ34Be0G8Uy8NFz0_pGScW", type: "drive" },
+            { title: "Grabación de audio", url: "13fKrTx9OeoAlCrs_eYO7to2lUwOO89cW", type: "drive" },
+            { title: "Sonido esencial", url: "1Qhwdv_PyQ9rC_U88KyOzzMMNk-N-McnB", type: "drive" },
+          ]},
+          { label: "Módulo 7 - Renderizado", videos: [
+            { title: "Todo sobre la exportación", url: "1Zey8duRvpqlrr7tjohaPXYglgTP3SL3q", type: "drive" },
+            { title: "Exportar con Adobe Media Encoder", url: "1KfXiMmnt4ploeX5UKi6dKji9adia_RX6", type: "drive" },
+            { title: "Exportar DCP (Digital Cinema Package)", url: "1xi6MrwModomDQCmpixCP0MtUZhrCjZVy", type: "drive" },
+            { title: "Exportar línea de tiempo XML", url: "17nMxucNfJgt1R-knjlOyPlmilE8i3Pwg", type: "drive" },
+          ]},
+          { label: "Módulo 8 - Avanzado", videos: [
+            { title: "Multicámara", url: "1nsHRpxqlhFSXNo_2szJZxMZW5VPxtjW9", type: "drive" },
+            { title: "Proxys", url: "1Gr19Qx-McGQwta1iXMko1ojYydF_zQP8", type: "drive" },
+            { title: "Abrir varios proyectos a la vez", url: "10wSxttnsRoONwSydGipXNwxBNZ9ZQ38Z", type: "drive" },
+            { title: "Enmarcado automático", url: "1hppwcFIg6RE2mM4azyfIfFlW5b9dm-r-", type: "drive" },
+            { title: "Despedida", url: "1O_t_2wF23-e3CUBG2DorEkYPO0hutnZw", type: "drive" },
+          ]},
+        ]
+      },
+      {
+        name: "COREL DRAW", flat: true,
+        modules: [{ label: "Corel Draw", videos: [
+          { title: "Espacio de trabajo", url: "15f23dtn2iHOwXOFNfGwIZdqod-kq1fHA", type: "drive" },
+          { title: "Paleta de colores", url: "1f8xsgUm22UxGf0MZkpg_QmbX_DGKJxo7", type: "drive" },
+          { title: "Atajos de teclado", url: "1ixzALiBScvUFnEdIqkuDClAHR3SgPCl9", type: "drive" },
+          { title: "Herramientas de dibujo", url: "1FHJ_co4f4R3jzTy_pdngEBUtZD4OHCZD", type: "drive" },
+          { title: "Vectorización de logos - trucos", url: "1OKSMzAJ7zUh_GWaRWxOHcs4uNHFcRdqQ", type: "drive" },
+          { title: "Diseño de tarjetas de presentación", url: "1aXl377JteXwQfL9zXTdgt4G-I1lzO3Dl", type: "drive" },
+          { title: "Colocar logo en camiseta/playera", url: "1_LRL77HRoLPMNyvn8bJSl-dci_HuEID6", type: "drive" },
+          { title: "Vectorización de logos #2", url: "1Ty4wMuUqEIG9PmLsupe2eGtim8rKB4b7", type: "drive" },
+          { title: "Creación de poster cinematográfico", url: "12pM2zuKXMRxW5FdOHmOUqOwuLMny794u", type: "drive" },
+          { title: "Numerar facturas", url: "1iLtLC2-jcqILXFYP39Ren5FHLqxo0ZL6", type: "drive" },
+          { title: "Logo realista en camiseta", url: "1ZZRQPG0kjEQ1AIGfRp2ogeWxjBPtm5ej", type: "drive" },
+          { title: "Semitonos: separación de color", url: "18abYgkDTZg9OMxYHSMOE_HIyf_T8LRYb", type: "drive" },
+          { title: "5 trucos que cambiarán tu vida", url: "1CaVDKo0k4taSPCpnhbITllbfB6vmI72h", type: "drive" },
+          { title: "Líneas de contorno en imágenes", url: "1TMqh-HaR-KjaZdlx4hCEd2ZCNwHpPKgA", type: "drive" },
+        ]}]
+      },
+    ]
+  },
 ];
-
-let allVideos = [];
-courses.forEach((course, ci) => {
-  course.modules.forEach((mod, mi) => {
-    mod.videos.forEach((v, vi) => {
-      allVideos.push({ ...v, ci, mi, vi, courseName: course.name });
-    });
-  });
-});
-
-let current = 0;
-let activeCourse = 0;
-let openModules = new Set();
-const player = document.getElementById('player');
-
-function toggleSidebar() {
-  document.getElementById('sidebar').classList.toggle('open');
-}
-
-function getUrl(v) {
-  return v.type === 'video' ? v.url : `${PROXY}?id=${v.url}`;
-}
-
-function globalIndex(ci, mi, vi) {
-  let idx = 0;
-  for (let c = 0; c < ci; c++) courses[c].modules.forEach(m => idx += m.videos.length);
-  for (let m = 0; m < mi; m++) idx += courses[ci].modules[m].videos.length;
-  return idx + vi;
-}
-
-function load(gIdx) {
-  current = (gIdx + allVideos.length) % allVideos.length;
-  const v = allVideos[current];
-  document.getElementById('topbar-course').textContent = v.courseName;
-  document.getElementById('topbar-title').textContent = v.title;
-  document.getElementById('info-counter').textContent = `${current + 1} / ${allVideos.length}`;
-
-  if (v.ci !== activeCourse) {
-    activeCourse = v.ci;
-    openModules.clear();
-  }
-  const modKey = `${v.ci}-${v.mi}`;
-  openModules.add(modKey);
-
-  renderSidebar();
-
-  player.pause();
-  player.src = '';
-  player.src = getUrl(v);
-  player.load();
-  player.muted = false;
-player.play().catch(() => {});
-
-  setTimeout(() => {
-    const el = document.querySelector(`[data-gidx="${current}"]`);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }, 50);
-}
-
-function next() { load(current + 1); }
-function prev() { load(current - 1); }
-
-function toggleModule(key) {
-  if (openModules.has(key)) openModules.delete(key);
-  else openModules.add(key);
-  renderSidebar();
-}
-
-function switchCourse(ci) {
-  if (activeCourse === ci) {
-    activeCourse = -1;
-  } else {
-    activeCourse = ci;
-    openModules.clear();
-  }
-  renderSidebar();
-}
-
-function renderSidebar() {
-  const cl = document.getElementById('courses-list');
-  cl.innerHTML = courses.map((c, ci) => {
-    const isActive = ci === activeCourse;
-    let submenuHTML = '';
-
-    if (isActive) {
-      const course = courses[ci];
-      if (course.flat) {
-        submenuHTML = `<div class="course-submenu open">${
-          course.modules[0].videos.map((v, vi) => {
-            const gIdx = globalIndex(ci, 0, vi);
-            return `<div class="single-video-item${gIdx === current ? ' playing' : ''}" data-gidx="${gIdx}" onclick="load(${gIdx})">${v.title}</div>`;
-          }).join('')
-        }</div>`;
-      } else {
-        submenuHTML = `<div class="course-submenu open">${
-          course.modules.map((mod, mi) => {
-            const key = `${ci}-${mi}`;
-            const isOpen = openModules.has(key);
-            const videos = mod.videos.map((v, vi) => {
-              const gIdx = globalIndex(ci, mi, vi);
-              return `<div class="video-item${gIdx === current ? ' playing' : ''}" data-gidx="${gIdx}" onclick="load(${gIdx})">${v.title}</div>`;
-            }).join('');
-            return `<div class="module-item">
-              <div class="module-header${isOpen ? ' open' : ''}" onclick="toggleModule('${key}')">
-                <span>${mod.label}</span><span class="module-arrow">▶</span>
-              </div>
-              <div class="videos-list${isOpen ? ' open' : ''}">${videos}</div>
-            </div>`;
-          }).join('')
-        }</div>`;
-      }
-    }
-
-    return `<div>
-      <div class="course-item${isActive ? ' active' : ''}" onclick="switchCourse(${ci})">
-        <span>${c.name}</span>
-        <span class="course-arrow">▶</span>
-      </div>
-      ${submenuHTML}
-    </div>`;
-  }).join('');
-}
-
-player.addEventListener('ended', () => load(current + 1));
-
-function pip() {
-  if (document.pictureInPictureElement) document.exitPictureInPicture();
-  else if (player.requestPictureInPicture) player.requestPictureInPicture();
-}
-
-async function keepAwake() {
-  try {
-    if ('wakeLock' in navigator) {
-      await navigator.wakeLock.request('screen');
-      document.getElementById('wakeMsg').textContent = '✓ Pantalla activa';
-    }
-  } catch(e) {}
-}
-document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'visible') keepAwake();
-});
-
-if ('mediaSession' in navigator) {
-  navigator.mediaSession.metadata = new MediaMetadata({
-    title: 'INCUBADORA', artist: 'Curso de Importación',
-    artwork: [{ src: '/curso-importacion/icon-192x192.png', sizes: '192x192', type: 'image/png' }]
-  });
-  navigator.mediaSession.setActionHandler('play', () => player.play());
-  navigator.mediaSession.setActionHandler('pause', () => player.pause());
-}
-
-keepAwake();
-renderSidebar();
-load(0);
-</script>
-</body>
-</html>
+       
