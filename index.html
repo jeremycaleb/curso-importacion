@@ -1222,7 +1222,7 @@ let openCategories = new Set([0]);
 let openModules = new Set();
 const player = document.getElementById('player');
 
-function toggleSidebar() {
+function updateHero(cati){document.querySelector('.hero').style.backgroundImage="url('"+heroImgs[cati]+"')";} function toggleSidebar() {
   document.getElementById('sidebar').classList.toggle('open');
 }
 
@@ -1255,7 +1255,7 @@ function load(gIdx) {
     activeCourse = { cati: v.cati, ci: v.ci };
     openModules.clear();
   }
-  openCategories.add(v.cati);
+  openCategories.add(v.cati); updateHero(v.cati);
   const modKey = `${v.cati}-${v.ci}-${v.mi}`;
   openModules.add(modKey);
 
@@ -1382,7 +1382,7 @@ if ('mediaSession' in navigator) {
 
 keepAwake();
 renderSidebar();
-load(0);
+load(0); const heroImgs=['fondo.jpg','fondo-ia.jpg','fondo-programacion.jpg','fondo-diseno.jpg'];
 </script>
 </body>
 </html>
