@@ -1244,7 +1244,7 @@ function updateHero(cati){document.querySelector('.hero').style.backgroundImage=
   document.getElementById('sidebar').classList.toggle('open');
 }
 
-function getUrl(v) {   return v.type === 'video' ? v.url :           v.type === 'iframe' ? `https://drive.google.com/file/d/${v.url}/preview` :          `${PROXY}?id=${v.url}`;
+function getUrl(v) {   return v.type === 'video' ? v.url :           v.type === 'iframe' ? `https://drive.google.com/file/d/${v.url}/preview?autoplay=1` :          `${PROXY}?id=${v.url}`;
   
 }
 
