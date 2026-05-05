@@ -214,7 +214,7 @@
     </div>
   </div>
   <div class="video-wrapper">
-    <video id="player" controls autoplay playsinline disableRemotePlayback></video>
+    <video id="player" controls autoplay playsinline disableRemotePlayback></video> <iframe id="iframe-player" style="display:none; width:100%; height:100%; border:none;" allowfullscreen allow="autoplay"></iframe> <iframe id="iframe-player" style="display:none; width:100%; height:100%; border:none;" allowfullscreen allow="autoplay"></iframe> <iframe id="iframe-player" style="display:none; width:100%; height:100%; border:none;" allowfullscreen allow="autoplay"></iframe>
   </div>
   <div class="info-bar">
     <div class="info-top">
@@ -1244,7 +1244,7 @@ function updateHero(cati){document.querySelector('.hero').style.backgroundImage=
   document.getElementById('sidebar').classList.toggle('open');
 }
 
-function getUrl(v) {
+function getUrl(v) {   return v.type === 'video' ? v.url :           v.type === 'iframe' ? `https://drive.google.com/file/d/${v.url}/preview` :          `${PROXY}?id=${v.url}`; }
   return v.type === 'video' ? v.url : `${PROXY}?id=${v.url}`;
 }
 
@@ -1281,7 +1281,7 @@ function load(gIdx) {
 
   player.pause();
   player.src = '';
-  player.src = getUrl(v);
+  const isIframe = v.type === 'iframe'; document.getElementById('player').style.display = isIframe ? 'none' : 'block'; document.getElementById('iframe-player').style.display = isIframe ? 'block' : 'none';  if (isIframe) {   document.getElementById('iframe-player').src = getUrl(v); } else {   player.pause();   player.src = '';   player.src = getUrl(v);   player.load();   player.muted = false;   player.play().catch(() => {}); }
   player.load();
   player.muted = false;
   player.play().catch(() => {});
