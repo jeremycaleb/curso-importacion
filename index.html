@@ -1256,7 +1256,7 @@ function getUrl(v) {   return v.type === 'video' ? v.url :           v.type === 
   
 }
 
-function handleTs(video,url){if(!window.MediaSource||!window.muxjs)return;var ms=new MediaSource();video.src=URL.createObjectURL(ms);ms.addEventListener('sourceopen',function(){var t=new muxjs.mp4.Transmuxer();var sb;t.on('data',function(seg){if(!sb){sb=ms.addSourceBuffer('video/mp4; codecs="'+seg.initSegment.codecs+'"');sb.appendBuffer(seg.initSegment);}sb.appendBuffer(seg.data);});fetch(url).then(function(r){return r.arrayBuffer();}).then(function(d){t.push(new Uint8Array(d));t.flush();});});}
+function handleTs(video,url){if(!window.MediaSource||!window.muxjs)return;var ms=new MediaSource();video.src=URL.createObjectURL(ms);ms.addEventListener('sourceopen',function(){var t=new muxjs.mp4.Transmuxer();var sb;t.on('data',function(seg){if(!sb){sb=ms.addSourceBuffer('video/mp4; codecs="avc1.42E01E,mp4a.40.2"');sb.appendBuffer(seg.initSegment);}sb.appendBuffer(seg.data);});fetch(url).then(function(r){return r.arrayBuffer();}).then(function(d){t.push(new Uint8Array(d));t.flush();});});}
     function globalIndex(cati, ci, mi, vi) {
   let idx = 0;
   for (let ca = 0; ca < cati; ca++) {
