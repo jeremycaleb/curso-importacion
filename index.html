@@ -1299,10 +1299,8 @@ function load(gIdx) {
     document.getElementById('iframe-player').src = '';
     player.pause();
     player.src = '';
-    player.src = getUrl(v); if(getUrl(v).includes('.ts')||getUrl(v).includes('video/mp2t')){handleTs(player,getUrl(v));}
-    player.load();
-    player.muted = false;
-    player.play().catch(() => {});
+    fetch(getUrl(v),{method:'HEAD'}).then(r=>{const ct=r.headers.get('content-type')||'';if(ct.includes('mp2t')||ct.includes('.ts')){handleTs(player,getUrl(v));}else{player.src=getUrl(v);player.load();player.muted=false;player.play().catch(()=>{});}});return;
+  
   }
   setTimeout(() => {
     const el = document.querySelector(`[data-gidx="${current}"]`);
