@@ -233,7 +233,8 @@
   </div>
 </div>
 
-<script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mux.js/6.3.0/mux.min.js"></script>
+  <script>
 const PROXY = 'https://drive-proxy.jeremycalebp.workers.dev';
 
 const categories = [
@@ -1255,7 +1256,8 @@ function getUrl(v) {   return v.type === 'video' ? v.url :           v.type === 
   
 }
 
-function globalIndex(cati, ci, mi, vi) {
+function handleTs(video,url){if(!window.MediaSource||!window.muxjs)return;var ms=new MediaSource();video.src=URL.createObjectURL(ms);ms.addEventListener('sourceopen',function(){var t=new muxjs.mp4.Transmuxer();var sb;t.on('data',function(seg){if(!sb){sb=ms.addSourceBuffer('video/mp4; codecs="'+seg.initSegment.codecs+'"');sb.appendBuffer(seg.initSegment);}sb.appendBuffer(seg.data);});fetch(url).then(function(r){return r.arrayBuffer();}).then(function(d){t.push(new Uint8Array(d));t.flush();});});}
+    function globalIndex(cati, ci, mi, vi) {
   let idx = 0;
   for (let ca = 0; ca < cati; ca++) {
     categories[ca].courses.forEach(course => {
@@ -1297,7 +1299,7 @@ function load(gIdx) {
     document.getElementById('iframe-player').src = '';
     player.pause();
     player.src = '';
-    player.src = getUrl(v);
+    player.src = getUrl(v); if(getUrl(v).includes('.ts')||getUrl(v).includes('video/mp2t')){handleTs(player,getUrl(v));}
     player.load();
     player.muted = false;
     player.play().catch(() => {});
