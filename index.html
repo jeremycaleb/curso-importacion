@@ -1256,7 +1256,7 @@ function getUrl(v) {   return v.type === 'video' ? v.url :           v.type === 
   
 }
 
-function handleTs(video,url){if(!window.MediaSource||!window.muxjs)return;var ms=new MediaSource();video.src=URL.createObjectURL(ms);ms.addEventListener('sourceopen',function(){var t=new muxjs.mp4.Transmuxer();var sb;t.on('data',function(seg){if(!sb){sb=ms.addSourceBuffer('video/mp4; codecs="avc1.42E01E,mp4a.40.2"');sb.appendBuffer(seg.initSegment);}sb.appendBuffer(seg.data);});fetch(url).then(function(r){return r.arrayBuffer();}).then(function(d){t.push(new Uint8Array(d));t.flush();});});}
+function handleTs(video,url){if(!window.MediaSource||!window.muxjs)return;var ms=new MediaSource();video.src=URL.createObjectURL(ms);ms.addEventListener('sourceopen',function(){var codec='video/mp4; codecs="avc1.42E01E,mp4a.40.2"';if(!MediaSource.isTypeSupported(codec))return;var sb=ms.addSourceBuffer(codec);var t=new muxjs.mp4.Transmuxer();var segments=[];var pending=false;function appendNext(){if(pending||segments.length===0)return;pending=true;var seg=segments.shift();sb.appendBuffer(seg);} sb.addEventListener('updateend',function(){pending=false;if(segments.length>0){appendNext();}else{try{ms.endOfStream();}catch(e){}}});t.on('data',function(seg){var data=new Uint8Array(seg.initSegment.byteLength+seg.data.byteLength);data.set(seg.initSegment,0);data.set(seg.data,seg.initSegment.byteLength);segments.push(data);appendNext();});fetch(url).then(function(r){return r.arrayBuffer();}).then(function(d){t.push(new Uint8Array(d));t.flush();}).catch(function(e){console.error('TS fetch error',e);});});}
     function globalIndex(cati, ci, mi, vi) {
   let idx = 0;
   for (let ca = 0; ca < cati; ca++) {
