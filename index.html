@@ -214,7 +214,7 @@
     </div>
   </div>
   <div class="video-wrapper">
-    <video id="player" controls autoplay playsinline disableRemotePlayback></video> <iframe id="iframe-player" style="display:none; width:100%; height:100%; border:none;" allowfullscreen allow="autoplay"></iframe>
+    <video id="player" controls autoplay playsinline disableRemotePlayback></video> <iframe id="iframe-player" style="display:none; width:100%; height:100%; border:none;" allowfullscreen allow="autoplay; encrypted-media"></iframe>
   </div>
   <div class="info-bar">
     <div class="info-top">
@@ -1285,6 +1285,7 @@ function load(gIdx) {
   if (isIframe) {
     player.pause();
     document.getElementById('iframe-player').src = getUrl(v);
+    document.getElementById('iframe-player').focus();
   } else {
     document.getElementById('iframe-player').src = '';
     player.pause();
