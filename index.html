@@ -1283,8 +1283,10 @@ function load(gIdx) {
   player.style.display = isIframe ? 'none' : 'block';
   document.getElementById('iframe-player').style.display = isIframe ? 'block' : 'none';
   if (isIframe) {
+    player.pause();
     document.getElementById('iframe-player').src = getUrl(v);
   } else {
+    document.getElementById('iframe-player').src = '';
     player.pause();
     player.src = '';
     player.src = getUrl(v);
