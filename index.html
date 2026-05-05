@@ -1299,7 +1299,7 @@ function load(gIdx) {
     document.getElementById('iframe-player').src = '';
     player.pause();
     player.src = '';
-(async()=>{const proxyUrl=getUrl(v);if(v.type==="video"){player.src=proxyUrl;player.load();player.muted=false;player.play().catch(()=>{});return;}if(v.type==="drive"){const fileId=v.url;const metaUrl=`https://drive-proxy.jeremycalebp.workers.dev/meta?id=${fileId}`;try{const response=await fetch(metaUrl);const data=await response.json();if(data.mimeType==="video/mp2t"){handleTs(player,proxyUrl);}else{player.src=proxyUrl;player.load();}}catch(e){player.src=proxyUrl;player.load();}player.muted=false;player.play().catch(()=>{});}})();
+(async()=>{const proxyUrl=getUrl(v);if(v.type==="video"){player.src=proxyUrl;player.load();player.muted=false;player.play().catch(()=>{});return;}if(v.type==="drive"){const fileId=v.url;const metaUrl=`https://drive-proxy.jeremycalebp.workers.dev/meta?id=${fileId}`;try{const response=await fetch(metaUrl);const data=await response.json();if(data.mimeType&&data.mimeType.includes("mpeg")){handleTs(player,proxyUrl);}else{player.src=proxyUrl;player.load();}}catch(e){player.src=proxyUrl;player.load();}player.muted=false;player.play().catch(()=>{});}})();
   
   }
   setTimeout(() => {
