@@ -208,12 +208,9 @@
   
   <!-- NAVBAR -->
   <div style="position:absolute; top:0; left:0; right:0; display:flex; align-items:center; justify-content:space-between; padding:18px 24px; z-index:10;">
-    <div id="search-overlay" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); width:90%; max-width:600px; background:#0d1e35; border:1px solid rgba(255,255,255,0.15); border-radius:12px; z-index:2000; padding:24px; box-shadow:0 20px 60px rgba(0,0,0,0.6);">
-  <div style="display:flex; gap:10px; margin-bottom:20px;">
-    <input id="search-input" type="text" placeholder="Buscar video..." oninput="searchVideos()" style="flex:1; background:#112240; border:1px solid rgba(255,255,255,0.15); color:#fff; padding:12px 16px; border-radius:8px; font-size:1rem; outline:none;">
-    <button onclick="closeSearch()" style="background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer;">✕</button>
-  </div>
-  <div id="search-results" style="overflow-y:auto; max-height:80vh;"></div>
+    <div id="search-overlay" style="display:none; position:absolute; top:0; left:0; right:0; bottom:0; align-items:center; gap:12px; padding:0 24px; background:#0a1628; z-index:20;">
+  <input id="search-input" type="text" placeholder="Buscar cursos..." oninput="searchVideos()" style="flex:1; background:transparent; border:none; border-bottom:1px solid rgba(255,255,255,0.3); color:#fff; padding:8px 4px; font-size:1rem; outline:none; width:100%;">
+  <div id="search-results" style="position:absolute; top:100%; left:0; right:0; background:#0d1e35; border-bottom:1px solid rgba(255,255,255,0.1); max-height:60vh; overflow-y:auto; z-index:100;"></div>
 </div>
     <button onclick="toggleSidebar();" style="background:none; border:none; cursor:pointer; display:flex; flex-direction:column; gap:5px;">
       <span style="display:block; width:26px; height:2px; background:#fff;"></span>
@@ -221,7 +218,7 @@
       <span style="display:block; width:26px; height:2px; background:#fff;"></span>
     </button>
     <span></span>
-    <button onclick="openSearch()" style="background:none; border:none; cursor:pointer; color:#fff; font-size:1.3rem;">🔍</button>
+    <button onclick="toggleSearch()" id="search-btn" style="background:none; border:none; cursor:pointer; color:#fff; font-size:1.1rem; opacity:0.7;">🔍</button>
   </div>
 
   <!-- HERO -->
@@ -1479,11 +1476,15 @@ window.addEventListener('message', (e) => {
   }
 });
 
-function openSearch() {
-  document.getElementById('search-overlay').style.display = 'block';
-  document.getElementById('search-input').value = '';
-  document.getElementById('search-results').innerHTML = '';
-  setTimeout(() => document.getElementById('search-input').focus(), 100);
+function toggleSearch() {
+  const ov = document.getElementById('search-overlay');
+  const isOpen = ov.style.display === 'flex';
+  ov.style.display = isOpen ? 'none' : 'flex';
+  if (!isOpen) {
+    document.getElementById('search-input').value = '';
+    document.getElementById('search-results').innerHTML = '';
+    setTimeout(() => document.getElementById('search-input').focus(), 100);
+  }
 }
 function closeSearch() {
   document.getElementById('search-overlay').style.display = 'none';
