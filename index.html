@@ -1258,16 +1258,24 @@ if (isIframe) {
     player.pause();
     if (window._iframeTimer) clearTimeout(window._iframeTimer);
     const iframeEl = document.getElementById('iframe-player');
-    iframeEl.src = getUrl(v);
-    iframeEl.focus();
+    iframeEl.onload = null;
+    iframeEl.src = '';
     fetch(`https://drive-proxy.jeremycalebp.workers.dev/meta?id=${v.url}`)
       .then(r => r.json())
       .then(data => {
         const ms = parseInt(data.videoMediaMetadata?.durationMillis || 0);
+        iframeEl.src = getUrl(v);
+        iframeEl.focus();
         if (ms > 0) {
-          window._iframeTimer = setTimeout(() => next(), ms + 3000);
+          iframeEl.onload = () => {
+            window._iframeTimer = setTimeout(() => next(), ms + 5000);
+          };
         }
-}).catch(() => {});
+      }).catch(() => {
+        iframeEl.src = getUrl(v);
+        iframeEl.focus();
+      });
+}
   } else {
     document.getElementById('iframe-player').src = '';
     player.pause();
