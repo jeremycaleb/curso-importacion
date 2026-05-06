@@ -1262,9 +1262,14 @@ if (isIframe) {
     document.getElementById('iframe-player').src = '';
     player.pause();
     player.src = '';
-(async()=>{...el bloque largo...})();
-  
+(async()=>{const proxyUrl=getUrl(v);if(v.type==="video"){player.src=proxyUrl;player.load();player.muted=false;player.play().catch(()=>{});return;}if(v.type==="drive"){const fileId=v.url;const metaUrl=`https://drive-proxy.jeremycalebp.workers.dev/meta?id=${fileId}`;try{const response=await fetch(metaUrl);const data=await response.json();if(data.mimeType&&data.mimeType.includes("mpeg")){handleTs(player,proxyUrl);}else{player.src=proxyUrl;player.load();}}catch(e){player.src=proxyUrl;player.load();}player.muted=false;player.play().catch(()=>{});}})();
   }
+  setTimeout(() => {
+    const el = document.querySelector(`[data-gidx="${current}"]`);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, 50);
+  localStorage.setItem('lastVideo', current);
+}
 
 function next() { load(current + 1); }
 function prev() { load(current - 1); }
