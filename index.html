@@ -1363,6 +1363,7 @@ if (isIframe) {
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }, 50);
   localStorage.setItem('lastVideo', current);
+localStorage.removeItem('lastCat');
 }
 
 function next() { load(current + 1); }
@@ -1591,8 +1592,10 @@ function showCategoryPage(cati) {
 const heroImgs = ['assets/backgrounds/fondo.jpg','assets/backgrounds/fondo-ia.jpg','assets/backgrounds/fondo-programacion.jpg','assets/backgrounds/fondo-diseno.jpg'];
 keepAwake();
 renderSidebar();
+const lastVideo = localStorage.getItem('lastVideo');
 const lastCat = localStorage.getItem('lastCat');
-if (lastCat !== null) showCategoryPage(parseInt(lastCat));
+if (lastVideo !== null) load(parseInt(lastVideo));
+else if (lastCat !== null) showCategoryPage(parseInt(lastCat));
 </script>
 </body>
 </html>
