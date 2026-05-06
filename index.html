@@ -1307,7 +1307,7 @@ function handleTs(video,url){if(!window.MediaSource||!window.muxjs)return;var ms
 
 function load(gIdx) {
   document.getElementById('landing').style.display = 'none';
-  document.getElementById('btn-back-home').style.display = 'none';
+  document.getElementById('btn-back-home').style.display = 'block';
   current = (gIdx + allVideos.length) % allVideos.length;
   const v = allVideos[current];
   document.getElementById('topbar-course').textContent = v.courseName;
