@@ -1571,7 +1571,7 @@ function showCategoryPage(cati) {
     <div id="cat-page" style="width:100%;min-height:100vh;background:#0a1628;overflow-y:auto;position:fixed;top:0;left:0;z-index:998;">
       <div style="position:relative;width:100%;height:320px;background:url('${imgs[cati]}') center/cover no-repeat;">
         <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,22,40,0.3),rgba(10,22,40,0.95));"></div>
-        <button onclick="document.getElementById('cat-page').remove();document.getElementById('landing').style.display='flex';" style="position:absolute;top:20px;left:20px;background:none;border:none;color:#e8a020;font-size:1.5rem;cursor:pointer;">←</button>
+<button onclick="document.getElementById('cat-page').remove();document.getElementById('landing').style.display='flex';localStorage.removeItem('lastCat');localStorage.removeItem('lastVideo');" style="position:absolute;top:20px;left:20px;background:none;border:none;color:#e8a020;font-size:1.5rem;cursor:pointer;">←</button>
         <div style="position:absolute;bottom:-40px;left:24px;font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:#fff;letter-spacing:3px;">${cat.name}</div>
       </div>
       <div style="padding:24px;">
