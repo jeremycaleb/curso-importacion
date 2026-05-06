@@ -1309,7 +1309,7 @@ function load(gIdx, origin = 'sidebar') {
   document.getElementById('landing').style.display = 'none';
   document.getElementById('btn-back-home').style.display = 'block';
   window.history.pushState({ origin: origin, lastCat: window._lastCat }, '', '');
-  window._cameFromCatPage = !!document.getElementById('cat-page');
+  window._cameFromCatPage = origin === 'category';
   current = (gIdx + allVideos.length) % allVideos.length;
   const v = allVideos[current];
   document.getElementById('topbar-course').textContent = v.courseName;
