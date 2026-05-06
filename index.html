@@ -1581,7 +1581,7 @@ function showCategoryPage(cati) {
       <div style="padding:64px 24px 24px;">
         ${cat.courses.map((course, ci) => {
           const firstIdx = allVideos.findIndex(v => v.cati === cati && v.ci === ci);
-          return `<div onclick="document.getElementById('cat-page').remove();load(${firstIdx});" style="background:#0d1f3a;border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:16px 20px;margin-bottom:12px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;">
+          return `<div onclick="document.getElementById('cat-page').remove();load(${firstIdx},'category');" style="background:#0d1f3a;border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:16px 20px;margin-bottom:12px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;">
             <div>
               <div style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:2px;color:#fff;">${course.name}</div>
               <div style="font-size:0.75rem;color:#e8a020;margin-top:4px;">${course.modules.reduce((a,m)=>a+m.videos.length,0)} clases</div>
