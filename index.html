@@ -207,18 +207,18 @@
 <div id="landing" style="display:flex; flex-direction:column; min-height:100vh; background:#0a1628; position:relative; overflow-x:hidden;">
   
   <!-- NAVBAR -->
-  <div style="position:absolute; top:0; left:0; right:0; display:flex; align-items:center; justify-content:space-between; padding:18px 24px; z-index:10;">
-    <div id="search-overlay" style="display:none; position:absolute; top:0; left:0; right:0; bottom:0; align-items:center; gap:12px; padding:0 24px; background:#0a1628; z-index:20;">
-  <input id="search-input" type="text" placeholder="Buscar cursos..." oninput="searchVideos()" style="flex:1; background:transparent; border:none; border-bottom:1px solid rgba(255,255,255,0.3); color:#fff; padding:8px 4px; font-size:1rem; outline:none; width:100%;">
-  <div id="search-results" style="position:absolute; top:100%; left:0; right:0; background:#0d1e35; border-bottom:1px solid rgba(255,255,255,0.1); max-height:60vh; overflow-y:auto; z-index:100;"></div>
-</div>
-    <button onclick="toggleSidebar();" style="background:none; border:none; cursor:pointer; display:flex; flex-direction:column; gap:5px;">
+  <div style="position:absolute; top:0; left:0; right:0; display:flex; align-items:center; justify-content:space-between; padding:12px 24px; z-index:10; gap:16px;">
+    <button onclick="toggleSidebar();" style="background:none; border:none; cursor:pointer; display:flex; flex-direction:column; gap:5px; flex-shrink:0;">
       <span style="display:block; width:26px; height:2px; background:#fff;"></span>
       <span style="display:block; width:26px; height:2px; background:#fff;"></span>
       <span style="display:block; width:26px; height:2px; background:#fff;"></span>
     </button>
-    <span></span>
-    <button onclick="toggleSearch()" id="search-btn" style="background:none; border:none; cursor:pointer; color:#fff; font-size:1.1rem; opacity:0.7;">🔍</button>
+    <div style="flex:1; max-width:50%; position:relative;">
+      <span style="position:absolute; left:12px; top:50%; transform:translateY(-50%); font-size:0.9rem; opacity:0.5; pointer-events:none;">🔍</span>
+      <input id="search-input" type="text" placeholder="Buscar cursos..." oninput="searchVideos()" style="width:100%; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.15); border-radius:8px; color:#fff; padding:8px 12px 8px 34px; font-size:0.9rem; outline:none; font-family:'DM Sans',sans-serif;">
+      <div id="search-results" style="position:absolute; top:calc(100% + 4px); left:0; right:0; background:#0d1e35; border:1px solid rgba(255,255,255,0.1); border-radius:8px; max-height:60vh; overflow-y:auto; z-index:100; display:none;"></div>
+    </div>
+    <div style="width:26px; flex-shrink:0;"></div>
   </div>
 
   <!-- HERO -->
