@@ -261,7 +261,7 @@ INCUBADORA no es una plataforma de <span style="color:#e8a020;">CURSOS ONLINE...
 <div class="sidebar" id="sidebar">
   <div class="sidebar-header">
     <div style="display:flex; align-items:center; gap:8px;">
-      <button id="btn-back-home" onclick="document.getElementById('landing').style.display='flex'; toggleSidebar();" style="background:none; border:none; color:#e8a020; font-size:1.3rem; cursor:pointer; padding:0; display:none;">←</button>
+      <button id="btn-back-home" onclick="document.getElementById('landing').style.display='flex'; toggleSidebar(); player.pause(); player.src=''; document.getElementById('iframe-player').src='';" style="background:none; border:none; color:#e8a020; font-size:1.3rem; cursor:pointer; padding:0; display:none;">←</button>
       <img src="assets/logos/incubadora_logo_blanco.png" alt="INCUBADORA">
     </div>
     <button class="close-btn" onclick="toggleSidebar()">✕</button>
@@ -1307,7 +1307,7 @@ function handleTs(video,url){if(!window.MediaSource||!window.muxjs)return;var ms
 
 function load(gIdx) {
   document.getElementById('landing').style.display = 'none';
-  document.getElementById('btn-back-home').style.display = 'block';
+  document.getElementById('btn-back-home').style.display = 'none';
   current = (gIdx + allVideos.length) % allVideos.length;
   const v = allVideos[current];
   document.getElementById('topbar-course').textContent = v.courseName;
@@ -1567,10 +1567,10 @@ function showCategoryPage(cati) {
   const imgs = heroImgs;
   let html = `
     <div id="cat-page" style="width:100%;min-height:100vh;background:#0a1628;overflow-y:auto;position:fixed;top:0;left:0;z-index:998;">
-      <div style="position:relative;width:100%;height:220px;background:url('${imgs[cati]}') center/cover no-repeat;">
+      <div style="position:relative;width:100%;height:320px;background:url('${imgs[cati]}') center/cover no-repeat;">
         <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,22,40,0.3),rgba(10,22,40,0.95));"></div>
         <button onclick="document.getElementById('cat-page').remove();document.getElementById('landing').style.display='flex';" style="position:absolute;top:20px;left:20px;background:none;border:none;color:#e8a020;font-size:1.5rem;cursor:pointer;">←</button>
-        <div style="position:absolute;bottom:20px;left:24px;font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:#fff;letter-spacing:3px;">${cat.name}</div>
+        <div style="position:absolute;bottom:-40px;left:24px;font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:#fff;letter-spacing:3px;">${cat.name}</div>
       </div>
       <div style="padding:24px;">
         ${cat.courses.map((course, ci) => {
