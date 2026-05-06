@@ -226,8 +226,8 @@
     <div style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(10,22,40,0.3) 0%, rgba(10,22,40,0.95) 100%);"></div>
     <div style="position:relative; padding:80px 32px 60px; max-width:650px; display:flex; flex-direction:column; align-items:center; text-align:center;">
       <img src="assets/logos/logo incubadora horizontal blanco.png" style="height:260px; margin-bottom:16px;">
-      <p style="font-family:'DM Sans',sans-serif; font-weight:900; font-size:clamp(2.5rem,6vw,4.5rem); color:#fff; line-height:1.15; margin:0;">
-INCUBADORA no es una plataforma de <span style="color:#e8a020;">cursos online...</span> es un método de <span style="color:#e8a020;">aprendizaje acelerado</span>
+      <p style="font-family:'Bebas Neue',sans-serif; font-size:clamp(2rem,5vw,3.5rem); color:#fff; line-height:1.1; margin:0;">
+INCUBADORA no es una plataforma de <span style="color:#e8a020;">CURSOS ONLINE...</span> es un método de <span style="color:#e8a020;">APRENDIZAJE ACELERADO</span>
       </p>
       <p style="font-size:clamp(1.1rem,2.5vw,1.4rem); color:rgba(255,255,255,0.75); margin:14px 0 0;">
         Prepárate para un mundo cada vez más rápido con el mejor contenido de estrategia y tecnología.
@@ -261,7 +261,7 @@ INCUBADORA no es una plataforma de <span style="color:#e8a020;">cursos online...
 <div class="sidebar" id="sidebar">
   <div class="sidebar-header">
     <div style="display:flex; align-items:center; gap:8px;">
-      <button onclick="document.getElementById('landing').style.display='flex'; toggleSidebar();" style="background:none; border:none; color:#e8a020; font-size:1.3rem; cursor:pointer; padding:0;">←</button>
+      <button id="btn-back-home" onclick="document.getElementById('landing').style.display='flex'; toggleSidebar();" style="background:none; border:none; color:#e8a020; font-size:1.3rem; cursor:pointer; padding:0; display:none;">←</button>
       <img src="assets/logos/incubadora_logo_blanco.png" alt="INCUBADORA">
     </div>
     <button class="close-btn" onclick="toggleSidebar()">✕</button>
@@ -1299,6 +1299,7 @@ function handleTs(video,url){if(!window.MediaSource||!window.muxjs)return;var ms
 
 function load(gIdx) {
   document.getElementById('landing').style.display = 'none';
+  document.getElementById('btn-back-home').style.display = 'block';
   current = (gIdx + allVideos.length) % allVideos.length;
   const v = allVideos[current];
   document.getElementById('topbar-course').textContent = v.courseName;
