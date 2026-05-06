@@ -1512,13 +1512,18 @@ function searchVideos() {
   const res = document.getElementById('search-results');
   if (!q) { res.innerHTML = ''; res.style.display = 'none'; return; }
   res.style.display = 'block';
-  const matches = allVideos.filter(v => v.title.toLowerCase().includes(q) || v.courseName.toLowerCase().includes(q));
-  if (!matches.length) { res.innerHTML = '<p style="padding:12px 16px; color:#667;">Sin resultados</p>'; res.style.display = 'block'; return; }
+  const seen = new Set();
+  const matches = allVideos.filter(v => {
+    if (!v.courseName.toLowerCase().includes(q)) return false;
+    if (seen.has(v.courseName)) return false;
+    seen.add(v.courseName); return true;
+  });
+  if (!matches.length) { res.innerHTML = '<p style="padding:12px 16px; color:#667;">Sin resultados</p>'; return; }
   res.innerHTML = matches.map(v => {
     const gIdx = allVideos.indexOf(v);
     return `<div onclick="load(${gIdx});closeSearch();" style="padding:12px 16px; border-bottom:1px solid rgba(255,255,255,0.07); cursor:pointer; border-radius:6px;">
-      <div style="font-size:0.7rem; color:#e8a020; letter-spacing:2px;">${v.courseName}</div>
-      <div style="font-size:0.95rem; color:#e8e8e8;">${v.title}</div>
+      <div style="font-size:0.95rem; color:#e8e8e8;">${v.courseName}</div>
+      <div style="font-size:0.7rem; color:#e8a020;">${v.catName}</div>
     </div>`;
   }).join('');
 }
