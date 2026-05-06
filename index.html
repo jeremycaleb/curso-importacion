@@ -1559,9 +1559,33 @@ function enterCategory(cati) {
   openCategories.clear();
   openCategories.add(cati);
   activeCourse = { cati: -1, ci: -1 };
-  renderSidebar();
-  const firstVideo = allVideos.find(v => v.cati === cati);
-  if (firstVideo) load(allVideos.indexOf(firstVideo));
+  showCategoryPage(cati);
+}
+
+function showCategoryPage(cati) {
+  const cat = categories[cati];
+  const imgs = heroImgs;
+  let html = `
+    <div id="cat-page" style="width:100%;min-height:100vh;background:#0a1628;overflow-y:auto;position:fixed;top:0;left:0;z-index:998;">
+      <div style="position:relative;width:100%;height:220px;background:url('${imgs[cati]}') center/cover no-repeat;">
+        <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,22,40,0.3),rgba(10,22,40,0.95));"></div>
+        <button onclick="document.getElementById('cat-page').remove();document.getElementById('landing').style.display='flex';" style="position:absolute;top:20px;left:20px;background:none;border:none;color:#e8a020;font-size:1.5rem;cursor:pointer;">←</button>
+        <div style="position:absolute;bottom:20px;left:24px;font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:#fff;letter-spacing:3px;">${cat.name}</div>
+      </div>
+      <div style="padding:24px;">
+        ${cat.courses.map((course, ci) => {
+          const firstIdx = allVideos.findIndex(v => v.cati === cati && v.ci === ci);
+          return `<div onclick="document.getElementById('cat-page').remove();load(${firstIdx});" style="background:#0d1f3a;border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:16px 20px;margin-bottom:12px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;">
+            <div>
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:2px;color:#fff;">${course.name}</div>
+              <div style="font-size:0.75rem;color:#e8a020;margin-top:4px;">${course.modules.reduce((a,m)=>a+m.videos.length,0)} clases</div>
+            </div>
+            <span style="color:#e8a020;font-size:1.2rem;">▶</span>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  document.body.insertAdjacentHTML('beforeend', html);
 }
 const heroImgs = ['assets/backgrounds/fondo.jpg','assets/backgrounds/fondo-ia.jpg','assets/backgrounds/fondo-programacion.jpg','assets/backgrounds/fondo-diseno.jpg'];
 keepAwake();
