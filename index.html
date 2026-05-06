@@ -1274,15 +1274,23 @@ function load(gIdx) {
 function next() { load(current + 1); }
 function prev() { load(current - 1); }
 
-function toggleCategory(cati) { if (openCategories.has(cati)) openCategories.delete(cati); else openCategories.add(cati);
-  
-  
+function toggleCategory(cati) {
+  if (openCategories.has(cati)) {
+    openCategories.delete(cati);
+  } else {
+    openCategories.clear();
+    openCategories.add(cati);
+  }
   renderSidebar();
 }
 
 function toggleModule(key) {
-  if (openModules.has(key)) openModules.delete(key);
-  else openModules.add(key);
+  if (openModules.has(key)) {
+    openModules.clear();
+  } else {
+    openModules.clear();
+    openModules.add(key);
+  }
   renderSidebar();
 }
 
