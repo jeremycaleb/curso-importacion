@@ -1487,8 +1487,17 @@ function toggleSearch() {
   }
 }
 function closeSearch() {
-  document.getElementById('search-overlay').style.display = 'none';
+  document.getElementById('search-results').style.display = 'none';
+  document.getElementById('search-results').innerHTML = '';
+  document.getElementById('search-input').value = '';
 }
+    document.addEventListener('click', function(e) {
+  const input = document.getElementById('search-input');
+  const results = document.getElementById('search-results');
+  if (!input.contains(e.target) && !results.contains(e.target)) {
+    results.style.display = 'none';
+  }
+});
 function searchVideos() {
   const q = document.getElementById('search-input').value.toLowerCase().trim();
   const res = document.getElementById('search-results');
