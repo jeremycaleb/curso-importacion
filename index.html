@@ -1492,7 +1492,8 @@ function closeSearch() {
 function searchVideos() {
   const q = document.getElementById('search-input').value.toLowerCase().trim();
   const res = document.getElementById('search-results');
-  if (!q) { res.innerHTML = ''; return; }
+  if (!q) { res.innerHTML = ''; res.style.display = 'none'; return; }
+  res.style.display = 'block';
   const matches = allVideos.filter(v => v.title.toLowerCase().includes(q) || v.courseName.toLowerCase().includes(q));
   if (!matches.length) { res.innerHTML = '<p style="color:#667;">Sin resultados</p>'; return; }
   res.innerHTML = matches.map(v => {
