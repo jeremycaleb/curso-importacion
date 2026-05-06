@@ -261,7 +261,7 @@ INCUBADORA no es una plataforma de <span style="color:#e8a020;">CURSOS ONLINE...
 <div class="sidebar" id="sidebar">
   <div class="sidebar-header">
     <div style="display:flex; align-items:center; gap:8px;">
-      <button id="btn-back-home" onclick="player.pause(); player.src=''; document.getElementById('iframe-player').src=''; if(window._cameFromCatPage && window._lastCat !== undefined){ localStorage.removeItem('lastVideo'); showCategoryPage(window._lastCat); } else { document.getElementById('landing').style.display='flex'; toggleSidebar(); localStorage.removeItem('lastVideo'); localStorage.removeItem('lastCat'); }" style="background:none; border:none; color:#e8a020; font-size:1.3rem; cursor:pointer; padding:0; display:none;">←</button>
+      <button id="btn-back-home" onclick="player.pause(); player.src=''; document.getElementById('iframe-player').src=''; localStorage.removeItem('lastVideo'); if(window._lastCat !== undefined && window._lastCat !== null && window._cameFromCatPage){ const existing=document.getElementById('cat-page'); if(existing)existing.remove(); showCategoryPage(window._lastCat); } else { document.getElementById('landing').style.display='flex'; toggleSidebar(); localStorage.removeItem('lastCat'); }" style="background:none; border:none; color:#e8a020; font-size:1.3rem; cursor:pointer; padding:0; display:none;">←</button>
       <img src="assets/logos/incubadora_logo_blanco.png" alt="INCUBADORA">
     </div>
     <button class="close-btn" onclick="toggleSidebar()">✕</button>
@@ -1364,6 +1364,7 @@ if (isIframe) {
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }, 50);
   localStorage.setItem('lastVideo', current);
+localStorage.setItem('lastFromCat', window._lastCat !== undefined ? window._lastCat : '');
 localStorage.removeItem('lastCat');
 }
 
@@ -1606,7 +1607,8 @@ keepAwake();
 renderSidebar();
 const lastVideo = localStorage.getItem('lastVideo');
 const lastCat = localStorage.getItem('lastCat');
-if (lastVideo !== null) load(parseInt(lastVideo));
+const lastFromCat = localStorage.getItem('lastFromCat');
+if (lastVideo !== null) { if (lastFromCat !== '' && lastFromCat !== null) window._lastCat = parseInt(lastFromCat); load(parseInt(lastVideo)); }
 else if (lastCat !== null) showCategoryPage(parseInt(lastCat));
 else { localStorage.removeItem('lastVideo'); localStorage.removeItem('lastCat'); }
 </script>
