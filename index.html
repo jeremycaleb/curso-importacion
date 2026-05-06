@@ -1256,8 +1256,19 @@ function load(gIdx) {
   document.getElementById('iframe-player').style.display = isIframe ? 'block' : 'none';
 if (isIframe) {
     player.pause();
-    document.getElementById('iframe-player').src = getUrl(v);
-    document.getElementById('iframe-player').focus();
+    if (window._iframeTimer) clearTimeout(window._iframeTimer);
+    const iframeEl = document.getElementById('iframe-player');
+    iframeEl.src = getUrl(v);
+    iframeEl.focus();
+    fetch(`https://drive-proxy.jeremycalebp.workers.dev/meta?id=${v.url}`)
+      .then(r => r.json())
+      .then(data => {
+        const ms = parseInt(data.videoMediaMetadata?.durationMillis || 0);
+        if (ms > 0) {
+          window._iframeTimer = setTimeout(() => next(), ms + 3000);
+        }
+      }).catch(() => {});
+  }
   } else {
     document.getElementById('iframe-player').src = '';
     player.pause();
