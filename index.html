@@ -40,7 +40,7 @@
     transition: width 0.28s ease, min-width 0.28s ease;
     flex-shrink: 0;
   }
-  .sidebar.open { width: var(--sidebar-w); min-width: var(--sidebar-w); }
+  .sidebar.open { position: fixed; top: 0; left: 0; width: var(--sidebar-w); min-width: var(--sidebar-w); z-index: 1000; }
 
   .sidebar-header {
     padding: 14px 16px;
