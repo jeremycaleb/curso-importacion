@@ -1551,6 +1551,8 @@ function enterCategory(cati) {
 const heroImgs = ['assets/backgrounds/fondo.jpg','assets/backgrounds/fondo-ia.jpg','assets/backgrounds/fondo-programacion.jpg','assets/backgrounds/fondo-diseno.jpg'];
 keepAwake();
 renderSidebar();
+const lastVideo = localStorage.getItem('lastVideo');
+if (lastVideo !== null) load(parseInt(lastVideo));
 </script>
 </body>
 </html>
