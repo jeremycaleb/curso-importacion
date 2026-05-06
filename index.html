@@ -1266,6 +1266,8 @@ if (isIframe) {
         const ms = parseInt(data.videoMediaMetadata?.durationMillis || 0);
         iframeEl.src = getUrl(v);
         iframeEl.focus();
+        window._iframeStart = Date.now();
+        window._iframeDuration = ms;
         if (ms > 0) {
             window._iframeTimer = setTimeout(() => {
               window._iframeTimer = setTimeout(() => next(), ms + 5000);
@@ -1386,6 +1388,17 @@ window.addEventListener('message', (e) => {
       }
     }
   } catch(err) {}
+  if (e.origin && (e.origin.includes('drive.google.com') || e.origin.includes('docs.google.com'))) {
+    const v = allVideos[current];
+    if (v && v.type === 'iframe' && window._iframeStart) {
+      const elapsed = (Date.now() - window._iframeStart) / 1000;
+      const duration = (window._iframeDuration || 0) / 1000;
+      if (duration > 0 && elapsed > duration * 0.9) {
+        if (window._iframeTimer) clearTimeout(window._iframeTimer);
+        load(current + 1);
+      }
+    }
+  }
 });
 
 function pip() {
