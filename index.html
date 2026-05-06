@@ -40,7 +40,7 @@
     transition: width 0.28s ease, min-width 0.28s ease;
     flex-shrink: 0;
   }
-  .sidebar.open { position: fixed; top: 0; left: 0; width: var(--sidebar-w); min-width: var(--sidebar-w); z-index: 1000; }
+  .sidebar.open { position: fixed; top: 0; left: 0; width: var(--sidebar-w); min-width: var(--sidebar-w); z-index: 1000; transition: none; }
 
   .sidebar-header {
     padding: 14px 16px;
@@ -1297,8 +1297,8 @@ function handleTs(video,url){if(!window.MediaSource||!window.muxjs)return;var ms
 }
 
 function load(gIdx) {
+  document.getElementById('landing').style.display = 'none';
   current = (gIdx + allVideos.length) % allVideos.length;
-  const v = allVideos[current];
   document.getElementById('topbar-course').textContent = v.courseName;
   document.getElementById('topbar-title').textContent = v.title;
   document.getElementById('info-counter').textContent = `${current + 1} / ${allVideos.length}`;
