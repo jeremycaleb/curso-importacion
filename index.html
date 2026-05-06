@@ -1606,6 +1606,7 @@ const lastVideo = localStorage.getItem('lastVideo');
 const lastCat = localStorage.getItem('lastCat');
 if (lastVideo !== null) load(parseInt(lastVideo));
 else if (lastCat !== null) showCategoryPage(parseInt(lastCat));
+else { localStorage.removeItem('lastVideo'); localStorage.removeItem('lastCat'); }
 </script>
 </body>
 </html>
