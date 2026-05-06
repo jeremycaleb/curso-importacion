@@ -1271,7 +1271,7 @@ if (isIframe) {
         window._iframeDuration = ms;
         if (ms > 0) {
             window._iframeTimer = setTimeout(() => {
-              window._iframeTimer = setTimeout(() => next(), ms + 5000);
+              window._iframeTimer = setTimeout(() => next(), ms + 2000);
             }, 3000);
           }
       }).catch(() => {
