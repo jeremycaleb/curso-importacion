@@ -261,7 +261,7 @@ INCUBADORA no es una plataforma de <span style="color:#e8a020;">CURSOS ONLINE...
 <div class="sidebar" id="sidebar">
   <div class="sidebar-header">
     <div style="display:flex; align-items:center; gap:8px;">
-      <button id="btn-back-home" onclick="document.getElementById('landing').style.display='flex'; toggleSidebar(); player.pause(); player.src=''; document.getElementById('iframe-player').src='';" style="background:none; border:none; color:#e8a020; font-size:1.3rem; cursor:pointer; padding:0; display:none;">←</button>
+      <button id="btn-back-home" onclick="document.getElementById('landing').style.display='flex'; toggleSidebar(); player.pause(); player.src=''; document.getElementById('iframe-player').src=''; localStorage.removeItem('lastVideo'); localStorage.removeItem('lastCat');" style="background:none; border:none; color:#e8a020; font-size:1.3rem; cursor:pointer; padding:0; display:none;">←</button>
       <img src="assets/logos/incubadora_logo_blanco.png" alt="INCUBADORA">
     </div>
     <button class="close-btn" onclick="toggleSidebar()">✕</button>
