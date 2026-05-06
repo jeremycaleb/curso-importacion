@@ -1385,7 +1385,7 @@ seekOverlay.addEventListener('mousedown', (e) => {
   const pct = ((e.clientX - rect.left) / rect.width) * 100;
   if (pct >= 90) {
     if (window._iframeTimer) clearTimeout(window._iframeTimer);
-    window._iframeTimer = setTimeout(() => next(), 10000);
+    window._iframeTimer = setTimeout(() => next(), 3000);
   }
   seekOverlay.style.pointerEvents = 'none';
   setTimeout(() => { seekOverlay.style.pointerEvents = 'auto'; }, 500);
