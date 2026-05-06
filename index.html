@@ -261,7 +261,7 @@ INCUBADORA no es una plataforma de <span style="color:#e8a020;">CURSOS ONLINE...
 <div class="sidebar" id="sidebar">
   <div class="sidebar-header">
     <div style="display:flex; align-items:center; gap:8px;">
-      <button id="btn-back-home" onclick="document.getElementById('landing').style.display='flex'; toggleSidebar(); player.pause(); player.src=''; document.getElementById('iframe-player').src=''; localStorage.removeItem('lastVideo'); localStorage.removeItem('lastCat');" style="background:none; border:none; color:#e8a020; font-size:1.3rem; cursor:pointer; padding:0; display:none;">←</button>
+      <button id="btn-back-home" onclick="player.pause(); player.src=''; document.getElementById('iframe-player').src=''; if(window._cameFromCatPage && window._lastCat !== undefined){ localStorage.removeItem('lastVideo'); showCategoryPage(window._lastCat); } else { document.getElementById('landing').style.display='flex'; toggleSidebar(); localStorage.removeItem('lastVideo'); localStorage.removeItem('lastCat'); }" style="background:none; border:none; color:#e8a020; font-size:1.3rem; cursor:pointer; padding:0; display:none;">←</button>
       <img src="assets/logos/incubadora_logo_blanco.png" alt="INCUBADORA">
     </div>
     <button class="close-btn" onclick="toggleSidebar()">✕</button>
@@ -1308,6 +1308,7 @@ function handleTs(video,url){if(!window.MediaSource||!window.muxjs)return;var ms
 function load(gIdx) {
   document.getElementById('landing').style.display = 'none';
   document.getElementById('btn-back-home').style.display = 'block';
+  window._cameFromCatPage = !!document.getElementById('cat-page');
   current = (gIdx + allVideos.length) % allVideos.length;
   const v = allVideos[current];
   document.getElementById('topbar-course').textContent = v.courseName;
@@ -1561,6 +1562,7 @@ function enterCategory(cati) {
   openCategories.add(cati);
   activeCourse = { cati: -1, ci: -1 };
   localStorage.setItem('lastCat', cati);
+  window._lastCat = cati;
   showCategoryPage(cati);
 }
 
@@ -1574,7 +1576,7 @@ function showCategoryPage(cati) {
 <button onclick="document.getElementById('cat-page').remove();document.getElementById('landing').style.display='flex';localStorage.removeItem('lastCat');localStorage.removeItem('lastVideo');" style="position:absolute;top:20px;left:20px;background:none;border:none;color:#e8a020;font-size:1.5rem;cursor:pointer;">←</button>
         <div style="position:absolute;bottom:-40px;left:24px;font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:#fff;letter-spacing:3px;">${cat.name}</div>
       </div>
-      <div style="padding:24px;">
+      <div style="padding:64px 24px 24px;">
         ${cat.courses.map((course, ci) => {
           const firstIdx = allVideos.findIndex(v => v.cati === cati && v.ci === ci);
           return `<div onclick="document.getElementById('cat-page').remove();load(${firstIdx});" style="background:#0d1f3a;border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:16px 20px;margin-bottom:12px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;">
