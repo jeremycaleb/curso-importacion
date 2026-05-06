@@ -1275,6 +1275,12 @@ let openModules = new Set();
 const player = document.getElementById('player');
 
 function updateHero(cati){document.querySelector('.hero').style.backgroundImage="url('"+heroImgs[cati]+"')";} function toggleSidebar() {
+  const landing = document.getElementById('landing');
+  const isOnLanding = landing.style.display !== 'none';
+  if (isOnLanding) {
+    activeCourse = { cati: -1, ci: -1 };
+    renderSidebar();
+  }
   document.getElementById('sidebar').classList.toggle('open');
 }
 
