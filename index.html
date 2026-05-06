@@ -1268,7 +1268,8 @@ function load(gIdx) {
   setTimeout(() => {
     const el = document.querySelector(`[data-gidx="${current}"]`);
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }, 50);
+ }, 50);
+  localStorage.setItem('lastVideo', current);
 }
 
 function next() { load(current + 1); }
@@ -1388,7 +1389,7 @@ if ('mediaSession' in navigator) {
 keepAwake();
 renderSidebar();
 const heroImgs = ['fondo.jpg','fondo-ia.jpg','fondo-programacion.jpg','fondo-diseno.jpg'];
-load(0);
+load(parseInt(localStorage.getItem('lastVideo')) || 0);
 </script>
 </body>
 </html>
