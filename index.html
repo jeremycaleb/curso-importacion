@@ -1267,8 +1267,8 @@ if (isIframe) {
         if (ms > 0) {
           window._iframeTimer = setTimeout(() => next(), ms + 3000);
         }
-      }).catch(() => {});
-  }
+}).catch(() => {});
+    }
   } else {
     document.getElementById('iframe-player').src = '';
     player.pause();
