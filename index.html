@@ -154,7 +154,7 @@
 
   .hero {
     width: 100%; height: 30vw; max-height: 220px; min-height: 160px;
-    background: url('fondo.jpg') center center / cover no-repeat;
+    background: url('assets/backgrounds/fondo.jpg') center center / cover no-repeat;
     position: relative; flex-shrink: 0;
   }
   .hero::after {
@@ -225,7 +225,7 @@
   <div style="width:100%; height:100vh; background:#0a1628; position:relative; display:flex; align-items:center; justify-content:center; flex-direction:column;">
     <div style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(10,22,40,0.3) 0%, rgba(10,22,40,0.95) 100%);"></div>
     <div style="position:relative; padding:80px 32px 60px; max-width:650px; display:flex; flex-direction:column; align-items:center; text-align:center;">
-      <img src="incubadora_logo_horizontal.png" style="height:60px; margin-bottom:32px;">
+      <img src="assets/logos/logo incubadora horizontal blanco.png" style="height:60px; margin-bottom:32px;">
       <p style="font-family:'Bebas Neue',sans-serif; font-size:clamp(2rem,5vw,3.5rem); color:#fff; line-height:1.1; margin:0;">
 Incubadora NO es una plataforma de <span style="color:#e8a020;">CURSOS ONLINE</span>, Incubadora es un método de <span style="color:#e8a020;">APRENDIZAJE ACELERADO</span>
       </p>
@@ -240,19 +240,19 @@ Incubadora NO es una plataforma de <span style="color:#e8a020;">CURSOS ONLINE</s
     <p style="font-family:'Bebas Neue',sans-serif; font-size:clamp(1.6rem,4vw,2.8rem); letter-spacing:3px; color:#e8a020; margin:0 0 16px;">CATEGORÍAS</p>
     <div style="display:flex; gap:16px; overflow-x:auto; padding-bottom:8px; scrollbar-width:none;">
       <div onclick="enterCategory(0)" style="flex:0 0 220px; border-radius:8px; overflow:hidden; cursor:pointer; position:relative;">
-        <img src="fondo.jpg" style="width:100%; height:130px; object-fit:cover; display:block;">
+        <img src="assets/backgrounds/fondo.jpg" style="width:100%; height:130px; object-fit:cover; display:block;">
         <div style="background:#0d1f3a; padding:10px 14px; font-family:'Bebas Neue',sans-serif; font-size:1.1rem; letter-spacing:2px; color:#fff;">IMPORTACIÓN</div>
       </div>
       <div onclick="enterCategory(1)" style="flex:0 0 220px; border-radius:8px; overflow:hidden; cursor:pointer; position:relative;">
-        <img src="fondo-ia.jpg" style="width:100%; height:130px; object-fit:cover; display:block;">
+        <img src="assets/backgrounds/fondo-ia.jpg" style="width:100%; height:130px; object-fit:cover; display:block;">
         <div style="background:#0d1f3a; padding:10px 14px; font-family:'Bebas Neue',sans-serif; font-size:1.1rem; letter-spacing:2px; color:#fff;">IA PARA NEGOCIOS</div>
       </div>
       <div onclick="enterCategory(2)" style="flex:0 0 220px; border-radius:8px; overflow:hidden; cursor:pointer; position:relative;">
-        <img src="fondo-programacion.jpg" style="width:100%; height:130px; object-fit:cover; display:block;">
+        <img src="assets/backgrounds/fondo-programacion.jpg" style="width:100%; height:130px; object-fit:cover; display:block;">
         <div style="background:#0d1f3a; padding:10px 14px; font-family:'Bebas Neue',sans-serif; font-size:1.1rem; letter-spacing:2px; color:#fff;">PROGRAMACIÓN</div>
       </div>
       <div onclick="enterCategory(3)" style="flex:0 0 220px; border-radius:8px; overflow:hidden; cursor:pointer; position:relative;">
-        <img src="fondo-dise%C3%B1o.jpg" style="width:100%; height:130px; object-fit:cover; display:block;">
+        <img src="assets/backgrounds/fondo-dise%C3%B1o.jpg" style="width:100%; height:130px; object-fit:cover; display:block;">
         <div style="background:#0d1f3a; padding:10px 14px; font-family:'Bebas Neue',sans-serif; font-size:1.1rem; letter-spacing:2px; color:#fff;">DISEÑO CON IA</div>
       </div>
     </div>
@@ -260,7 +260,7 @@ Incubadora NO es una plataforma de <span style="color:#e8a020;">CURSOS ONLINE</s
 </div>
 <div class="sidebar" id="sidebar">
   <div class="sidebar-header">
-    <img src="incubadora_logo_blanco.png" alt="INCUBADORA">
+    <img src="assets/logos/incubadora_logo_blanco.png" alt="INCUBADORA">
     <button class="close-btn" onclick="toggleSidebar()">✕</button>
   </div>
   <div class="courses-list" id="courses-list"></div>
@@ -1547,7 +1547,7 @@ function enterCategory(cati) {
   const firstVideo = allVideos.find(v => v.cati === cati);
   if (firstVideo) load(allVideos.indexOf(firstVideo));
 }
-const heroImgs = ['fondo.jpg','fondo-ia.jpg','fondo-programacion.jpg','fondo-dise%C3%B1o.jpg'];
+const heroImgs = ['assets/backgrounds/fondo.jpg','assets/backgrounds/fondo-ia.jpg','assets/backgrounds/fondo-programacion.jpg','assets/backgrounds/fondo-dise%C3%B1o.jpg'];
 keepAwake();
 renderSidebar();
 </script>
