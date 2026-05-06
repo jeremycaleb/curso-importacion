@@ -208,7 +208,7 @@
   
   <!-- NAVBAR -->
   <div style="position:absolute; top:0; left:0; right:0; display:flex; align-items:center; justify-content:space-between; padding:18px 24px; z-index:10;">
-    <div id="search-overlay" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(10,22,40,0.97); z-index:2000; padding:24px;">
+    <div id="search-overlay" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); width:90%; max-width:600px; background:#0d1e35; border:1px solid rgba(255,255,255,0.15); border-radius:12px; z-index:2000; padding:24px; box-shadow:0 20px 60px rgba(0,0,0,0.6);">
   <div style="display:flex; gap:10px; margin-bottom:20px;">
     <input id="search-input" type="text" placeholder="Buscar video..." oninput="searchVideos()" style="flex:1; background:#112240; border:1px solid rgba(255,255,255,0.15); color:#fff; padding:12px 16px; border-radius:8px; font-size:1rem; outline:none;">
     <button onclick="closeSearch()" style="background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer;">✕</button>
@@ -230,7 +230,7 @@
     <div style="position:relative; padding:80px 32px 60px; max-width:650px; display:flex; flex-direction:column; align-items:center; text-align:center;">
       <img src="logo incubadora horizontal.png" style="height:90px; margin-bottom:32px;">
       <p style="font-family:'Bebas Neue',sans-serif; font-size:clamp(2rem,5vw,3.5rem); color:#fff; line-height:1.1; margin:0;">
-Incubadora <span style="color:#e8a020;">NO</span> es una plataforma de <span style="color:#e8a020;">CURSOS ONLINE</span>, Incubadora es un método de <span style="color:#e8a020;">APRENDIZAJE ACELERADO</span>
+Incubadora NO es una plataforma de <span style="color:#e8a020;">CURSOS ONLINE</span>, Incubadora es un método de <span style="color:#e8a020;">APRENDIZAJE ACELERADO</span>
       </p>
       <p style="font-size:clamp(1.1rem,2.5vw,1.4rem); color:rgba(255,255,255,0.75); margin:14px 0 0;">
         Prepárate para un mundo cada vez más rápido con el mejor contenido de estrategia y tecnología.
@@ -239,7 +239,7 @@ Incubadora <span style="color:#e8a020;">NO</span> es una plataforma de <span sty
   </div>
 
   <!-- CATEGORÍAS -->
-  <div style="padding:32px 24px 40px;">
+  <div style="padding:12px 24px 40px;">
     <p style="font-family:'Bebas Neue',sans-serif; font-size:clamp(2rem,5vw,3.5rem); letter-spacing:3px; color:#e8a020; margin:0 0 16px;">CATEGORÍAS</p>
     <div style="display:flex; gap:16px; overflow-x:auto; padding-bottom:8px; scrollbar-width:none;">
       <div onclick="enterCategory(0)" style="flex:0 0 220px; border-radius:8px; overflow:hidden; cursor:pointer; position:relative;">
