@@ -1559,6 +1559,7 @@ function enterCategory(cati) {
   openCategories.clear();
   openCategories.add(cati);
   activeCourse = { cati: -1, ci: -1 };
+  localStorage.setItem('lastCat', cati);
   showCategoryPage(cati);
 }
 
