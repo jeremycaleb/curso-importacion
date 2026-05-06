@@ -1590,7 +1590,8 @@ function showCategoryPage(cati) {
 const heroImgs = ['assets/backgrounds/fondo.jpg','assets/backgrounds/fondo-ia.jpg','assets/backgrounds/fondo-programacion.jpg','assets/backgrounds/fondo-diseno.jpg'];
 keepAwake();
 renderSidebar();
-// sin autoload
+const lastCat = localStorage.getItem('lastCat');
+if (lastCat !== null) showCategoryPage(parseInt(lastCat));
 </script>
 </body>
 </html>
