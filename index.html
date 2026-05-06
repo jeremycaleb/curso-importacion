@@ -1610,7 +1610,7 @@ renderSidebar();
 const lastVideo = localStorage.getItem('lastVideo');
 const lastCat = localStorage.getItem('lastCat');
 const lastFromCat = localStorage.getItem('lastFromCat');
-if (lastVideo !== null) { load(parseInt(lastVideo)); }
+if (lastVideo !== null) {   const origin = (lastFromCat !== null && lastFromCat !== '') ? 'category' : 'sidebar';   if (origin === 'category') window._lastCat = parseInt(lastFromCat);   load(parseInt(lastVideo), origin); }
 else if (lastCat !== null) { window._lastCat = parseInt(lastCat); showCategoryPage(parseInt(lastCat)); }
 else { localStorage.removeItem('lastVideo'); localStorage.removeItem('lastCat'); }
 </script>
