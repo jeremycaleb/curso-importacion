@@ -1365,7 +1365,7 @@ if (isIframe) {
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }, 50);
   localStorage.setItem('lastVideo', current);
-localStorage.setItem('lastFromCat', window._lastCat !== undefined ? window._lastCat : '');
+localStorage.setItem('lastFromCat', window._cameFromCatPage ? window._lastCat : '');
 localStorage.removeItem('lastCat');
 }
 
