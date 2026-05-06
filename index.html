@@ -214,7 +214,7 @@
     </div>
   </div>
   <div class="video-wrapper">
-    <video id="player" controls autoplay playsinline disableRemotePlayback></video> <iframe id="iframe-player" style="display:none; width:100%; height:100%; border:none;" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+<video id="player" controls autoplay playsinline disableRemotePlayback></video> <iframe id="iframe-player" style="display:none; width:100%; height:100%; border:none;" allowfullscreen allow="autoplay; encrypted-media"></iframe> <div id="seekbar-overlay" style="display:none; position:absolute; bottom:0; left:0; width:100%; height:12%; z-index:10; cursor:pointer;"></div>
   </div>
   <div class="info-bar">
     <div class="info-top">
@@ -1267,6 +1267,7 @@ if (isIframe) {
         iframeEl.src = getUrl(v);
         iframeEl.focus();
         window._iframeStart = Date.now();
+        document.getElementById('seekbar-overlay').style.display = 'block';
         window._iframeDuration = ms;
         if (ms > 0) {
             window._iframeTimer = setTimeout(() => {
@@ -1279,6 +1280,7 @@ if (isIframe) {
       });
   } else {
     document.getElementById('iframe-player').src = '';
+        document.getElementById('seekbar-overlay').style.display = 'none';
     player.pause();
     player.src = '';
 (async()=>{const proxyUrl=getUrl(v);if(v.type==="video"){player.src=proxyUrl;player.load();player.muted=false;player.play().catch(()=>{});return;}if(v.type==="drive"){const fileId=v.url;const metaUrl=`https://drive-proxy.jeremycalebp.workers.dev/meta?id=${fileId}`;try{const response=await fetch(metaUrl);const data=await response.json();if(data.mimeType&&data.mimeType.includes("mpeg")){handleTs(player,proxyUrl);}else{player.src=proxyUrl;player.load();}}catch(e){player.src=proxyUrl;player.load();}player.muted=false;player.play().catch(()=>{});}})();
@@ -1377,6 +1379,17 @@ function renderSidebar() {
 }
 
 player.addEventListener('ended', () => load(current + 1));
+const seekOverlay = document.getElementById('seekbar-overlay');
+seekOverlay.addEventListener('mousedown', (e) => {
+  const rect = seekOverlay.getBoundingClientRect();
+  const pct = ((e.clientX - rect.left) / rect.width) * 100;
+  if (pct >= 90) {
+    if (window._iframeTimer) clearTimeout(window._iframeTimer);
+    window._iframeTimer = setTimeout(() => next(), 10000);
+  }
+  seekOverlay.style.pointerEvents = 'none';
+  setTimeout(() => { seekOverlay.style.pointerEvents = 'auto'; }, 500);
+});
 window.addEventListener('message', (e) => {
   try {
     const data = JSON.parse(e.data);
