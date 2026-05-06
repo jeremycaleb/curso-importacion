@@ -1375,6 +1375,18 @@ function renderSidebar() {
 }
 
 player.addEventListener('ended', () => load(current + 1));
+window.addEventListener('message', (e) => {
+  try {
+    const data = JSON.parse(e.data);
+    if (data.event === 'infoDelivery' && data.info && data.info.playerState === 0) {
+      const v = allVideos[current];
+      if (v && v.type === 'iframe') {
+        if (window._iframeTimer) clearTimeout(window._iframeTimer);
+        load(current + 1);
+      }
+    }
+  } catch(err) {}
+});
 
 function pip() {
   if (document.pictureInPictureElement) document.exitPictureInPicture();
