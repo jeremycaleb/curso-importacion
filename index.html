@@ -260,11 +260,12 @@ INCUBADORA no es una plataforma de <span style="color:#e8a020;">cursos online...
 </div>
 <div class="sidebar" id="sidebar">
   <div class="sidebar-header">
-    <img src="assets/logos/incubadora_logo_blanco.png" alt="INCUBADORA">
+    <div style="display:flex; align-items:center; gap:8px;">
+      <button onclick="document.getElementById('landing').style.display='flex'; toggleSidebar();" style="background:none; border:none; color:#e8a020; font-size:1.3rem; cursor:pointer; padding:0;">←</button>
+      <img src="assets/logos/incubadora_logo_blanco.png" alt="INCUBADORA">
+    </div>
     <button class="close-btn" onclick="toggleSidebar()">✕</button>
   </div>
-  <div class="courses-list" id="courses-list"></div>
-</div>
 
 <div class="main">
   <div class="hero"></div>
