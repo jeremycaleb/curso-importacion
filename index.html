@@ -1267,10 +1267,10 @@ if (isIframe) {
         iframeEl.src = getUrl(v);
         iframeEl.focus();
         if (ms > 0) {
-          iframeEl.onload = () => {
-            window._iframeTimer = setTimeout(() => next(), ms + 5000);
-          };
-        }
+            window._iframeTimer = setTimeout(() => {
+              window._iframeTimer = setTimeout(() => next(), ms + 5000);
+            }, 3000);
+          }
       }).catch(() => {
         iframeEl.src = getUrl(v);
         iframeEl.focus();
