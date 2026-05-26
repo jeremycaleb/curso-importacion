@@ -1319,7 +1319,7 @@ function updateHero(cati){document.querySelector('.hero').style.backgroundImage=
   document.getElementById('sidebar').classList.toggle('open');
 }
 
-function getUrl(v) {   return v.type === 'video' ? v.url :           v.type === 'iframe' ? `https://drive.google.com/file/d/${v.url}/preview?autoplay=1` :          `${PROXY}?id=${v.url}`;
+function getUrl(v) {   return v.type === 'video' ? v.url :           v.type === 'iframe' ? v.url :          `${PROXY}?id=${v.url}`;
   
 }
 
@@ -1372,7 +1372,7 @@ if (isIframe) {
       .then(r => r.json())
       .then(data => {
         const ms = parseInt(data.videoMediaMetadata?.durationMillis || 0);
-        iframeEl.src = getUrl(v);
+        iframeEl.src = getUrl(v); iframeEl.setAttribute('sandbox','allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts');
         iframeEl.focus();
         window._iframeStart = Date.now();
         document.getElementById('seekbar-overlay').style.display = 'block';
@@ -1383,7 +1383,7 @@ if (isIframe) {
             }, 3000);
           }
       }).catch(() => {
-        iframeEl.src = getUrl(v);
+        iframeEl.src = getUrl(v); iframeEl.setAttribute('sandbox','allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts');
         iframeEl.focus();
       });
   } else {
