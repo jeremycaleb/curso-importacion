@@ -1368,7 +1368,7 @@ if (isIframe) {
     const iframeEl = document.getElementById('iframe-player');
     iframeEl.onload = null;
     iframeEl.src = '';
-    fetch(`https://drive-proxy.jeremycalebp.workers.dev/meta?id=${v.url}`)
+    fetch(v.url.includes('archive.org') ? `https://archive.org/metadata/${v.url.match(/\/embed\/([^\/?#]+)/)?.[1]}` : `https://drive-proxy.jeremycalebp.workers.dev/meta?id=${v.url}`)
       .then(r => r.json())
       .then(data => {
         const ms = parseInt(data.videoMediaMetadata?.durationMillis || 0);
