@@ -1383,7 +1383,10 @@ if (isIframe) {
       }).catch(() => {
         iframeEl.src = getUrl(v); iframeEl.setAttribute('sandbox','allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts');
         iframeEl.focus();
-        window._iframeTimer = setTimeout(() => next(), 3113000);
+        let _rafStart = null; let _rafId = null;
+        function _rafCheck(ts){ if(!_rafStart) _rafStart=ts; if(ts-_rafStart>=3113000){ cancelAnimationFrame(_rafId); next(); return; } _rafId=requestAnimationFrame(_rafCheck); }
+        if(window._rafId) cancelAnimationFrame(window._rafId);
+        window._rafId=requestAnimationFrame(_rafCheck);
       });
   } else {
     document.getElementById('iframe-player').src = '';
