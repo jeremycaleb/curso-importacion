@@ -1384,10 +1384,7 @@ if (isIframe) {
         iframeEl.src = getUrl(v); iframeEl.setAttribute('sandbox','allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts');
         iframeEl.focus();
         if(window._archiveWorker) window._archiveWorker.terminate();
-        const _wCode=`let t=null;self.onmessage=function(e){if(e.data==='start'){setTimeout(()=>{self.postMessage('ended');},3113000);}if(e.data==='stop'){clearTimeout(t);}};`;
-        window._archiveWorker=new Worker(URL.createObjectURL(new Blob([_wCode],{type:'application/javascript'})));
-        window._archiveWorker.onmessage=function(e){if(e.data==='ended'){next();}};
-        window._archiveWorker.postMessage('start');
+        try{const aC=new(window.AudioContext||window.webkitAudioContext)();const osc=aC.createOscillator();const g=aC.createGain();g.gain.setValueAtTime(0,aC.currentTime);osc.connect(g);g.connect(aC.destination);osc.start(0);const _wCode=`let s=null;self.onmessage=function(e){if(e.data.action==='start'){s=Date.now();setInterval(()=>{if(Date.now()-s>=e.data.duration){self.postMessage({status:'complete'});}},250);}};`;window._archiveWorker=new Worker(URL.createObjectURL(new Blob([_wCode],{type:'application/javascript'})));window._archiveWorker.onmessage=function(e){if(e.data.status==='complete'){try{osc.stop();aC.close();}catch(err){}window._archiveWorker.terminate();next();}};window._archiveWorker.postMessage({action:'start',duration:3113000});}catch(err){const _wCode=`let s=Date.now();setInterval(()=>{if(Date.now()-s>=3113000){self.postMessage('ended');}},500);`;window._archiveWorker=new Worker(URL.createObjectURL(new Blob([_wCode],{type:'application/javascript'})));window._archiveWorker.onmessage=function(){next();};};
       });
   } else {
     document.getElementById('iframe-player').src = '';
