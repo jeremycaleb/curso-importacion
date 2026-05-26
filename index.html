@@ -1277,6 +1277,16 @@ const categories = [
         ]}]
       },
     ]
+  }, {
+    name: "TALLERES GRÉKOS",
+    courses: [
+      {
+        name: "CAPACITACIÓN LEONEL", flat: true,
+        modules: [{ label: "Talleres", videos: [
+          { title: "Taller IA y Computadora - Leonel", url: "https://archive.org/embed/aria-podcast-limpio", type: "iframe" },
+        ]}]
+      },
+    ]
   },
 ];
 
@@ -1626,7 +1636,7 @@ function showCategoryPage(cati) {
     </div>`;
   document.body.insertAdjacentHTML('beforeend', html);
 }
-const heroImgs = ['assets/backgrounds/fondo.jpg','assets/backgrounds/fondo-ia.jpg','assets/backgrounds/fondo-programacion.jpg','assets/backgrounds/fondo-diseno.jpg'];
+const heroImgs = ['assets/backgrounds/fondo.jpg','assets/backgrounds/fondo-ia.jpg','assets/backgrounds/fondo-programacion.jpg','assets/backgrounds/fondo-diseno.jpg','assets/backgrounds/fondo-talleres.jpg'];
 keepAwake();
 renderSidebar();
 const lastVideo = localStorage.getItem('lastVideo');
