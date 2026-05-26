@@ -1371,7 +1371,7 @@ if (isIframe) {
     fetch(v.url.includes('archive.org') ? `https://archive.org/metadata/${v.url.match(/\/embed\/([^\/?#]+)/)?.[1]}` : `https://drive-proxy.jeremycalebp.workers.dev/meta?id=${v.url}`)
       .then(r => r.json())
       .then(data => {
-        const ms = v.url.includes('archive.org') ? (() => { const f = data.files?.find(f => f.format==='VBR MP3'||f.format==='MP3'||f.name?.endsWith('.mp3')); if(!f?.length)return 0; const l=f.length.trim(); return l.includes(':') ? (s=>s.length===3?(s[0]*3600+s[1]*60+s[2])*1000:(s[0]*60+s[1])*1000)(l.split(':').map(Number)) : Math.round(parseFloat(l)*1000); })() : parseInt(data.videoMediaMetadata?.durationMillis || 0);
+        const ms = v.url.includes('archive.org') ? (() => { const f = data.files?.find(f => f.format==='VBR MP3'||f.format==='MP3'||f.name?.endsWith('.mp3')); if(!f?.length)return 0; const l=f.length.trim(); console.log('ms calculado:',Math.round(parseFloat(l)*1000)); return l.includes(':') ? (s=>s.length===3?(s[0]*3600+s[1]*60+s[2])*1000:(s[0]*60+s[1])*1000)(l.split(':').map(Number)) : Math.round(parseFloat(l)*1000); })() : parseInt(data.videoMediaMetadata?.durationMillis || 0);
         iframeEl.src = getUrl(v); iframeEl.setAttribute('sandbox','allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts');
         iframeEl.focus();
         window._iframeStart = Date.now();
