@@ -1371,7 +1371,7 @@ if (isIframe) {
     fetch(v.url.includes('archive.org') ? `https://archive.org/metadata/${v.url.match(/\/embed\/([^\/?#]+)/)?.[1]}` : `https://drive-proxy.jeremycalebp.workers.dev/meta?id=${v.url}`)
       .then(r => r.json())
       .then(data => {
-        const ms = parseInt(data.videoMediaMetadata?.durationMillis || 0);
+        const ms = v.url.includes('archive.org') ? (() => { const f = data.files?.find(f => f.name?.endsWith('.mp3')); if (!f?.length) return 0; const p = f.length.includes(':') ? f.length.split(':').map(Number) : null; return p ? (p.length===3 ? (p[0]*3600+p[1]*60+p[2])*1000 : (p[0]*60+p[1])*1000) : parseFloat(f.length)*1000; })() : parseInt(data.videoMediaMetadata?.durationMillis || 0);
         iframeEl.src = getUrl(v); iframeEl.setAttribute('sandbox','allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts');
         iframeEl.focus();
         window._iframeStart = Date.now();
