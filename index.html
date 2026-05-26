@@ -1378,9 +1378,7 @@ if (isIframe) {
         document.getElementById('seekbar-overlay').style.display = 'block';
         window._iframeDuration = ms;
         if (ms > 0) {
-            window._iframeTimer = setTimeout(() => {
-              window._iframeTimer = setTimeout(() => next(), ms + 2000);
-            }, 3000);
+           window._iframeTimer = setTimeout(() => next(), ms + 1000);
           }
       }).catch(() => {
         iframeEl.src = getUrl(v); iframeEl.setAttribute('sandbox','allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts');
